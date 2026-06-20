@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "kind": "sdkwork.component.spec",
+  "component": {
+    "name": "sdkwork-documents-database-host",
+    "displayName": "SDKWork Documents Database Host",
+    "version": "0.1.0",
+    "type": "rust-crate",
+    "root": "sdkwork-documents/crates/sdkwork-documents-database-host",
+    "domain": "content",
+    "capability": "documents",
+    "surface": "database-host",
+    "languages": ["rust"],
+    "generated": false,
+    "manifests": ["Cargo.toml"]
+  },
+  "canonicalSpecs": [
+    { "file": "COMPONENT_SPEC.md", "path": "../../../sdkwork-specs/COMPONENT_SPEC.md" },
+    { "file": "DATABASE_SPEC.md", "path": "../../../sdkwork-specs/DATABASE_SPEC.md" },
+    { "file": "DATABASE_FRAMEWORK_SPEC.md", "path": "../../../sdkwork-specs/DATABASE_FRAMEWORK_SPEC.md" },
+    { "file": "RUST_CODE_SPEC.md", "path": "../../../sdkwork-specs/RUST_CODE_SPEC.md" }
+  ],
+  "contracts": {
+    "publicExports": ["."],
+    "runtimeEntrypoints": ["bootstrap_documents_database"],
+    "sdkClients": [],
+    "sdkDependencies": [{ "workspace": "sdkwork-database" }],
+    "events": [],
+    "configKeys": []
+  },
+  "verification": {
+    "commands": ["cargo test -p sdkwork-documents-database-host"]
+  }
+}

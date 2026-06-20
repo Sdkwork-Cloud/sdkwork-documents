@@ -1,0 +1,11 @@
+{
+  "name": "sdkwork-documents-pc",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node ./scripts/scaffold.mjs dev",
+    "build": "node ./scripts/scaffold.mjs build",
+    "lint": "node ./scripts/scaffold.mjs lint"
+  }
+}

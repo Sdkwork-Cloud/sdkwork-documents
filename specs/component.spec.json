@@ -1,0 +1,163 @@
+{
+  "schemaVersion": 1,
+  "kind": "sdkwork.component.spec",
+  "component": {
+    "name": "sdkwork-documents",
+    "displayName": "SDKWork Documents",
+    "version": "0.1.0",
+    "type": "web-backend-service",
+    "root": "sdkwork-documents",
+    "domain": "content",
+    "capability": "documents",
+    "surface": "backend-service",
+    "languages": [
+      "rust",
+      "typescript"
+    ],
+    "generated": false,
+    "status": "draft",
+    "manifests": [
+      "sdkwork.app.config.json",
+      "AGENTS.md",
+      "specs/component.spec.json",
+      "sdks/sdkwork-documents-sdk/.sdkwork-assembly.json",
+      "sdks/sdkwork-documents-app-sdk/.sdkwork-assembly.json",
+      "sdks/sdkwork-documents-backend-sdk/.sdkwork-assembly.json"
+    ]
+  },
+  "canonicalSpecs": [
+    {
+      "file": "WEB_FRAMEWORK_SPEC.md",
+      "path": "../sdkwork-specs/WEB_FRAMEWORK_SPEC.md"
+    },
+    {
+      "file": "WEB_BACKEND_SPEC.md",
+      "path": "../sdkwork-specs/WEB_BACKEND_SPEC.md"
+    },
+    {
+      "file": "DATABASE_SPEC.md",
+      "path": "../sdkwork-specs/DATABASE_SPEC.md"
+    },
+    {
+      "file": "DATABASE_FRAMEWORK_SPEC.md",
+      "path": "../sdkwork-specs/DATABASE_FRAMEWORK_SPEC.md"
+    },
+    {
+      "file": "DEPLOYMENT_SPEC.md",
+      "path": "../sdkwork-specs/DEPLOYMENT_SPEC.md"
+    },
+    {
+      "file": "API_SPEC.md",
+      "path": "../sdkwork-specs/API_SPEC.md"
+    },
+    {
+      "file": "SDK_SPEC.md",
+      "path": "../sdkwork-specs/SDK_SPEC.md"
+    },
+    {
+      "file": "SDK_WORKSPACE_GENERATION_SPEC.md",
+      "path": "../sdkwork-specs/SDK_WORKSPACE_GENERATION_SPEC.md"
+    },
+    {
+      "file": "TEST_SPEC.md",
+      "path": "../sdkwork-specs/TEST_SPEC.md"
+    }
+  ],
+  "contracts": {
+    "apiAuthorities": [
+      {
+        "name": "sdkwork-documents-open-api",
+        "prefix": "/doc/v3/api",
+        "authorityOpenApi": "sdks/sdkwork-documents-sdk/openapi/documents-open-api.openapi.json",
+        "sdkFamily": "sdkwork-documents-sdk"
+      },
+      {
+        "name": "sdkwork-documents.app",
+        "prefix": "/app/v3/api",
+        "authorityOpenApi": "sdks/sdkwork-documents-app-sdk/openapi/documents-app-api.openapi.json",
+        "sdkFamily": "sdkwork-documents-app-sdk"
+      },
+      {
+        "name": "sdkwork-documents.backend",
+        "prefix": "/backend/v3/api",
+        "authorityOpenApi": "sdks/sdkwork-documents-backend-sdk/openapi/documents-backend-api.openapi.json",
+        "sdkFamily": "sdkwork-documents-backend-sdk"
+      }
+    ],
+    "sdkClients": [
+      "SdkworkDocumentsOpenClient",
+      "SdkworkDocumentsAppClient",
+      "SdkworkDocumentsBackendClient"
+    ],
+    "sdkDependencies": [
+      {
+        "workspace": "sdkwork-web-framework",
+        "role": "http-web-framework-runtime",
+        "required": true,
+        "dependencyMode": "platform-framework",
+        "generatedTransportImportPolicy": "forbidden"
+      },
+      {
+        "workspace": "sdkwork-database",
+        "role": "database-runtime",
+        "required": true,
+        "dependencyMode": "platform-framework",
+        "generatedTransportImportPolicy": "forbidden"
+      },
+      {
+        "workspace": "sdkwork-utils",
+        "role": "cross-language-utility-runtime",
+        "required": true,
+        "dependencyMode": "platform-framework",
+        "generatedTransportImportPolicy": "forbidden"
+      },
+      {
+        "workspace": "sdkwork-appbase",
+        "role": "appbase-platform-runtime",
+        "required": true,
+        "dependencyMode": "platform-framework",
+        "generatedTransportImportPolicy": "forbidden"
+      },
+      {
+        "workspace": "sdkwork-sdk-generator",
+        "role": "sdk-generation-tooling",
+        "required": true,
+        "dependencyMode": "platform-tooling",
+        "generatedTransportImportPolicy": "forbidden"
+      }
+    ],
+    "runtimeEntrypoints": [
+      "sdkwork-documents-app-api",
+      "sdkwork-documents-backend-api",
+      "sdkwork-documents-open-api",
+      "crates/sdkwork-router-documents-app-api/src/runtime.rs"
+    ],
+    "configKeys": [
+      "SDKWORK_DOCUMENTS_DATABASE_URL",
+      "SDKWORK_DOCUMENTS_TENANT_ID",
+      "SDKWORK_DOCUMENTS_USER_ID",
+      "SDKWORK_DOCUMENTS_OPERATOR_ID",
+      "SDKWORK_DOCUMENTS_APPLICATION_PUBLIC_HTTP_BIND",
+      "SDKWORK_DOCUMENTS_APPLICATION_BACKEND_HTTP_BIND",
+      "SDKWORK_DOCUMENTS_APPLICATION_OPEN_HTTP_BIND",
+      "SDKWORK_DOCUMENTS_DEV_AUTH_BYPASS"
+    ],
+    "dependencyApiExports": [],
+    "dependencyApiSurfaces": [],
+    "events": [
+      "documents.document.created",
+      "documents.document.updated",
+      "documents.document.deleted"
+    ]
+  },
+  "verification": {
+    "commands": [
+      "pnpm verify",
+      "node sdks/test/verify-sdk-ownership-boundaries.test.mjs"
+    ]
+  },
+  "metadata": {
+    "standardVersion": "2026-06-20",
+    "managedBy": "tools/materialize_phase1_contracts.mjs"
+  }
+}

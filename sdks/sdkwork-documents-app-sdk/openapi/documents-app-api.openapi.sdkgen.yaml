@@ -1,0 +1,15 @@
+schemaVersion: 1
+kind: sdkwork.sdkgen.config
+input: documents-app-api.openapi.json
+output: ../sdkwork-documents-app-sdk-typescript/generated/server-openapi
+sdkOwner: sdkwork-documents
+apiAuthority: sdkwork-documents.app
+sdkFamily: sdkwork-documents-app-sdk
+standardProfile: sdkwork-v3
+languageTargets:
+  - typescript
+ownerOnly: true
+domain: content
+capability: documents
+prefix: /app/v3/api
+surface: app-api

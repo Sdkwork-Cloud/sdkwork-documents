@@ -1,0 +1,45 @@
+{
+  "workspace": "sdkwork-documents-backend-sdk",
+  "title": "SDKWork Documents Backend API SDK",
+  "apiVersion": "0.1.0",
+  "openapiVersion": "3.1.2",
+  "authoritySpec": "openapi/documents-backend-api.openapi.json",
+  "generationInputSpec": "openapi/documents-backend-api.openapi.json",
+  "derivedSpecs": {
+    "default": "openapi/documents-backend-api.openapi.json"
+  },
+  "apiAuthority": "sdkwork-documents.backend",
+  "discoverySurface": {
+    "sdkTarget": "backend",
+    "apiPrefix": "/backend/v3/api",
+    "schemaUrl": "/backend/v3/openapi.json",
+    "generatedProtocols": [
+      "http-openapi"
+    ],
+    "manualTransports": []
+  },
+  "languages": [
+    {
+      "language": "typescript",
+      "workspace": "sdkwork-documents-backend-sdk-typescript",
+      "generationState": "materialized",
+      "releaseState": "not_published",
+      "generatedPath": "sdkwork-documents-backend-sdk-typescript/generated/server-openapi",
+      "manifestPath": "sdkwork-documents-backend-sdk-typescript/generated/server-openapi/package.json",
+      "name": "@sdkwork/documents-backend-sdk",
+      "version": "0.1.0",
+      "description": "Generator-owned TypeScript transport SDK for sdkwork-documents.backend.",
+      "consumerSurface": {
+        "primaryClient": "SdkworkDocumentsBackendClient",
+        "apiPrefix": "/backend/v3/api"
+      }
+    }
+  ],
+  "sdkOwner": "sdkwork-documents",
+  "sdkDependencies": [],
+  "metadata": {
+    "standardVersion": "2026-06-20",
+    "ownerOnlyOperationCount": 5,
+    "managedBy": "sdks/standardize-documents-sdk-family.mjs"
+  }
+}

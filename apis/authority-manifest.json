@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "kind": "sdkwork.api.authority.manifest",
+  "owner": "sdkwork-documents",
+  "domain": "content",
+  "capability": "documents",
+  "surfaces": [
+    {
+      "authorityPath": "apis/open-api/content/documents/documents-open-api.openapi.json",
+      "sdkPath": "sdks/sdkwork-documents-sdk/openapi/documents-open-api.openapi.json"
+    },
+    {
+      "authorityPath": "apis/app-api/content/documents/documents-app-api.openapi.json",
+      "sdkPath": "sdks/sdkwork-documents-app-sdk/openapi/documents-app-api.openapi.json"
+    },
+    {
+      "authorityPath": "apis/backend-api/content/documents/documents-backend-api.openapi.json",
+      "sdkPath": "sdks/sdkwork-documents-backend-sdk/openapi/documents-backend-api.openapi.json"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+[package]
+name = "sdkwork-content-documents-service"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+async-trait.workspace = true
+sdkwork-documents-contract.workspace = true
+sdkwork-utils-rust.workspace = true
+
+[dev-dependencies]
+tokio.workspace = true

@@ -1,0 +1,20 @@
+schema_version: 1
+kind: sdkwork.database.schema
+module_id: documents
+contract_version: 1.0.0
+owner_team: documents-platform
+compliance_level: L2
+engines:
+  - postgres
+  - sqlite
+table_prefix: documents_
+tables:
+  - name: documents_document
+    lifecycle_status: active
+    owner: documents-platform
+  - name: documents_revision
+    lifecycle_status: active
+    owner: documents-platform
+  - name: documents_audit_log
+    lifecycle_status: active
+    owner: documents-platform

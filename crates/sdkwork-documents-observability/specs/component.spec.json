@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "kind": "sdkwork.component.spec",
+  "component": {
+    "name": "sdkwork-documents-observability",
+    "displayName": "SDKWork Documents Observability",
+    "version": "0.1.0",
+    "type": "rust-library",
+    "root": "sdkwork-documents/crates/sdkwork-documents-observability",
+    "domain": "content",
+    "capability": "documents",
+    "surface": "backend-service",
+    "languages": ["rust"],
+    "generated": false,
+    "manifests": ["Cargo.toml"]
+  },
+  "canonicalSpecs": [
+    { "file": "COMPONENT_SPEC.md", "path": "../../../sdkwork-specs/COMPONENT_SPEC.md" },
+    { "file": "WEB_BACKEND_SPEC.md", "path": "../../../sdkwork-specs/WEB_BACKEND_SPEC.md" },
+    { "file": "TEST_SPEC.md", "path": "../../../sdkwork-specs/TEST_SPEC.md" }
+  ],
+  "contracts": {
+    "publicExports": [
+      "metrics_middleware",
+      "metrics_handler",
+      "wrap_router_with_metrics"
+    ],
+    "runtimeEntrypoints": ["wrap_router_with_metrics", "metrics_handler"],
+    "sdkClients": [],
+    "sdkDependencies": [],
+    "events": [],
+    "configKeys": []
+  },
+  "verification": {
+    "commands": ["cargo test -p sdkwork-documents-observability"]
+  }
+}

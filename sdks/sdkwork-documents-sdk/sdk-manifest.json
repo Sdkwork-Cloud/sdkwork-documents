@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "sdkName": "sdkwork-documents-sdk",
+  "packageName": "@sdkwork/documents-sdk",
+  "sdkOwner": "sdkwork-documents",
+  "apiAuthority": "sdkwork-documents-open-api",
+  "sdkFamily": "sdkwork-documents-sdk",
+  "sdkType": "open",
+  "sdkSurface": "open",
+  "language": "typescript",
+  "apiPrefix": "/doc/v3/api",
+  "generationInputSpec": "openapi/documents-open-api.openapi.json",
+  "generatedOutput": "sdkwork-documents-sdk-typescript/generated/server-openapi",
+  "standardProfile": "sdkwork-v3",
+  "sdkDependencies": [],
+  "ownerOnlyOperationCount": 3,
+  "standardVersion": "2026-06-20",
+  "managedBy": "sdks/standardize-documents-sdk-family.mjs"
+}

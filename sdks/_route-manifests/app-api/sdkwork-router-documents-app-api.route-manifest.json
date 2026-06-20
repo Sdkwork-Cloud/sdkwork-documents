@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "kind": "sdkwork.route.manifest",
+  "packageName": "sdkwork-router-documents-app-api",
+  "surface": "app-api",
+  "owner": "sdkwork-documents",
+  "domain": "content",
+  "capability": "documents",
+  "apiAuthority": "sdkwork-documents.app",
+  "sdkFamily": "sdkwork-documents-app-sdk",
+  "prefix": "/app/v3/api",
+  "source": {
+    "crateRoot": "crates/sdkwork-router-documents-app-api",
+    "crateImport": "sdkwork_router_documents_app_api",
+    "openApiAuthority": "sdks/sdkwork-documents-app-sdk/openapi/documents-app-api.openapi.json"
+  },
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/app/v3/api/documents",
+      "operationId": "documents.list",
+      "tags": [
+        "documents"
+      ],
+      "auth": {
+        "mode": "dual-token",
+        "required": true
+      },
+      "handler": {
+        "module": "crate::routes",
+        "name": null
+      },
+      "ownership": {
+        "owner": "sdkwork-documents",
+        "apiAuthority": "sdkwork-documents.app"
+      },
+      "requestContext": "WebRequestContext",
+      "apiSurface": "app-api"
+    },
+    {
+      "method": "POST",
+      "path": "/app/v3/api/documents",
+      "operationId": "documents.create",
+      "tags": [
+        "documents"
+      ],
+      "auth": {
+        "mode": "dual-token",
+        "required": true
+      },
+      "handler": {
+        "module": "crate::routes",
+        "name": null
+      },
+      "ownership": {
+        "owner": "sdkwork-documents",
+        "apiAuthority": "sdkwork-documents.app"
+      },
+      "requestContext": "WebRequestContext",
+      "apiSurface": "app-api"
+    },
+    {
+      "method": "GET",
+      "path": "/app/v3/api/documents/{documentId}",
+      "operationId": "documents.retrieve",
+      "tags": [
+        "documents"
+      ],
+      "auth": {
+        "mode": "dual-token",
+        "required": true
+      },
+      "handler": {
+        "module": "crate::routes",
+        "name": null
+      },
+      "ownership": {
+        "owner": "sdkwork-documents",
+        "apiAuthority": "sdkwork-documents.app"
+      },
+      "requestContext": "WebRequestContext",
+      "apiSurface": "app-api"
+    },
+    {
+      "method": "PATCH",
+      "path": "/app/v3/api/documents/{documentId}",
+      "operationId": "documents.update",
+      "tags": [
+        "documents"
+      ],
+      "auth": {
+        "mode": "dual-token",
+        "required": true
+      },
+      "handler": {
+        "module": "crate::routes",
+        "name": null
+      },
+      "ownership": {
+        "owner": "sdkwork-documents",
+        "apiAuthority": "sdkwork-documents.app"
+      },
+      "requestContext": "WebRequestContext",
+      "apiSurface": "app-api"
+    }
+  ]
+}

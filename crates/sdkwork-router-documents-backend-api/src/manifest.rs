@@ -1,0 +1,50 @@
+pub const PACKAGE_NAME: &str = "sdkwork-router-documents-backend-api";
+pub const SURFACE: &str = "backend-api";
+pub const OWNER: &str = "sdkwork-documents";
+pub const DOMAIN: &str = "content";
+pub const CAPABILITY: &str = "documents";
+pub const API_AUTHORITY: &str = "sdkwork-documents.backend";
+pub const SDK_FAMILY: &str = "sdkwork-documents-backend-sdk";
+pub const PREFIX: &str = "/backend/v3/api";
+pub const AUTH_MODE: &str = "dual-token";
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct RouteManifestEntry {
+    pub method: &'static str,
+    pub path: &'static str,
+    pub operation_id: &'static str,
+    pub auth_mode: &'static str,
+}
+
+pub const ROUTES: &[RouteManifestEntry] = &[
+    RouteManifestEntry {
+        method: "GET",
+        path: "/backend/v3/api/documents",
+        operation_id: "documents.list",
+        auth_mode: AUTH_MODE,
+    },
+    RouteManifestEntry {
+        method: "POST",
+        path: "/backend/v3/api/documents",
+        operation_id: "documents.create",
+        auth_mode: AUTH_MODE,
+    },
+    RouteManifestEntry {
+        method: "GET",
+        path: "/backend/v3/api/documents/{documentId}",
+        operation_id: "documents.retrieve",
+        auth_mode: AUTH_MODE,
+    },
+    RouteManifestEntry {
+        method: "PATCH",
+        path: "/backend/v3/api/documents/{documentId}",
+        operation_id: "documents.update",
+        auth_mode: AUTH_MODE,
+    },
+    RouteManifestEntry {
+        method: "DELETE",
+        path: "/backend/v3/api/documents/{documentId}",
+        operation_id: "documents.delete",
+        auth_mode: AUTH_MODE,
+    },
+];

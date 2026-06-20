@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 1,
+  "generator": "@sdkwork/sdk-generator",
+  "sdk": {
+    "name": "sdkwork-documents-sdk",
+    "version": "0.1.0",
+    "language": "typescript",
+    "sdkType": "custom",
+    "protocol": "http",
+    "packageName": "@sdkwork/documents-sdk"
+  },
+  "generatedFiles": [
+    {
+      "path": "bin/publish-core.mjs",
+      "sha256": "98ad0918a78bfbe22bf8f12fec709b0bed545b9e01edd40f5e4abf31a23378a5"
+    },
+    {
+      "path": "bin/publish.ps1",
+      "sha256": "78c6419400b988409d9393c2ecd85aa02dd6760f73edb3cc84cb28fefc51b41e"
+    },
+    {
+      "path": "bin/publish.sh",
+      "sha256": "899087c23e670b6951a12a13490fd557f761c96d78fabfb7e58a37e367db889f"
+    },
+    {
+      "path": "bin/sdk-gen.bat",
+      "sha256": "22d4c9b71d0d722b795098598c01ceb4ca7aec230eb189a517c714c472849777"
+    },
+    {
+      "path": "bin/sdk-gen.sh",
+      "sha256": "b24c21c7b42fa17fffb3c7c563a7329722624441696b1d6a841e2a7520da7260"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "sha256": "fb941a0806986a54fc192f98a98f6d9c282b8d350b2b19a3e71dda404e92d545"
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "7840cc7d2b36ff364ac16c2fc5ec15b861bfe96854eecf81fb59b00edb8b1447"
+    },
+    {
+      "path": "package.json",
+      "sha256": "3ef5c630ca7155e675105bf2014e225d8bf9a988a6bfe3ca3027232628e6f3c4"
+    },
+    {
+      "path": "README.md",
+      "sha256": "7b25c62475805492aa98a08dfba6c4acfd7c00c2222c3ce503b91f3417170e60"
+    },
+    {
+      "path": "sdkwork-sdk.json",
+      "sha256": "8ec56c5678fcc0f5eaa3a4e4fd61ed1c77e3a4eb9375d26afca737e930eb42f0"
+    },
+    {
+      "path": "src/api/base.ts",
+      "sha256": "02ad25e6bf331ff241ba387c2947ddf1900dd849038e08c2757416a3aa788a04"
+    },
+    {
+      "path": "src/api/documents.ts",
+      "sha256": "1adec661d2e2f4ee75354d0a068a9b58471ef6f6865826ed32d20c9c224a6d50"
+    },
+    {
+      "path": "src/api/index.ts",
+      "sha256": "45a3c697ad1b92d3554746c20804f3303ece980c5dc63976746ee08ccca3dc60"
+    },
+    {
+      "path": "src/api/paths.ts",
+      "sha256": "0491a9cb9632f6af4549e9c0aa72afa87dd84bf8df33a57e94135f1c3add2e83"
+    },
+    {
+      "path": "src/auth/index.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+    },
+    {
+      "path": "src/http/client.ts",
+      "sha256": "3f9e497f2e58dd3815d0e330180e0d3e46c4dfda4fad2fccabf2682d4e32244e"
+    },
+    {
+      "path": "src/http/index.ts",
+      "sha256": "fc204fbe89750b9d25ecaffe41003e6ac243a1a895b65e65856202ab825d2dbe"
+    },
+    {
+      "path": "src/index.ts",
+      "sha256": "e1af024d7f8a747f8815f6700c699e335dcede9aea102e1374d990a381af32b5"
+    },
+    {
+      "path": "src/sdk.ts",
+      "sha256": "c574e01cc84ad1fafd2912f6b7d6accf687dbcc0970e2f431e922674011b9c6d"
+    },
+    {
+      "path": "src/types/common.ts",
+      "sha256": "2d75166aa61cdbf2c56569b4fd1dcb10c0a070fe8bf8123bd519af10844bee29"
+    },
+    {
+      "path": "src/types/document-capabilities.ts",
+      "sha256": "becc5a5cfda8d63aba273555d8746a50effa3305c5dcba236917ad8868cc200b"
+    },
+    {
+      "path": "src/types/document-create-request.ts",
+      "sha256": "73dcdec8d931a63227edefd64f1ad8e8b47238a1b875538319e91ba69cbe9ccd"
+    },
+    {
+      "path": "src/types/document-list.ts",
+      "sha256": "60901d8f5b8e8bf34b96aba729fe5b59cc4438a4e4c6045f7558ae23f8fc772e"
+    },
+    {
+      "path": "src/types/document-update-request.ts",
+      "sha256": "b444706bc5199f21136c7a7d8d6380a4168d12f1a32ebb539c127c4d7204ef84"
+    },
+    {
+      "path": "src/types/document.ts",
+      "sha256": "f22d7d1a6a482af9f79bf535c807c27e34c897f42427cbfc72d5b8aee096bcab"
+    },
+    {
+      "path": "src/types/index.ts",
+      "sha256": "e21ec857a2ec9a1ae3ce772483203368bd0b9fe1fdaba0bb398bccd932038f45"
+    },
+    {
+      "path": "src/types/problem-details.ts",
+      "sha256": "91fb59ab3670b22260a33fce701642b5f01c22449358a5bd10b2720d4a47cb23"
+    },
+    {
+      "path": "tsconfig.json",
+      "sha256": "7c8a6c2b00fb208ec28e1e6045194487d1b3e563d6c44cef4783fd4fe0e8ffad"
+    }
+  ],
+  "scaffoldFiles": [
+    "custom/build-runtime.mjs",
+    "custom/README.md"
+  ],
+  "customRoots": [
+    "custom/"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "sdkName": "sdkwork-documents-backend-sdk",
+  "packageName": "@sdkwork/documents-backend-sdk",
+  "sdkOwner": "sdkwork-documents",
+  "apiAuthority": "sdkwork-documents.backend",
+  "sdkFamily": "sdkwork-documents-backend-sdk",
+  "sdkType": "backend",
+  "sdkSurface": "backend",
+  "language": "typescript",
+  "apiPrefix": "/backend/v3/api",
+  "generationInputSpec": "openapi/documents-backend-api.openapi.json",
+  "generatedOutput": "sdkwork-documents-backend-sdk-typescript/generated/server-openapi",
+  "standardProfile": "sdkwork-v3",
+  "sdkDependencies": [],
+  "ownerOnlyOperationCount": 5,
+  "standardVersion": "2026-06-20",
+  "managedBy": "sdks/standardize-documents-sdk-family.mjs"
+}

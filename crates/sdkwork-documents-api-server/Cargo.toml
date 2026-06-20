@@ -1,0 +1,28 @@
+[package]
+name = "sdkwork-documents-api-server"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+axum.workspace = true
+tokio = { workspace = true, features = ["macros", "rt-multi-thread", "net", "signal"] }
+tracing.workspace = true
+tracing-subscriber.workspace = true
+sdkwork-documents-observability.workspace = true
+sdkwork-router-documents-app-api.workspace = true
+
+[[bin]]
+name = "sdkwork-documents-app-api"
+path = "src/bin/app_main.rs"
+
+[[bin]]
+name = "sdkwork-documents-backend-api"
+path = "src/bin/backend_main.rs"
+
+[[bin]]
+name = "sdkwork-documents-open-api"
+path = "src/bin/open_main.rs"

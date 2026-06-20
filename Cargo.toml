@@ -1,0 +1,57 @@
+[workspace]
+resolver = "2"
+members = [
+  "crates/sdkwork-documents-contract",
+  "crates/sdkwork-documents-database-host",
+  "crates/sdkwork-content-documents-service",
+  "crates/sdkwork-content-documents-repository-sqlx",
+  "crates/sdkwork-router-documents-open-api",
+  "crates/sdkwork-router-documents-app-api",
+  "crates/sdkwork-router-documents-backend-api",
+  "crates/sdkwork-documents-api-server",
+  "crates/sdkwork-documents-observability",
+]
+
+[workspace.package]
+edition = "2021"
+version = "0.1.0"
+license = "UNLICENSED"
+
+[workspace.dependencies]
+async-trait = "0.1"
+axum = "0.8"
+http = "1.4"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sqlx = { version = "0.8", default-features = false, features = ["runtime-tokio", "postgres", "sqlite", "uuid", "chrono", "migrate"] }
+thiserror = "2"
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+tower = { version = "0.5", features = ["util"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+uuid = { version = "1", features = ["v4", "serde"] }
+dotenvy = "0.15"
+
+sdkwork-documents-contract = { path = "crates/sdkwork-documents-contract" }
+sdkwork-documents-database-host = { path = "crates/sdkwork-documents-database-host" }
+sdkwork-content-documents-service = { path = "crates/sdkwork-content-documents-service" }
+sdkwork-content-documents-repository-sqlx = { path = "crates/sdkwork-content-documents-repository-sqlx" }
+sdkwork-router-documents-open-api = { path = "crates/sdkwork-router-documents-open-api" }
+sdkwork-router-documents-app-api = { path = "crates/sdkwork-router-documents-app-api" }
+sdkwork-router-documents-backend-api = { path = "crates/sdkwork-router-documents-backend-api" }
+sdkwork-documents-api-server = { path = "crates/sdkwork-documents-api-server" }
+sdkwork-documents-observability = { path = "crates/sdkwork-documents-observability" }
+
+sdkwork-iam-web-adapter = { path = "../sdkwork-appbase/crates/sdkwork-iam-web-adapter" }
+sdkwork-web-core = { path = "../sdkwork-web-framework/crates/sdkwork-web-core" }
+sdkwork-web-axum = { path = "../sdkwork-web-framework/crates/sdkwork-web-axum" }
+sdkwork-utils-rust = { path = "../sdkwork-utils/packages/sdkwork-utils-rust" }
+sdkwork-database-config = { path = "../sdkwork-database/crates/sdkwork-database-config", package = "sdkwork-database-config" }
+sdkwork-database-lifecycle = { path = "../sdkwork-database/crates/sdkwork-database-lifecycle", package = "sdkwork-database-lifecycle" }
+sdkwork-database-spi = { path = "../sdkwork-database/crates/sdkwork-database-spi", package = "sdkwork-database-spi" }
+sdkwork-database-sqlx = { path = "../sdkwork-database/crates/sdkwork-database-sqlx", package = "sdkwork-database-sqlx" }
+sdkwork-database-repository = { path = "../sdkwork-database/crates/sdkwork-database-repository", package = "sdkwork-database-repository" }
+sdkwork_database_config = { path = "../sdkwork-database/crates/sdkwork-database-config", package = "sdkwork-database-config" }
+sdkwork_database_lifecycle = { path = "../sdkwork-database/crates/sdkwork-database-lifecycle", package = "sdkwork-database-lifecycle" }
+sdkwork_database_spi = { path = "../sdkwork-database/crates/sdkwork-database-spi", package = "sdkwork-database-spi" }
+sdkwork_database_sqlx = { path = "../sdkwork-database/crates/sdkwork-database-sqlx", package = "sdkwork-database-sqlx" }

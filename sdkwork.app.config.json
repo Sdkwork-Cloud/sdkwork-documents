@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 3,
+  "kind": "sdkwork.app",
+  "app": {
+    "key": "sdkwork-documents",
+    "name": "SDKWork Documents",
+    "displayName": "SDKWork Documents",
+    "description": "Structured document storage, retrieval, and publishing for SDKWork applications.",
+    "officialWebsiteUrl": "https://sdkwork.com/apps/sdkwork-documents",
+    "appType": "SDK",
+    "identifiers": {
+      "packageName": "com.sdkwork.documents",
+      "bundleId": "com.sdkwork.documents",
+      "desktopAppId": "com.sdkwork.documents",
+      "containerImage": "sdkwork/documents"
+    }
+  },
+  "backend": {
+    "owner": "sdkwork-documents",
+    "domain": "content",
+    "capability": "documents",
+    "apiAuthorities": [
+      "sdkwork-documents-open-api",
+      "sdkwork-documents.app",
+      "sdkwork-documents.backend"
+    ]
+  },
+  "runtime": {
+    "family": "server",
+    "framework": "rust-service",
+    "defaultPlatform": "API",
+    "defaultArchitecture": "x64",
+    "supportedDeploymentProfiles": ["cloud", "standalone"],
+    "defaultDeploymentProfile": "cloud"
+  },
+  "media": {
+    "icons": {
+      "primary": {
+        "id": "documents-primary-icon",
+        "type": "ICON",
+        "purpose": "PRIMARY",
+        "url": "https://sdkwork.com/assets/apps/sdkwork-documents/icon.png",
+        "platform": "WEB",
+        "locale": "en-US",
+        "width": 1024,
+        "height": 1024,
+        "format": "PNG",
+        "enabled": true
+      },
+      "platform": []
+    },
+    "screenshots": [],
+    "previews": []
+  },
+  "publish": {
+    "status": "INTERNAL",
+    "platforms": ["API"],
+    "installPlatforms": ["API"],
+    "stores": [],
+    "config": {
+      "workspaceRoot": ".",
+      "framework": "rust-service",
+      "managedBy": "tools/materialize_phase1_contracts.mjs"
+    }
+  },
+  "environments": {
+    "dev": {
+      "accessUrl": "http://127.0.0.1:18084"
+    },
+    "test": {
+      "accessUrl": "https://test.sdkwork.com/documents"
+    },
+    "prod": {
+      "accessUrl": "https://api.sdkwork.com/documents"
+    }
+  },
+  "artifacts": {
+    "installConfig": {
+      "defaultPackageId": "container-x64-cloud-container-oci",
+      "packages": [
+        {
+          "id": "container-x64-cloud-container-oci",
+          "name": "SDKWork Documents Server Container",
+          "sourceType": "CONTAINER_IMAGE",
+          "packageFormat": "DOCKER_IMAGE",
+          "platform": "API",
+          "architecture": "x64",
+          "url": "oci://registry.sdkwork.com/sdkwork/documents@sha256:TODO",
+          "checksumAlgorithm": "SHA-256",
+          "checksum": "TODO",
+          "sizeBytes": 0,
+          "enabled": false,
+          "deploymentProfile": "cloud",
+          "runtimeTarget": "container"
+        }
+      ]
+    }
+  },
+  "release": {
+    "currentVersion": "0.1.0",
+    "latest": {
+      "DEV": "0.1.0"
+    },
+    "notes": [
+      {
+        "version": "0.1.0",
+        "channel": "DEV",
+        "current": true,
+        "packageIds": ["container-x64-cloud-container-oci"],
+        "notes": "Initial Documents HTTP service skeleton."
+      }
+    ]
+  },
+  "security": {
+    "checksumRequired": true,
+    "signatureRequired": true,
+    "sbomRequired": true
+  },
+  "devApp": {
+    "enabled": true,
+    "sourceRoot": "."
+  },
+  "metadata": {
+    "status": "contract-skeleton",
+    "todo": "Replace placeholder media and artifact values before app registration."
+  }
+}

@@ -1,0 +1,12 @@
+[package]
+name = "sdkwork-documents-observability"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+axum.workspace = true
+tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
+
+[dev-dependencies]
+tower.workspace = true

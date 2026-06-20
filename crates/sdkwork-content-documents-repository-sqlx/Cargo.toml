@@ -1,0 +1,19 @@
+[package]
+name = "sdkwork-content-documents-repository-sqlx"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+async-trait.workspace = true
+dotenvy.workspace = true
+sqlx = { workspace = true, features = ["migrate", "sqlite"] }
+uuid.workspace = true
+sdkwork-documents-contract.workspace = true
+sdkwork-documents-database-host.workspace = true
+sdkwork-database-config.workspace = true
+sdkwork-database-repository.workspace = true
+sdkwork-database-sqlx.workspace = true
+sdkwork-utils-rust.workspace = true
+
+[dev-dependencies]
+tokio.workspace = true

@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "kind": "sdkwork.route.manifest",
+  "packageName": "sdkwork-router-documents-open-api",
+  "surface": "open-api",
+  "owner": "sdkwork-documents",
+  "domain": "content",
+  "capability": "documents",
+  "apiAuthority": "sdkwork-documents-open-api",
+  "sdkFamily": "sdkwork-documents-sdk",
+  "prefix": "/doc/v3/api",
+  "source": {
+    "crateRoot": "crates/sdkwork-router-documents-open-api",
+    "crateImport": "sdkwork_router_documents_open_api",
+    "openApiAuthority": "sdks/sdkwork-documents-sdk/openapi/documents-open-api.openapi.json"
+  },
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/doc/v3/api/documents/capabilities",
+      "operationId": "capabilities.retrieve",
+      "tags": [
+        "documents"
+      ],
+      "auth": {
+        "mode": "api-key",
+        "required": true
+      },
+      "handler": {
+        "module": "crate::routes",
+        "name": null
+      },
+      "ownership": {
+        "owner": "sdkwork-documents",
+        "apiAuthority": "sdkwork-documents-open-api"
+      },
+      "requestContext": "WebRequestContext",
+      "apiSurface": "open-api"
+    },
+    {
+      "method": "GET",
+      "path": "/doc/v3/api/documents",
+      "operationId": "documents.list",
+      "tags": [
+        "documents"
+      ],
+      "auth": {
+        "mode": "api-key",
+        "required": true
+      },
+      "handler": {
+        "module": "crate::routes",
+        "name": null
+      },
+      "ownership": {
+        "owner": "sdkwork-documents",
+        "apiAuthority": "sdkwork-documents-open-api"
+      },
+      "requestContext": "WebRequestContext",
+      "apiSurface": "open-api"
+    },
+    {
+      "method": "GET",
+      "path": "/doc/v3/api/documents/{documentId}",
+      "operationId": "documents.retrieve",
+      "tags": [
+        "documents"
+      ],
+      "auth": {
+        "mode": "api-key",
+        "required": true
+      },
+      "handler": {
+        "module": "crate::routes",
+        "name": null
+      },
+      "ownership": {
+        "owner": "sdkwork-documents",
+        "apiAuthority": "sdkwork-documents-open-api"
+      },
+      "requestContext": "WebRequestContext",
+      "apiSurface": "open-api"
+    }
+  ]
+}

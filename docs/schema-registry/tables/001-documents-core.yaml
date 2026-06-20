@@ -1,0 +1,4 @@
+module: documents
+owner: sdkwork-documents
+table: documents_document
+description: Primary document record

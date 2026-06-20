@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "prefixes": [
+    {
+      "prefix": "documents_",
+      "owner": "documents-platform"
+    }
+  ]
+}

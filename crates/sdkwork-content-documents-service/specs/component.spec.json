@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "kind": "sdkwork.component.spec",
+  "component": {
+    "name": "sdkwork-content-documents-service",
+    "displayName": "SDKWork Content Documents Service",
+    "version": "0.1.0",
+    "type": "rust-crate",
+    "root": "sdkwork-documents/crates/sdkwork-content-documents-service",
+    "domain": "content",
+    "capability": "documents",
+    "surface": "backend-service",
+    "languages": ["rust"],
+    "generated": false,
+    "manifests": ["Cargo.toml"]
+  },
+  "canonicalSpecs": [
+    { "file": "COMPONENT_SPEC.md", "path": "../../../sdkwork-specs/COMPONENT_SPEC.md" },
+    { "file": "WEB_BACKEND_SPEC.md", "path": "../../../sdkwork-specs/WEB_BACKEND_SPEC.md" },
+    { "file": "RUST_CODE_SPEC.md", "path": "../../../sdkwork-specs/RUST_CODE_SPEC.md" },
+    { "file": "TEST_SPEC.md", "path": "../../../sdkwork-specs/TEST_SPEC.md" }
+  ],
+  "contracts": {
+    "publicExports": ["."],
+    "runtimeEntrypoints": ["DocumentsService"],
+    "sdkClients": [],
+    "sdkDependencies": [{ "workspace": "sdkwork-utils" }],
+    "events": [],
+    "configKeys": []
+  },
+  "verification": {
+    "commands": ["cargo test -p sdkwork-content-documents-service"]
+  }
+}
