@@ -39,7 +39,7 @@
   "sdkDependencies": [],
   "metadata": {
     "standardVersion": "2026-06-20",
-    "ownerOnlyOperationCount": 4,
+    "ownerOnlyOperationCount": 6,
     "managedBy": "sdks/standardize-documents-sdk-family.mjs"
   }
 }

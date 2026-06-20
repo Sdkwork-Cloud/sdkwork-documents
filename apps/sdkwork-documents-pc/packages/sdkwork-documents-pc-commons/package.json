@@ -1,0 +1,43 @@
+{
+  "name": "@sdkwork/documents-pc-commons",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "SDKWork Documents PC shared reference runtime and UI helpers.",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "types": "./src/index.ts"
+    },
+    "./runtime": {
+      "import": "./src/runtime.ts",
+      "types": "./src/runtime.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0"
+  },
+  "dependencies": {
+    "lucide-react": "^0.511.0",
+    "react": "^19.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "~5.8.2"
+  },
+  "sdkwork": {
+    "workspace": "sdkwork-documents",
+    "architecture": "pc-react",
+    "domain": "content",
+    "capability": "documents",
+    "surface": "shared-pc-runtime",
+    "status": "ready"
+  }
+}

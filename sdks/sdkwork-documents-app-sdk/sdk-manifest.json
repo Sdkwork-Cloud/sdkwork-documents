@@ -13,7 +13,7 @@
   "generatedOutput": "sdkwork-documents-app-sdk-typescript/generated/server-openapi",
   "standardProfile": "sdkwork-v3",
   "sdkDependencies": [],
-  "ownerOnlyOperationCount": 4,
+  "ownerOnlyOperationCount": 6,
   "standardVersion": "2026-06-20",
   "managedBy": "sdks/standardize-documents-sdk-family.mjs"
 }

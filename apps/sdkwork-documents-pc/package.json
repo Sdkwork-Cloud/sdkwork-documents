@@ -6,6 +6,15 @@
   "scripts": {
     "dev": "node ./scripts/scaffold.mjs dev",
     "build": "node ./scripts/scaffold.mjs build",
-    "lint": "node ./scripts/scaffold.mjs lint"
+    "lint": "pnpm -r --filter @sdkwork/documents-pc-* run typecheck",
+    "typecheck": "pnpm -r --filter @sdkwork/documents-pc-* run typecheck"
+  },
+  "dependencies": {
+    "@sdkwork/documents-pc-api-reference": "workspace:*",
+    "@sdkwork/documents-pc-commons": "workspace:*",
+    "@sdkwork/documents-pc-i18n": "workspace:*",
+    "@sdkwork/documents-pc-sdk-reference": "workspace:*",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
   }
 }

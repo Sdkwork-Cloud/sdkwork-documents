@@ -10,6 +10,7 @@ serde.workspace = true
 serde_json.workspace = true
 sdkwork-content-documents-repository-sqlx.workspace = true
 sdkwork-content-documents-service.workspace = true
+sdkwork-content-documents-sdk-reference.workspace = true
 sdkwork-documents-contract.workspace = true
 sdkwork-documents-database-host.workspace = true
 sdkwork-router-documents-backend-api.workspace = true

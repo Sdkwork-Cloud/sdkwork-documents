@@ -4,6 +4,7 @@ members = [
   "crates/sdkwork-documents-contract",
   "crates/sdkwork-documents-database-host",
   "crates/sdkwork-content-documents-service",
+  "crates/sdkwork-content-documents-sdk-reference",
   "crates/sdkwork-content-documents-repository-sqlx",
   "crates/sdkwork-router-documents-open-api",
   "crates/sdkwork-router-documents-app-api",
@@ -35,6 +36,7 @@ dotenvy = "0.15"
 sdkwork-documents-contract = { path = "crates/sdkwork-documents-contract" }
 sdkwork-documents-database-host = { path = "crates/sdkwork-documents-database-host" }
 sdkwork-content-documents-service = { path = "crates/sdkwork-content-documents-service" }
+sdkwork-content-documents-sdk-reference = { path = "crates/sdkwork-content-documents-sdk-reference" }
 sdkwork-content-documents-repository-sqlx = { path = "crates/sdkwork-content-documents-repository-sqlx" }
 sdkwork-router-documents-open-api = { path = "crates/sdkwork-router-documents-open-api" }
 sdkwork-router-documents-app-api = { path = "crates/sdkwork-router-documents-app-api" }
@@ -46,6 +48,7 @@ sdkwork-iam-web-adapter = { path = "../sdkwork-appbase/crates/sdkwork-iam-web-ad
 sdkwork-web-core = { path = "../sdkwork-web-framework/crates/sdkwork-web-core" }
 sdkwork-web-axum = { path = "../sdkwork-web-framework/crates/sdkwork-web-axum" }
 sdkwork-utils-rust = { path = "../sdkwork-utils/packages/sdkwork-utils-rust" }
+sdkwork-sdk-generator-client = { path = "../sdkwork-sdk-generator/rust" }
 sdkwork-database-config = { path = "../sdkwork-database/crates/sdkwork-database-config", package = "sdkwork-database-config" }
 sdkwork-database-lifecycle = { path = "../sdkwork-database/crates/sdkwork-database-lifecycle", package = "sdkwork-database-lifecycle" }
 sdkwork-database-spi = { path = "../sdkwork-database/crates/sdkwork-database-spi", package = "sdkwork-database-spi" }

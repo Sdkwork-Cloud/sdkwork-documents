@@ -25,6 +25,18 @@ const HTTP_ROUTES: &[HttpRoute] = &[
         "documents",
         "documents.update",
     ),
+    HttpRoute::dual_token(
+        HttpMethod::Post,
+        "/app/v3/api/sdk_reference/archives",
+        "sdkReference",
+        "archives.create",
+    ),
+    HttpRoute::dual_token(
+        HttpMethod::Post,
+        "/app/v3/api/sdk_reference/documentation",
+        "sdkReference",
+        "documentation.create",
+    ),
 ];
 
 pub fn app_route_manifest() -> HttpRouteManifest {

@@ -526,6 +526,206 @@
         },
         "x-sdkwork-source-route-crate": "sdkwork-router-documents-app-api"
       }
+    },
+    "/app/v3/api/sdk_reference/archives": {
+      "post": {
+        "description": "Generates a downloadable SDK archive from the submitted OpenAPI document using the backend Rust SDK generator integration. Reads content_sdk_release. Writes content_sdk_release, ops_audit_log. File targets none.",
+        "operationId": "archives.create",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SdkReferenceArchiveGenerateRequest"
+              }
+            }
+          },
+          "description": "Typed request payload for generate sdk archive.",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArchivesCreateResult"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            },
+            "description": "Server Error"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "AccessToken": [],
+            "AuthToken": []
+          }
+        ],
+        "summary": "Generate SDK archive",
+        "tags": [
+          "sdkReference"
+        ],
+        "x-contract-kind": "create",
+        "x-file-targets": [],
+        "x-read-sources": [
+          "content_sdk_release"
+        ],
+        "x-route-scope": "public",
+        "x-sdk-domain": "sdkReference",
+        "x-sdkwork-domain": "sdkReference",
+        "x-sdkwork-resource": "archives",
+        "x-source-file": "crates/sdkwork-content-documents-sdk-reference/src/sdk_reference.rs",
+        "x-write-tables": [
+          "content_sdk_release",
+          "ops_audit_log"
+        ],
+        "x-sdkwork-owner": "sdkwork-documents",
+        "x-sdkwork-api-authority": "sdkwork-documents.app",
+        "x-sdkwork-request-context": "WebRequestContext",
+        "x-sdkwork-api-surface": "app-api",
+        "x-sdkwork-source-route-crate": "sdkwork-router-documents-app-api",
+        "x-sdkwork-sdk-family": "sdkwork-documents-app-sdk"
+      }
+    },
+    "/app/v3/api/sdk_reference/documentation": {
+      "post": {
+        "description": "Generates SDK README and code documentation from the submitted OpenAPI document using the backend Rust SDK generator integration. Reads content_sdk_release. Writes content_sdk_release, ops_audit_log. File targets none.",
+        "operationId": "documentation.create",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SdkReferenceDocumentationGenerateRequest"
+              }
+            }
+          },
+          "description": "Typed request payload for generate sdk reference documentation.",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentationCreateResult"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            },
+            "description": "Server Error"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            },
+            "description": "Error response."
+          }
+        },
+        "security": [
+          {
+            "AccessToken": [],
+            "AuthToken": []
+          }
+        ],
+        "summary": "Generate SDK reference documentation",
+        "tags": [
+          "sdkReference"
+        ],
+        "x-contract-kind": "create",
+        "x-file-targets": [],
+        "x-read-sources": [
+          "content_sdk_release"
+        ],
+        "x-route-scope": "public",
+        "x-sdk-domain": "sdkReference",
+        "x-sdkwork-domain": "sdkReference",
+        "x-sdkwork-resource": "documentation",
+        "x-source-file": "crates/sdkwork-content-documents-sdk-reference/src/sdk_reference.rs",
+        "x-write-tables": [
+          "content_sdk_release",
+          "ops_audit_log"
+        ],
+        "x-sdkwork-owner": "sdkwork-documents",
+        "x-sdkwork-api-authority": "sdkwork-documents.app",
+        "x-sdkwork-request-context": "WebRequestContext",
+        "x-sdkwork-api-surface": "app-api",
+        "x-sdkwork-source-route-crate": "sdkwork-router-documents-app-api",
+        "x-sdkwork-sdk-family": "sdkwork-documents-app-sdk"
+      }
     }
   },
   "components": {
@@ -651,6 +851,373 @@
             }
           }
         }
+      },
+      "SdkReferenceArchiveGenerateRequest": {
+        "additionalProperties": false,
+        "description": "Sdk reference archive generate request schema exposed by SDKWork Documents.",
+        "name": "SdkReferenceArchiveGenerateRequest",
+        "properties": {
+          "config": {
+            "additionalProperties": false,
+            "description": "Config field on sdk reference archive generate request.",
+            "properties": {
+              "apiPrefix": {
+                "description": "Api prefix field on sdk reference archive generate request.",
+                "maxLength": 256,
+                "type": "string"
+              },
+              "apiSpecPath": {
+                "description": "Api spec path field on sdk reference archive generate request.",
+                "maxLength": 512,
+                "type": "string"
+              },
+              "author": {
+                "description": "Author field on sdk reference archive generate request.",
+                "maxLength": 128,
+                "type": "string"
+              },
+              "baseUrl": {
+                "description": "Base url field on sdk reference archive generate request.",
+                "maxLength": 2048,
+                "minLength": 1,
+                "type": "string"
+              },
+              "description": {
+                "description": "Description field on sdk reference archive generate request.",
+                "maxLength": 512,
+                "type": "string"
+              },
+              "language": {
+                "description": "Language field on sdk reference archive generate request.",
+                "maxLength": 32,
+                "minLength": 1,
+                "type": "string"
+              },
+              "license": {
+                "description": "License field on sdk reference archive generate request.",
+                "maxLength": 64,
+                "type": "string"
+              },
+              "name": {
+                "description": "Name field on sdk reference archive generate request.",
+                "maxLength": 128,
+                "minLength": 1,
+                "type": "string"
+              },
+              "outputPath": {
+                "description": "Output path field on sdk reference archive generate request.",
+                "maxLength": 512,
+                "type": "string"
+              },
+              "packageName": {
+                "description": "Package name field on sdk reference archive generate request.",
+                "maxLength": 256,
+                "minLength": 1,
+                "type": "string"
+              },
+              "sdkType": {
+                "description": "Sdk type field on sdk reference archive generate request.",
+                "enum": [
+                  "app",
+                  "backend",
+                  "ai",
+                  "custom"
+                ],
+                "type": "string"
+              },
+              "version": {
+                "description": "Version field on sdk reference archive generate request.",
+                "maxLength": 64,
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "version",
+              "language",
+              "sdkType",
+              "baseUrl",
+              "apiPrefix",
+              "packageName"
+            ],
+            "type": "object"
+          },
+          "language": {
+            "description": "Language field on sdk reference archive generate request.",
+            "maxLength": 32,
+            "minLength": 1,
+            "type": "string"
+          },
+          "spec": {
+            "additionalProperties": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/JsonValue"
+                }
+              ],
+              "description": "Spec field on sdk reference archive generate request."
+            },
+            "description": "Spec field on sdk reference archive generate request.",
+            "type": "object"
+          }
+        },
+        "required": [
+          "spec",
+          "language",
+          "config"
+        ],
+        "type": "object"
+      },
+      "SdkReferenceArchiveResponse": {
+        "additionalProperties": false,
+        "description": "Sdk reference archive response schema exposed by SDKWork Documents.",
+        "name": "SdkReferenceArchiveResponse",
+        "properties": {
+          "contentBase64": {
+            "description": "Content base 64 field on sdk reference archive response.",
+            "maxLength": 52428800,
+            "minLength": 1,
+            "type": "string"
+          },
+          "contentType": {
+            "description": "Content type field on sdk reference archive response.",
+            "maxLength": 128,
+            "minLength": 1,
+            "type": "string"
+          },
+          "fileName": {
+            "description": "File name field on sdk reference archive response.",
+            "maxLength": 256,
+            "minLength": 1,
+            "type": "string"
+          },
+          "language": {
+            "description": "Language field on sdk reference archive response.",
+            "maxLength": 32,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "fileName",
+          "contentType",
+          "contentBase64",
+          "language"
+        ],
+        "type": "object"
+      },
+      "SdkReferenceDocumentationGenerateRequest": {
+        "additionalProperties": false,
+        "description": "Sdk reference documentation generate request schema exposed by SDKWork Documents.",
+        "name": "SdkReferenceDocumentationGenerateRequest",
+        "properties": {
+          "config": {
+            "additionalProperties": false,
+            "description": "Config field on sdk reference documentation generate request.",
+            "properties": {
+              "apiPrefix": {
+                "description": "Api prefix field on sdk reference documentation generate request.",
+                "maxLength": 256,
+                "type": "string"
+              },
+              "apiSpecPath": {
+                "description": "Api spec path field on sdk reference documentation generate request.",
+                "maxLength": 512,
+                "type": "string"
+              },
+              "author": {
+                "description": "Author field on sdk reference documentation generate request.",
+                "maxLength": 128,
+                "type": "string"
+              },
+              "baseUrl": {
+                "description": "Base url field on sdk reference documentation generate request.",
+                "maxLength": 2048,
+                "minLength": 1,
+                "type": "string"
+              },
+              "description": {
+                "description": "Description field on sdk reference documentation generate request.",
+                "maxLength": 512,
+                "type": "string"
+              },
+              "language": {
+                "description": "Language field on sdk reference documentation generate request.",
+                "maxLength": 32,
+                "minLength": 1,
+                "type": "string"
+              },
+              "license": {
+                "description": "License field on sdk reference documentation generate request.",
+                "maxLength": 64,
+                "type": "string"
+              },
+              "name": {
+                "description": "Name field on sdk reference documentation generate request.",
+                "maxLength": 128,
+                "minLength": 1,
+                "type": "string"
+              },
+              "outputPath": {
+                "description": "Output path field on sdk reference documentation generate request.",
+                "maxLength": 512,
+                "type": "string"
+              },
+              "packageName": {
+                "description": "Package name field on sdk reference documentation generate request.",
+                "maxLength": 256,
+                "minLength": 1,
+                "type": "string"
+              },
+              "sdkType": {
+                "description": "Sdk type field on sdk reference documentation generate request.",
+                "enum": [
+                  "app",
+                  "backend",
+                  "ai",
+                  "custom"
+                ],
+                "type": "string"
+              },
+              "version": {
+                "description": "Version field on sdk reference documentation generate request.",
+                "maxLength": 64,
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "version",
+              "language",
+              "sdkType",
+              "baseUrl",
+              "apiPrefix",
+              "packageName"
+            ],
+            "type": "object"
+          },
+          "language": {
+            "description": "Language field on sdk reference documentation generate request.",
+            "maxLength": 32,
+            "minLength": 1,
+            "type": "string"
+          },
+          "spec": {
+            "additionalProperties": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/JsonValue"
+                }
+              ],
+              "description": "Spec field on sdk reference documentation generate request."
+            },
+            "description": "Spec field on sdk reference documentation generate request.",
+            "type": "object"
+          }
+        },
+        "required": [
+          "spec",
+          "language",
+          "config"
+        ],
+        "type": "object"
+      },
+      "SdkReferenceDocumentationResponse": {
+        "additionalProperties": false,
+        "description": "Sdk reference documentation response schema exposed by SDKWork Documents.",
+        "name": "SdkReferenceDocumentationResponse",
+        "properties": {
+          "generated": {
+            "description": "Generated field on sdk reference documentation response.",
+            "type": "boolean"
+          },
+          "language": {
+            "description": "Language field on sdk reference documentation response.",
+            "maxLength": 32,
+            "minLength": 1,
+            "type": "string"
+          },
+          "methodDefinition": {
+            "description": "Method definition field on sdk reference documentation response.",
+            "maxLength": 262144,
+            "nullable": true,
+            "type": "string"
+          },
+          "readme": {
+            "description": "Readme field on sdk reference documentation response.",
+            "maxLength": 1048576,
+            "minLength": 1,
+            "type": "string"
+          },
+          "usageExample": {
+            "description": "Usage example field on sdk reference documentation response.",
+            "maxLength": 262144,
+            "nullable": true,
+            "type": "string"
+          }
+        },
+        "required": [
+          "readme",
+          "language",
+          "generated"
+        ],
+        "type": "object"
+      },
+      "ArchivesCreateResult": {
+        "additionalProperties": false,
+        "description": "Archives create result schema exposed by SDKWork Documents.",
+        "properties": {
+          "code": {
+            "description": "Business response code.",
+            "type": "string"
+          },
+          "data": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SdkReferenceArchiveResponse"
+              }
+            ],
+            "description": "Data field on archives create result."
+          },
+          "msg": {
+            "description": "Human-readable response message.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code"
+        ],
+        "type": "object",
+        "x-operation-id": "archives.create"
+      },
+      "DocumentationCreateResult": {
+        "additionalProperties": false,
+        "description": "Documentation create result schema exposed by SDKWork Documents.",
+        "properties": {
+          "code": {
+            "description": "Business response code.",
+            "type": "string"
+          },
+          "data": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SdkReferenceDocumentationResponse"
+              }
+            ],
+            "description": "Data field on documentation create result."
+          },
+          "msg": {
+            "description": "Human-readable response message.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code"
+        ],
+        "type": "object",
+        "x-operation-id": "documentation.create"
       }
     }
   },

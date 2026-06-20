@@ -1,0 +1,22 @@
+{
+  "name": "@sdkwork/documents-pc-i18n",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "SDKWork Documents PC i18n catalogs for reference modules.",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "types": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "~5.8.2"
+  }
+}

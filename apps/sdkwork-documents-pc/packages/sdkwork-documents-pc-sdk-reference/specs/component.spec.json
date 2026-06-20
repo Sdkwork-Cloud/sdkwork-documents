@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "kind": "sdkwork.component.spec",
+  "component": {
+    "name": "sdkwork-documents-pc-sdk-reference",
+    "displayName": "SDKWork Documents PC SDK Reference",
+    "version": "0.1.0",
+    "type": "node-package",
+    "root": "sdkwork-documents/apps/sdkwork-documents-pc/packages/sdkwork-documents-pc-sdk-reference",
+    "domain": "content",
+    "capability": "documents",
+    "status": "standardizing",
+    "languages": ["typescript"],
+    "generated": false,
+    "private": true,
+    "manifests": ["package.json"]
+  },
+  "contracts": {
+    "publicExports": ["."],
+    "runtimeEntrypoints": ["package.json#scripts.typecheck"],
+    "sdkClients": ["@sdkwork/documents-app-sdk"],
+    "events": [],
+    "configKeys": [],
+    "routeManifest": null
+  },
+  "verification": {
+    "commands": ["pnpm --filter @sdkwork/documents-pc-sdk-reference typecheck"]
+  },
+  "metadata": {
+    "managedBy": "sdkwork-documents",
+    "standardVersion": "2026-06-20"
+  }
+}

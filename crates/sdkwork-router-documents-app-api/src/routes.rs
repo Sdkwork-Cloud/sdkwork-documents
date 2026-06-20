@@ -17,7 +17,7 @@ where
 }
 
 pub fn build_router_with_shared_app_api(api: Arc<dyn DocumentsAppApi>) -> Router {
-    Router::new()
+    let documents_router = Router::new()
         .route(paths::HEALTHZ, get(handlers::health))
         .route(
             paths::DOCUMENTS,
@@ -27,5 +27,7 @@ pub fn build_router_with_shared_app_api(api: Arc<dyn DocumentsAppApi>) -> Router
             paths::DOCUMENT,
             get(handlers::retrieve_document).patch(handlers::update_document),
         )
-        .with_state(AppState { api })
+        .with_state(AppState { api });
+
+    documents_router.merge(sdkwork_content_documents_sdk_reference::app_sdk_reference_router())
 }

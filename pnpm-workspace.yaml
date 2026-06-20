@@ -1,0 +1,6 @@
+packages:
+  - apps/sdkwork-documents-pc
+  - apps/sdkwork-documents-pc/packages/*
+  - sdks/sdkwork-documents-app-sdk/sdkwork-documents-app-sdk-typescript
+  - sdks/sdkwork-documents-backend-sdk/sdkwork-documents-backend-sdk-typescript
+  - sdks/sdkwork-documents-sdk/sdkwork-documents-sdk-typescript

@@ -1,0 +1,40 @@
+{
+  "name": "@sdkwork/documents-pc-sdk-reference",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "SDKWork Documents PC SDK reference browser and archive generation UI.",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "types": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@sdkwork/documents-pc-api-reference": "workspace:*",
+    "@sdkwork/documents-pc-commons": "workspace:*",
+    "lucide-react": "^0.511.0",
+    "motion": "^12.38.0",
+    "react": "^19.1.0",
+    "react-i18next": "^15.5.2"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "~5.8.2"
+  },
+  "sdkwork": {
+    "workspace": "sdkwork-documents",
+    "architecture": "pc-react",
+    "domain": "content",
+    "capability": "sdk-reference",
+    "surface": "pc-feature",
+    "status": "ready"
+  }
+}
