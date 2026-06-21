@@ -23,6 +23,9 @@
       "sdkwork-documents-open-api",
       "sdkwork-documents.app",
       "sdkwork-documents.backend"
+    ],
+    "accessTokenPermissionScope": [
+      "iam.users.read"
     ]
   },
   "runtime": {
@@ -30,7 +33,10 @@
     "framework": "rust-service",
     "defaultPlatform": "API",
     "defaultArchitecture": "x64",
-    "supportedDeploymentProfiles": ["cloud", "standalone"],
+    "supportedDeploymentProfiles": [
+      "cloud",
+      "standalone"
+    ],
     "defaultDeploymentProfile": "cloud"
   },
   "media": {
@@ -54,8 +60,12 @@
   },
   "publish": {
     "status": "INTERNAL",
-    "platforms": ["API"],
-    "installPlatforms": ["API"],
+    "platforms": [
+      "API"
+    ],
+    "installPlatforms": [
+      "API"
+    ],
     "stores": [],
     "config": {
       "workspaceRoot": ".",
@@ -106,7 +116,9 @@
         "version": "0.1.0",
         "channel": "DEV",
         "current": true,
-        "packageIds": ["container-x64-cloud-container-oci"],
+        "packageIds": [
+          "container-x64-cloud-container-oci"
+        ],
         "notes": "Initial Documents HTTP service skeleton."
       }
     ]
