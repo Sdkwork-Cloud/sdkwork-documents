@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChevronRight, Layers, Zap, BarChart3, ShieldCheck, Network, Briefcase } from 'lucide-react';
+import { documentsShellLayout, getDocumentsShellScrollOffsetPx } from '@sdkwork/documents-pc-commons';
 
 export function ProductDocs() {
   const { t } = useTranslation();
@@ -29,16 +30,16 @@ export function ProductDocs() {
     const element = document.getElementById(id);
     if (element) {
       window.scrollTo({
-        top: element.offsetTop - 80,
+        top: element.offsetTop - getDocumentsShellScrollOffsetPx(),
         behavior: 'smooth'
       });
     }
   };
 
   return (
-    <div className="flex w-full min-h-screen pt-[56px] mx-auto bg-white dark:bg-[#0a0a0a]">
+    <div className={documentsShellLayout.pageRoot}>
       {/* Left Sidebar */}
-      <aside className="w-64 shrink-0 border-r border-slate-200 dark:border-white/10 hidden md:block overflow-y-auto sticky top-[56px] h-[calc(100vh-56px)] py-8 px-6 custom-scrollbar">
+      <aside className={`w-64 shrink-0 border-r border-slate-200 dark:border-white/10 hidden md:block py-8 px-6 custom-scrollbar ${documentsShellLayout.stickySidebar}`}>
         <nav className="space-y-8">
           <div>
             <h3 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-3">{t('productDocs.title')}</h3>
@@ -64,7 +65,7 @@ export function ProductDocs() {
             <span className="text-slate-900 dark:text-white font-medium">{t('productDocs.overview')}</span>
           </div>
 
-          <div id="overview" className="mb-16 scroll-mt-24">
+          <div id="overview" className={`mb-16 ${documentsShellLayout.scrollMarginSection}`}>
             <h1 className="text-4xl font-bold text-slate-900 dark:text-white mb-6 tracking-tight">
               {t('productDocs.title')}
             </h1>
@@ -79,7 +80,7 @@ export function ProductDocs() {
             </div>
           </div>
 
-          <div id="core-features" className="mb-16 scroll-mt-24">
+          <div id="core-features" className={`mb-16 ${documentsShellLayout.scrollMarginSection}`}>
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2 border-b border-slate-200 dark:border-white/10 pb-4">
               <Zap className="w-6 h-6 text-yellow-500" />
               {t('productDocs.coreFeatures')}
@@ -113,7 +114,7 @@ export function ProductDocs() {
             </div>
           </div>
 
-          <div id="architecture" className="mb-16 scroll-mt-24">
+          <div id="architecture" className={`mb-16 ${documentsShellLayout.scrollMarginSection}`}>
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2 border-b border-slate-200 dark:border-white/10 pb-4">
               <Network className="w-6 h-6 text-indigo-500" />
               {t('productDocs.architecture')}
@@ -152,7 +153,7 @@ export function ProductDocs() {
             </div>
           </div>
 
-          <div id="use-cases" className="mb-16 scroll-mt-24">
+          <div id="use-cases" className={`mb-16 ${documentsShellLayout.scrollMarginSection}`}>
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2 border-b border-slate-200 dark:border-white/10 pb-4">
               <Briefcase className="w-6 h-6 text-teal-500" />
               {t('productDocs.useCases')}
@@ -173,7 +174,7 @@ export function ProductDocs() {
             </div>
           </div>
 
-          <div id="security" className="mb-16 scroll-mt-24">
+          <div id="security" className={`mb-16 ${documentsShellLayout.scrollMarginSection}`}>
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2 border-b border-slate-200 dark:border-white/10 pb-4">
               <ShieldCheck className="w-6 h-6 text-green-500" />
               {t('productDocs.security')}
@@ -202,7 +203,7 @@ export function ProductDocs() {
       </main>
 
       {/* Right Sidebar (Table of Contents) */}
-      <aside className="w-64 shrink-0 hidden xl:block overflow-y-auto sticky top-[56px] h-[calc(100vh-56px)] py-12 px-6">
+      <aside className={`w-64 shrink-0 hidden xl:block py-12 px-6 ${documentsShellLayout.stickySidebar}`}>
         <h4 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-4">On this page</h4>
         <ul className="space-y-2.5 text-[13px]">
           <li>

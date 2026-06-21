@@ -4,6 +4,7 @@ import { registerDocumentsReferenceRuntime } from './documents-sdk-client.ts';
 
 export const APP_API_PREFIX = '/app/v3/api';
 export const BACKEND_API_PREFIX = '/backend/v3/api';
+export const DOCUMENTS_OPEN_API_PREFIX = '/doc/v3/api';
 export const OPEN_API_PREFIX = '/v1';
 export const CLOUD_API_PREFIX = '/cloud/v3/api';
 

@@ -22,11 +22,19 @@ pnpm topology:validate
 
 ## Local URLs
 
+### Default dev profile (`standalone.unified-process.development`)
+
 | Surface | URL |
 | --- | --- |
 | `application.public-ingress` | http://127.0.0.1:18084 |
-| `application.backend-http` | http://127.0.0.1:18084 |
-| `application.open-http` | http://127.0.0.1:18084 |
+
+### Cloud split-services dev profile (`cloud.split-services.development`)
+
+| Surface | URL |
+| --- | --- |
+| `application.public-ingress` | http://127.0.0.1:18084 |
+| `application.backend-http` | http://127.0.0.1:18085 |
+| `application.open-http` | http://127.0.0.1:18086 |
 | `platform.api-gateway` | http://127.0.0.1:3900 |
 
 Client env keys:

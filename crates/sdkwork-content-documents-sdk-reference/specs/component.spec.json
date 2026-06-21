@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "kind": "sdkwork.component.spec",
+  "component": {
+    "name": "sdkwork-content-documents-sdk-reference",
+    "displayName": "SDKWork Content Documents SDK Reference",
+    "version": "0.1.0",
+    "type": "rust-crate",
+    "root": "sdkwork-documents/crates/sdkwork-content-documents-sdk-reference",
+    "domain": "content",
+    "capability": "documents",
+    "surface": "backend-service",
+    "languages": ["rust"],
+    "generated": false,
+    "manifests": ["Cargo.toml"]
+  },
+  "canonicalSpecs": [
+    { "file": "COMPONENT_SPEC.md", "path": "../../../sdkwork-specs/COMPONENT_SPEC.md" },
+    { "file": "API_SPEC.md", "path": "../../../sdkwork-specs/API_SPEC.md" },
+    { "file": "SDK_SPEC.md", "path": "../../../sdkwork-specs/SDK_SPEC.md" },
+    { "file": "RUST_CODE_SPEC.md", "path": "../../../sdkwork-specs/RUST_CODE_SPEC.md" },
+    { "file": "TEST_SPEC.md", "path": "../../../sdkwork-specs/TEST_SPEC.md" }
+  ],
+  "contracts": {
+    "publicExports": ["app_sdk_reference_router", "app_sdk_reference_router_with_json_body_limit"],
+    "runtimeEntrypoints": ["app_sdk_reference_router"],
+    "sdkClients": [],
+    "sdkDependencies": [
+      { "workspace": "sdkwork-utils", "role": "cross-language-utility-runtime" },
+      { "workspace": "sdkwork-sdk-generator", "role": "sdk-generation-tooling" }
+    ],
+    "apiAuthorities": ["sdkwork-documents.app"],
+    "events": [],
+    "configKeys": [
+      "SDKWORK_DOCUMENTS_SDK_GENERATOR_BASE_URL",
+      "SDKWORK_DOCUMENTS_SDK_GENERATOR_API_KEY",
+      "SDKWORK_DOCUMENTS_SDK_GENERATOR_API_KEY_FILE"
+    ]
+  },
+  "verification": {
+    "commands": ["cargo test -p sdkwork-content-documents-sdk-reference"]
+  }
+}

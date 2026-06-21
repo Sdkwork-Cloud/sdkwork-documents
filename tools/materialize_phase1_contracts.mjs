@@ -1108,7 +1108,13 @@ writeJson("database/seeds/seed.manifest.json", {
     },
   },
 });
-writeText("database/seeds/common/001_bootstrap.sql", "-- documents seed placeholder\n");
+writeText(
+  "database/seeds/common/001_bootstrap.sql",
+  `-- sdkwork-documents standard bootstrap seed
+-- Tenant-scoped documents data is created at runtime; this seed keeps the profile non-empty.
+SELECT 1;
+`,
+);
 writeText("database/drift/policy.yaml", "drift_policy_version: 1\nmode: observe\n");
 
 writeText(

@@ -2,24 +2,26 @@
 
 use sdkwork_database_config::{DatabaseConfig, DatabaseEngine};
 use sdkwork_database_sqlx::{create_pool_from_config, DatabasePool, PoolError};
+use sdkwork_utils_rust::trim;
 
 const DOCUMENTS_POOL_MAX_CONNECTIONS: u32 = 5;
 
 pub fn database_config_from_url(database_url: &str) -> Result<DatabaseConfig, PoolError> {
-    let normalized = database_url.trim();
-    let engine = DatabaseEngine::from_url(normalized).ok_or_else(|| {
+    let normalized = trim(database_url);
+    let engine = DatabaseEngine::from_url(&normalized).ok_or_else(|| {
         PoolError::InvalidUrl(format!("unsupported documents database url: {normalized}"))
     })?;
+    let max_connections = max_connections_for_url(engine, &normalized);
     Ok(DatabaseConfig {
         engine,
-        url: normalized.to_string(),
-        max_connections: max_connections_for_url(engine, normalized),
+        url: normalized,
+        max_connections,
         ..DatabaseConfig::default()
     })
 }
 
 fn max_connections_for_url(engine: DatabaseEngine, database_url: &str) -> u32 {
-    if engine == DatabaseEngine::Sqlite && database_url.trim() == "sqlite::memory:" {
+    if engine == DatabaseEngine::Sqlite && trim(database_url) == "sqlite::memory:" {
         return 1;
     }
     DOCUMENTS_POOL_MAX_CONNECTIONS

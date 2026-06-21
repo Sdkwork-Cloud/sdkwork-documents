@@ -1,0 +1,53 @@
+/*
+ * Documents shell layout offsets for host apps with a fixed portal navbar.
+ * Host apps should define:
+ *   --sdkwork-portal-navbar-height (default 4rem)
+ *   --sdkwork-documents-subheader-height (default 3.375rem)
+ */
+
+.sdkwork-documents-shell-page-root {
+  padding-top: var(--sdkwork-portal-navbar-height, 4rem);
+}
+
+.sdkwork-documents-shell-sticky-sidebar {
+  position: sticky;
+  top: var(--sdkwork-portal-navbar-height, 4rem);
+  height: calc(100vh - var(--sdkwork-portal-navbar-height, 4rem));
+  overflow-y: auto;
+}
+
+.sdkwork-documents-shell-sticky-subheader {
+  position: sticky;
+  top: var(--sdkwork-portal-navbar-height, 4rem);
+}
+
+.sdkwork-documents-shell-sticky-sidebar-below-subheader {
+  position: sticky;
+  top: calc(var(--sdkwork-portal-navbar-height, 4rem) + var(--sdkwork-documents-subheader-height, 3.375rem));
+  height: calc(100vh - var(--sdkwork-portal-navbar-height, 4rem) - var(--sdkwork-documents-subheader-height, 3.375rem));
+}
+
+@media (min-width: 768px) {
+  .sdkwork-documents-shell-sticky-sidebar-below-subheader-md {
+    position: sticky;
+    top: calc(var(--sdkwork-portal-navbar-height, 4rem) + var(--sdkwork-documents-subheader-height, 3.375rem));
+    height: calc(100vh - var(--sdkwork-portal-navbar-height, 4rem) - var(--sdkwork-documents-subheader-height, 3.375rem));
+  }
+}
+
+.sdkwork-documents-shell-sticky-below-subheader {
+  position: sticky;
+  top: calc(var(--sdkwork-portal-navbar-height, 4rem) + var(--sdkwork-documents-subheader-height, 3.375rem));
+}
+
+.sdkwork-documents-shell-scroll-section {
+  scroll-margin-top: calc(var(--sdkwork-portal-navbar-height, 4rem) + 1.5rem);
+}
+
+@media (min-width: 1280px) {
+  .sdkwork-documents-shell-endpoint-aside {
+    position: sticky;
+    top: calc(var(--sdkwork-portal-navbar-height, 4rem) + var(--sdkwork-documents-subheader-height, 3.375rem));
+    align-self: start;
+  }
+}

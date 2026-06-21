@@ -127,13 +127,13 @@
           {
             "id": "application.backend-http",
             "crate": "sdkwork-documents-api-server",
-            "binary": "sdkwork-documents-app-api",
+            "binary": "sdkwork-documents-backend-api",
             "required": true
           },
           {
             "id": "application.open-http",
             "crate": "sdkwork-documents-api-server",
-            "binary": "sdkwork-documents-app-api",
+            "binary": "sdkwork-documents-open-api",
             "required": true
           }
         ],

@@ -291,6 +291,12 @@ assert(
   "service crate must depend on sdkwork-utils-rust for shared utility helpers",
 );
 
+const sdkReferenceToml = readText("crates/sdkwork-content-documents-sdk-reference/Cargo.toml");
+assert(
+  sdkReferenceToml.includes("sdkwork-utils-rust"),
+  "sdk-reference crate must depend on sdkwork-utils-rust for shared env normalization helpers",
+);
+
 const componentSpec = readJson("specs/component.spec.json");
 const rootRuntimeEntrypoints = componentSpec.contracts?.runtimeEntrypoints ?? [];
 for (const entrypoint of [
@@ -360,6 +366,46 @@ assert(
   "scripts/documents-dev.mjs must exist",
 );
 assert(fs.existsSync(path.join(repoRoot, ".env.example")), ".env.example must exist");
+const rootEnvExample = readText(".env.example");
+assert(
+  !/\bPORT=/.test(rootEnvExample),
+  ".env.example must not use retired PORT; use SDKWORK_DOCUMENTS_APPLICATION_PUBLIC_INGRESS_BIND",
+);
+assert(
+  rootEnvExample.includes("SDKWORK_DOCUMENTS_APPLICATION_PUBLIC_INGRESS_BIND"),
+  ".env.example must declare SDKWORK_DOCUMENTS_APPLICATION_PUBLIC_INGRESS_BIND",
+);
+
+const pcEnvExamplePath = "apps/sdkwork-documents-pc/.env.example";
+assert(
+  fs.existsSync(path.join(repoRoot, pcEnvExamplePath)),
+  `${pcEnvExamplePath} must exist per APP_PC_ARCHITECTURE_SPEC.md`,
+);
+const pcEnvExample = readText(pcEnvExamplePath);
+for (const key of [
+  "VITE_SDKWORK_DOCUMENTS_DEPLOYMENT_PROFILE",
+  "VITE_SDKWORK_DOCUMENTS_APPLICATION_PUBLIC_HTTP_URL",
+  "VITE_SDKWORK_DOCUMENTS_PLATFORM_API_GATEWAY_HTTP_URL",
+]) {
+  assert(pcEnvExample.includes(key), `${pcEnvExamplePath} must declare ${key}`);
+}
+
+for (const packageDir of [
+  "apps/sdkwork-documents-pc/packages/sdkwork-documents-pc-commons",
+  "apps/sdkwork-documents-pc/packages/sdkwork-documents-pc-i18n",
+  "apps/sdkwork-documents-pc/packages/sdkwork-documents-pc-api-reference",
+  "apps/sdkwork-documents-pc/packages/sdkwork-documents-pc-sdk-reference",
+]) {
+  assert(
+    fs.existsSync(path.join(repoRoot, packageDir, "package.json")),
+    `${packageDir}/package.json must exist`,
+  );
+  assert(
+    fs.existsSync(path.join(repoRoot, packageDir, "specs/component.spec.json")),
+    `${packageDir}/specs/component.spec.json must exist per COMPONENT_SPEC.md`,
+  );
+}
+
 assert(
   fs.existsSync(path.join(repoRoot, "apps/sdkwork-documents-pc/AGENTS.md")),
   "apps/sdkwork-documents-pc/AGENTS.md must exist per SDKWORK_WORKSPACE_SPEC.md",
@@ -475,12 +521,68 @@ const crateComponentSpecs = [
   "crates/sdkwork-documents-contract/specs/component.spec.json",
   "crates/sdkwork-content-documents-service/specs/component.spec.json",
   "crates/sdkwork-content-documents-repository-sqlx/specs/component.spec.json",
+  "crates/sdkwork-content-documents-sdk-reference/specs/component.spec.json",
   "crates/sdkwork-documents-database-host/specs/component.spec.json",
   "crates/sdkwork-documents-api-server/specs/component.spec.json",
   "crates/sdkwork-documents-observability/specs/component.spec.json",
 ];
 for (const relativePath of crateComponentSpecs) {
   assert(fs.existsSync(path.join(repoRoot, relativePath)), `${relativePath} must exist`);
+}
+
+assert(
+  packageJson.scripts?.verify?.includes("topology:validate"),
+  "package.json verify must run topology:validate",
+);
+assert(
+  packageJson.scripts?.verify?.includes("test:topology"),
+  "package.json verify must run test:topology",
+);
+assert(
+  packageJson.scripts?.verify?.includes("clean-generated-sdk-artifacts.mjs"),
+  "package.json verify must clean generated SDK build artifacts before verification",
+);
+
+const apiPrefixesSource = readText("crates/sdkwork-content-documents-sdk-reference/src/api_prefixes.rs");
+for (const [constant, prefix] of [
+  ["APP_API_PREFIX", "/app/v3/api"],
+  ["BACKEND_API_PREFIX", "/backend/v3/api"],
+  ["DOCUMENTS_OPEN_API_PREFIX", "/doc/v3/api"],
+]) {
+  assert(
+    apiPrefixesSource.includes(`${constant}: &str = "${prefix}"`),
+    `api_prefixes.rs must declare ${constant} = ${prefix}`,
+  );
+}
+
+assert(
+  fs.existsSync(path.join(repoRoot, "tools/clean-generated-sdk-artifacts.mjs")),
+  "tools/clean-generated-sdk-artifacts.mjs must exist",
+);
+
+assert(
+  readText("apps/sdkwork-documents-pc/packages/sdkwork-documents-pc-commons/src/documents-reference-runtime.tsx").includes(
+    'export const DOCUMENTS_OPEN_API_PREFIX = \'/doc/v3/api\'',
+  ),
+  "PC commons must export DOCUMENTS_OPEN_API_PREFIX aligned with sdkwork-documents-open-api",
+);
+
+const topologyOrchestration =
+  topologySpec.orchestration?.profiles?.["cloud.split-services.development"]?.processes ?? [];
+const topologyComponents = topologySpec.components ?? {};
+for (const [surfaceId, componentKey] of [
+  ["application.public-ingress", "appApiRouter"],
+  ["application.backend-http", "backendApiRouter"],
+  ["application.open-http", "openApiRouter"],
+]) {
+  const expectedBinary = topologyComponents[componentKey]?.binary;
+  const processDef = topologyOrchestration.find((entry) => entry.id === surfaceId);
+  assert(expectedBinary, `topology components.${componentKey}.binary must be declared`);
+  assert(processDef, `topology orchestration must declare process ${surfaceId}`);
+  assert(
+    processDef.binary === expectedBinary,
+    `topology orchestration ${surfaceId} must launch ${expectedBinary}`,
+  );
 }
 
 if (failures.length > 0) {

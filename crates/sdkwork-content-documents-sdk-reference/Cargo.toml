@@ -10,6 +10,7 @@ base64 = "0.22"
 serde.workspace = true
 serde_json.workspace = true
 sdkwork-sdk-generator-client.workspace = true
+sdkwork-utils-rust.workspace = true
 
 [dev-dependencies]
 serde_json.workspace = true

@@ -4,7 +4,7 @@ use sdkwork_documents_contract::{
     Document, DocumentUpdateRequest, DocumentsRepository, DocumentsServiceError,
     DocumentsServiceResult,
 };
-use sdkwork_utils_rust::is_uuid;
+use sdkwork_utils_rust::{is_uuid, trim};
 
 pub struct DocumentsSqlxRepository {
     pool: DatabasePool,
@@ -25,7 +25,7 @@ impl DocumentsSqlxRepository {
                 "invalid document id: {document_id}"
             )));
         }
-        uuid::Uuid::parse_str(document_id.trim())
+        uuid::Uuid::parse_str(trim(document_id).as_str())
             .map_err(|error| DocumentsServiceError::Validation(error.to_string()))
     }
 }

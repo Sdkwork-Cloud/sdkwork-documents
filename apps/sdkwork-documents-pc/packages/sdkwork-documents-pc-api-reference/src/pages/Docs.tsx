@@ -2,6 +2,7 @@ import React, { useMemo, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChevronRight, Terminal, BookOpen, Key, Zap, Cpu } from 'lucide-react';
 import { useDocumentsReferenceRuntime } from '@sdkwork/documents-pc-commons/runtime';
+import { documentsShellLayout, getDocumentsShellScrollOffsetPx } from '@sdkwork/documents-pc-commons';
 
 const NODE_ENV_REFERENCE = 'process' + '.env';
 const API_KEY_ENV_NAME = 'SDKWORK_API_KEY';
@@ -60,15 +61,15 @@ main();`;
     const element = document.getElementById(id);
     if (element) {
       window.scrollTo({
-        top: element.offsetTop - 80,
+        top: element.offsetTop - getDocumentsShellScrollOffsetPx(),
         behavior: 'smooth',
       });
     }
   };
 
   return (
-    <div className="flex w-full min-h-screen pt-[56px] mx-auto bg-white dark:bg-[#0a0a0a]">
-      <aside className="w-64 shrink-0 border-r border-slate-200 dark:border-white/10 hidden md:block overflow-y-auto sticky top-[56px] h-[calc(100vh-56px)] py-8 px-6 custom-scrollbar">
+    <div className={documentsShellLayout.pageRoot}>
+      <aside className={`w-64 shrink-0 border-r border-slate-200 dark:border-white/10 hidden md:block py-8 px-6 custom-scrollbar ${documentsShellLayout.stickySidebar}`}>
         <nav className="space-y-8">
           <div>
             <h3 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-3">{t('docs.gettingStarted')}</h3>
@@ -240,7 +241,7 @@ main();`;
         </div>
       </main>
 
-      <aside className="w-64 shrink-0 hidden xl:block overflow-y-auto sticky top-[56px] h-[calc(100vh-56px)] py-12 px-6">
+      <aside className={`w-64 shrink-0 hidden xl:block py-12 px-6 ${documentsShellLayout.stickySidebar}`}>
         <h4 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-4">{t('docs.page.onThisPage')}</h4>
         <ul className="space-y-2.5 text-[13px]">
           <li>

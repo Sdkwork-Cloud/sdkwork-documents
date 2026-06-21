@@ -84,9 +84,34 @@ test("documents dev orchestrator loads topology profile env", async () => {
   assert.match(devScript, /resolveCloudGatewayConfigPath/);
   assert.match(devScript, /SDKWORK_DOCUMENTS_DEPLOYMENT_PROFILE/);
   assert.match(devScript, /SDKWORK_DOCUMENTS_SERVICE_LAYOUT/);
-  assert.match(devScript, /sdkwork-documents-app-api/);
+  assert.match(devScript, /DEFAULT_API_SERVER_CRATE/);
+  assert.match(devScript, /processDef\.binary/);
   assert.doesNotMatch(devScript, /--hosting/);
   assert.doesNotMatch(devScript, /self-hosted|cloud-hosted/);
+});
+
+test("cloud split-services orchestration maps each HTTP surface to its canonical binary", async () => {
+  const spec = await readJson("specs/topology.spec.json");
+  const components = spec.components ?? {};
+  const processes =
+    spec.orchestration?.profiles?.["cloud.split-services.development"]?.processes ?? [];
+
+  const expectedBySurface = {
+    "application.public-ingress": components.appApiRouter?.binary,
+    "application.backend-http": components.backendApiRouter?.binary,
+    "application.open-http": components.openApiRouter?.binary,
+  };
+
+  for (const [surfaceId, expectedBinary] of Object.entries(expectedBySurface)) {
+    assert.equal(typeof expectedBinary, "string", `${surfaceId} component binary must be declared`);
+    const processDef = processes.find((entry) => entry.id === surfaceId);
+    assert.ok(processDef, `${surfaceId} must be declared in cloud split-services orchestration`);
+    assert.equal(
+      processDef.binary,
+      expectedBinary,
+      `${surfaceId} must launch ${expectedBinary}`,
+    );
+  }
 });
 
 test("api authority materializer and patch scripts exist", async () => {

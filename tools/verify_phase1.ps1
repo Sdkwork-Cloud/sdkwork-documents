@@ -1,5 +1,20 @@
 $ErrorActionPreference = "Stop"
 
+function Remove-GeneratedSdkBuildArtifacts {
+    param(
+        [Parameter(Mandatory = $true)][string[]]$SdkRoots
+    )
+
+    foreach ($sdkRoot in $SdkRoots) {
+        foreach ($artifactName in @("node_modules", "dist", "package-lock.json")) {
+            $artifactPath = Join-Path $sdkRoot $artifactName
+            if (Test-Path $artifactPath) {
+                Remove-Item -LiteralPath $artifactPath -Recurse -Force
+            }
+        }
+    }
+}
+
 function Invoke-Checked {
     param(
         [Parameter(Mandatory = $true)][string]$FilePath,
@@ -151,6 +166,8 @@ $requiredGeneratedSdkRoots = @(
     "sdks/sdkwork-documents-backend-sdk/sdkwork-documents-backend-sdk-typescript/generated/server-openapi"
 )
 
+Remove-GeneratedSdkBuildArtifacts -SdkRoots $requiredGeneratedSdkRoots
+
 $requiredGeneratedSdkFiles = @(
     "sdkwork-sdk.json",
     "package.json",
@@ -215,6 +232,7 @@ $packages = @(
     "sdkwork-documents-database-host",
     "sdkwork-content-documents-service",
     "sdkwork-content-documents-repository-sqlx",
+    "sdkwork-content-documents-sdk-reference",
     "sdkwork-router-documents-app-api",
     "sdkwork-router-documents-backend-api",
     "sdkwork-router-documents-open-api",

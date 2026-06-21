@@ -1,5 +1,7 @@
 use std::time::Duration;
 
+use crate::api_prefixes::{APP_API_PREFIX, BACKEND_API_PREFIX, OPENAI_V1_API_PREFIX};
+use crate::config::{config_secret_value, env_optional};
 use axum::extract::DefaultBodyLimit;
 use axum::http::StatusCode;
 use axum::response::{IntoResponse, Response};
@@ -7,8 +9,6 @@ use axum::routing::post;
 use axum::{Json, Router};
 use base64::engine::general_purpose::STANDARD as BASE64_STANDARD;
 use base64::Engine as _;
-use crate::config::{config_secret_value, env_optional};
-use crate::api_prefixes::{APP_API_PREFIX, BACKEND_API_PREFIX, OPENAI_V1_API_PREFIX};
 use sdkwork_sdk_generator::{
     GenerateFromFileRequest, GeneratedPackage, GeneratedPackageFormat, SdkGeneratorClient,
     SdkLanguage, SdkType,
@@ -20,10 +20,14 @@ use crate::response::PlusApiResult;
 
 const SDKWORK_DOCUMENTS_SDK_GENERATOR_BASE_URL: &str = "SDKWORK_DOCUMENTS_SDK_GENERATOR_BASE_URL";
 const SDKWORK_DOCUMENTS_SDK_GENERATOR_API_KEY: &str = "SDKWORK_DOCUMENTS_SDK_GENERATOR_API_KEY";
-const SDKWORK_DOCUMENTS_SDK_GENERATOR_API_KEY_FILE: &str = "SDKWORK_DOCUMENTS_SDK_GENERATOR_API_KEY_FILE";
-const LEGACY_SDKWORK_DOCUMENTS_SDK_GENERATOR_BASE_URL: &str = "PORTAL_TOOL_API_SDK_GENERATOR_BASE_URL";
-const LEGACY_SDKWORK_DOCUMENTS_SDK_GENERATOR_API_KEY: &str = "PORTAL_TOOL_API_SDK_GENERATOR_API_KEY";
-const LEGACY_SDKWORK_DOCUMENTS_SDK_GENERATOR_API_KEY_FILE: &str = "PORTAL_TOOL_API_SDK_GENERATOR_API_KEY_FILE";
+const SDKWORK_DOCUMENTS_SDK_GENERATOR_API_KEY_FILE: &str =
+    "SDKWORK_DOCUMENTS_SDK_GENERATOR_API_KEY_FILE";
+const LEGACY_SDKWORK_DOCUMENTS_SDK_GENERATOR_BASE_URL: &str =
+    "PORTAL_TOOL_API_SDK_GENERATOR_BASE_URL";
+const LEGACY_SDKWORK_DOCUMENTS_SDK_GENERATOR_API_KEY: &str =
+    "PORTAL_TOOL_API_SDK_GENERATOR_API_KEY";
+const LEGACY_SDKWORK_DOCUMENTS_SDK_GENERATOR_API_KEY_FILE: &str =
+    "PORTAL_TOOL_API_SDK_GENERATOR_API_KEY_FILE";
 const DEFAULT_SDK_NAME: &str = "SdkworkClient";
 const DEFAULT_SDK_VERSION: &str = "0.1.0";
 const DEFAULT_SDK_BASE_URL: &str = "https://api.sdkwork.com";
@@ -745,8 +749,6 @@ fn safe_archive_slug(value: &str) -> Option<String> {
         .map(|character| {
             if character.is_ascii_alphanumeric() {
                 character.to_ascii_lowercase()
-            } else if matches!(character, '-' | '_' | '/' | '.') {
-                '-'
             } else {
                 '-'
             }
@@ -874,6 +876,7 @@ struct SdkOperationSurface {
     class_base_name: String,
 }
 
+#[allow(clippy::too_many_arguments)]
 fn sdk_method_definition(
     operation: &SdkReferenceOperationDoc,
     language: &str,
@@ -1223,6 +1226,7 @@ fn sdk_method_definition(
     lines.join("\n")
 }
 
+#[allow(clippy::too_many_arguments)]
 fn sdk_usage_example(
     request: &NormalizedSdkReferenceRequest,
     operation: &SdkReferenceOperationDoc,
@@ -2843,6 +2847,7 @@ fn parameter_sdk_name(name: &str, language: &str) -> String {
     format_property_name(name, language)
 }
 
+#[allow(clippy::too_many_arguments)]
 fn sdk_signature(
     language: &str,
     method_name: &str,

@@ -238,6 +238,7 @@ $expectedPackages = @(
     "sdkwork-documents-database-host",
     "sdkwork-content-documents-service",
     "sdkwork-content-documents-repository-sqlx",
+    "sdkwork-content-documents-sdk-reference",
     "sdkwork-documents-api-server",
     "sdkwork-documents-observability",
     "sdkwork-router-documents-open-api",

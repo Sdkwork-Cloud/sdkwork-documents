@@ -9,6 +9,7 @@ import {
   isReferenceSidebarGroupCollapsed,
   toggleReferenceSidebarGroup,
   filterReferenceSidebarTree,
+  documentsShellLayout,
   type ReferenceSidebarCollapsedGroups,
 } from '@sdkwork/documents-pc-commons';
 import type { ApiReferenceEndpoint } from '../openapiTypes';
@@ -204,16 +205,16 @@ export function ApiReference() {
 
   if (loading) {
     return (
-      <div className="w-full min-h-screen pt-20 bg-white dark:bg-[#0a0a0a] flex items-center justify-center">
+      <div className={documentsShellLayout.pageRootCentered}>
         <Loader2 className="w-8 h-8 animate-spin text-blue-500" />
       </div>
     );
   }
 
   return (
-    <div className="w-full min-h-screen pt-20 bg-white dark:bg-[#0a0a0a] flex flex-col">
+    <div className={documentsShellLayout.pageRootColumn}>
       {/* Sub-header Tabs for API Systems */}
-      <div className="sticky top-[56px] z-40 bg-white/80 dark:bg-[#0a0a0a]/80 backdrop-blur-md border-b border-slate-200 dark:border-white/10">
+      <div className={documentsShellLayout.stickySubHeader}>
         <div className="w-full mx-auto px-4 md:px-6 lg:px-8 flex items-center gap-8 overflow-x-auto custom-scrollbar">
           {apiData.map((system) => {
             const Icon = system.icon;
@@ -252,7 +253,7 @@ export function ApiReference() {
       <div className="flex flex-1 w-full mx-auto">
         {/* Sidebar */}
         <aside
-          className="relative hidden h-[calc(100vh-110px)] w-[360px] max-w-[360px] basis-[360px] shrink-0 flex-col border-r border-slate-200 bg-slate-50/50 dark:border-white/10 dark:bg-[#0a0a0a] md:flex sticky top-[110px]"
+          className={`relative hidden w-[360px] max-w-[360px] basis-[360px] shrink-0 flex-col border-r border-slate-200 bg-slate-50/50 dark:border-white/10 dark:bg-[#0a0a0a] md:flex ${documentsShellLayout.stickySidebarBelowSubHeader}`}
         >
           {/* Header Area: Search */}
           <div className="p-4 border-b border-slate-200 dark:border-white/10">

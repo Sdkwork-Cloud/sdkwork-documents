@@ -1,23 +1,33 @@
+use sdkwork_utils_rust::{is_blank, trim};
+
 pub fn env_optional(name: &str) -> Option<String> {
-    std::env::var(name)
-        .ok()
-        .map(|value| value.trim().to_string())
-        .filter(|value| !value.is_empty())
+    std::env::var(name).ok().and_then(|value| {
+        let normalized = trim(&value);
+        if is_blank(Some(&normalized)) {
+            None
+        } else {
+            Some(normalized)
+        }
+    })
 }
 
 fn normalize_optional_string(value: Option<&str>) -> Option<String> {
-    value
-        .map(str::trim)
-        .filter(|value| !value.is_empty())
-        .map(str::to_owned)
+    value.and_then(|raw| {
+        let normalized = trim(raw);
+        if is_blank(Some(&normalized)) {
+            None
+        } else {
+            Some(normalized)
+        }
+    })
 }
 
 fn read_secret_file(env_name: &str, path: &str) -> Result<String, String> {
     std::fs::read_to_string(path)
-        .map(|value| value.trim().to_string())
+        .map(|value| trim(&value))
         .map_err(|error| format!("failed to read secret file for {env_name} at {path}: {error}"))
         .and_then(|value| {
-            if value.is_empty() {
+            if is_blank(Some(&value)) {
                 Err(format!("secret file for {env_name} at {path} is empty"))
             } else {
                 Ok(value)

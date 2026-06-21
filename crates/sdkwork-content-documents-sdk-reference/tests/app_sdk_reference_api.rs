@@ -1,4 +1,6 @@
-﻿use std::sync::{Arc, Mutex, OnceLock};
+#![allow(clippy::await_holding_lock)]
+
+use std::sync::{Arc, Mutex, OnceLock};
 
 use axum::body::Body;
 use axum::extract::{Path, State};
@@ -31,7 +33,10 @@ async fn app_sdk_reference_archives_generate_with_rust_sdk_generator_client() {
     assert_eq!(StatusCode::OK, response.status());
     let payload = response_json(response).await;
     assert_eq!("2000", payload["code"]);
-    assert_eq!("sdkwork-example-app-sdk-typescript-0.1.0.zip", payload["data"]["fileName"]);
+    assert_eq!(
+        "sdkwork-example-app-sdk-typescript-0.1.0.zip",
+        payload["data"]["fileName"]
+    );
     assert_eq!("application/zip", payload["data"]["contentType"]);
     assert_eq!("typescript", payload["data"]["language"]);
     assert!(payload["data"]["contentBase64"]

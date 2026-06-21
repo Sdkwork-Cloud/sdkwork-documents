@@ -1590,6 +1590,7 @@ dependencies = [
  "axum",
  "base64",
  "sdkwork-sdk-generator-client",
+ "sdkwork-utils-rust",
  "serde",
  "serde_json",
  "tokio",
