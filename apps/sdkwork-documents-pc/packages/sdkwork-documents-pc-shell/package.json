@@ -1,0 +1,43 @@
+{
+  "name": "@sdkwork/documents-pc-shell",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "SDKWork Documents PC shell layout and route assembly.",
+  "main": "./src/index.tsx",
+  "module": "./src/index.tsx",
+  "types": "./src/index.tsx",
+  "exports": {
+    ".": {
+      "import": "./src/index.tsx",
+      "types": "./src/index.tsx"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@sdkwork/documents-pc-api-reference": "workspace:*",
+    "@sdkwork/documents-pc-commons": "workspace:*",
+    "@sdkwork/documents-pc-core": "workspace:*",
+    "@sdkwork/documents-pc-sdk-reference": "workspace:*",
+    "lucide-react": "^0.511.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-i18next": "^15.5.2",
+    "react-router-dom": "^7.14.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "~5.8.2"
+  },
+  "sdkwork": {
+    "workspace": "sdkwork-documents",
+    "architecture": "pc-react",
+    "domain": "content",
+    "capability": "documents",
+    "surface": "pc-shell",
+    "status": "ready"
+  }
+}

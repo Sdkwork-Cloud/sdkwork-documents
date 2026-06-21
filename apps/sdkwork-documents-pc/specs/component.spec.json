@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "kind": "sdkwork.component.spec",
+  "component": {
+    "name": "sdkwork-documents-pc",
+    "displayName": "SDKWork Documents PC",
+    "version": "0.1.0",
+    "type": "pc-app",
+    "root": "sdkwork-documents/apps/sdkwork-documents-pc",
+    "domain": "content",
+    "capability": "pc-application",
+    "surface": "app",
+    "languages": ["typescript", "react"],
+    "generated": false,
+    "private": true,
+    "manifests": ["package.json"]
+  },
+  "contracts": {
+    "publicExports": ["src/bootstrap/runtime.ts"],
+    "runtimeEntrypoints": [
+      "package.json",
+      "index.html",
+      "vite.config.ts",
+      "tsconfig.json",
+      "src/main.tsx",
+      "src/App.tsx",
+      "src/AuthGate.tsx",
+      "src/bootstrap/environment.ts",
+      "src/bootstrap/runtime.ts",
+      "src/bootstrap/sdkClients.ts",
+      "src/bootstrap/iamRuntime.ts",
+      "src/bootstrap/routes.ts",
+      "packages/sdkwork-documents-pc-shell/package.json",
+      "packages/sdkwork-documents-pc-core/package.json"
+    ],
+    "routeManifest": null,
+    "sdkClients": ["@sdkwork/documents-app-sdk"],
+    "configKeys": [
+      "config/browser/runtime-env.development.example.json",
+      "config/browser/runtime-env.production.example.json"
+    ]
+  },
+  "verification": {
+    "commands": [
+      "node --test apps/sdkwork-documents-pc/tests/documents-pc-architecture.contract.test.mjs",
+      "pnpm --filter sdkwork-documents-pc typecheck"
+    ]
+  },
+  "metadata": {
+    "managedBy": "sdkwork-documents",
+    "standardVersion": "2026-06-20"
+  }
+}

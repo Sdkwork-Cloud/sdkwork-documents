@@ -15,7 +15,8 @@
     "./runtime": {
       "import": "./src/runtime.ts",
       "types": "./src/runtime.ts"
-    }
+    },
+    "./documentsShellLayout.css": "./src/documentsShellLayout.css"
   },
   "scripts": {
     "typecheck": "tsc --noEmit"

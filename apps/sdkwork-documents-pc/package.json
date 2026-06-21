@@ -3,18 +3,43 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
+  "description": "SDKWork Documents PC browser application composition root.",
+  "packageManager": "pnpm@10.30.3",
   "scripts": {
-    "dev": "node ./scripts/scaffold.mjs dev",
-    "build": "node ./scripts/scaffold.mjs build",
-    "lint": "pnpm -r --filter @sdkwork/documents-pc-* run typecheck",
-    "typecheck": "pnpm -r --filter @sdkwork/documents-pc-* run typecheck"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "pnpm run typecheck",
+    "typecheck": "tsc --noEmit",
+    "test:architecture": "node --test tests/documents-pc-architecture.contract.test.mjs"
   },
   "dependencies": {
+    "@sdkwork/documents-app-sdk": "workspace:*",
     "@sdkwork/documents-pc-api-reference": "workspace:*",
     "@sdkwork/documents-pc-commons": "workspace:*",
+    "@sdkwork/documents-pc-core": "workspace:*",
     "@sdkwork/documents-pc-i18n": "workspace:*",
     "@sdkwork/documents-pc-sdk-reference": "workspace:*",
+    "@sdkwork/documents-pc-shell": "workspace:*",
+    "@sdkwork/sdk-common": "workspace:*",
+    "@tailwindcss/vite": "^4.1.14",
+    "@vitejs/plugin-react": "^5.0.4",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.14.0",
+    "tailwindcss": "^4.1.14",
+    "vite": "^6.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "~5.8.2"
+  },
+  "sdkwork": {
+    "workspace": "sdkwork-documents",
+    "architecture": "pc-react",
+    "domain": "content",
+    "capability": "pc-application",
+    "status": "ready"
   }
 }

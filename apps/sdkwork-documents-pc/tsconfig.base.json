@@ -15,7 +15,24 @@
     "allowImportingTsExtensions": true,
     "paths": {
       "@sdkwork/documents-app-sdk": [
-        "../../../sdks/sdkwork-documents-app-sdk/sdkwork-documents-app-sdk-typescript/generated/server-openapi/src/index.ts"
+        "../../sdks/sdkwork-documents-app-sdk/sdkwork-documents-app-sdk-typescript/generated/server-openapi/src/index.ts"
+      ],
+      "@sdkwork/documents-pc-api-reference": [
+        "./packages/sdkwork-documents-pc-api-reference/src/index.ts"
+      ],
+      "@sdkwork/documents-pc-api-reference/*": [
+        "./packages/sdkwork-documents-pc-api-reference/src/*"
+      ],
+      "@sdkwork/documents-pc-commons": ["./packages/sdkwork-documents-pc-commons/src/index.ts"],
+      "@sdkwork/documents-pc-commons/*": ["./packages/sdkwork-documents-pc-commons/src/*"],
+      "@sdkwork/documents-pc-core": ["./packages/sdkwork-documents-pc-core/src/index.ts"],
+      "@sdkwork/documents-pc-i18n": ["./packages/sdkwork-documents-pc-i18n/src/index.ts"],
+      "@sdkwork/documents-pc-sdk-reference": [
+        "./packages/sdkwork-documents-pc-sdk-reference/src/index.ts"
+      ],
+      "@sdkwork/documents-pc-shell": ["./packages/sdkwork-documents-pc-shell/src/index.tsx"],
+      "@sdkwork/sdk-common": [
+        "../../../sdkwork-sdk-commons/sdkwork-sdk-common-typescript/dist/index.d.ts"
       ]
     }
   }

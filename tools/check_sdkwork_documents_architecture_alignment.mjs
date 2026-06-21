@@ -395,6 +395,8 @@ for (const packageDir of [
   "apps/sdkwork-documents-pc/packages/sdkwork-documents-pc-i18n",
   "apps/sdkwork-documents-pc/packages/sdkwork-documents-pc-api-reference",
   "apps/sdkwork-documents-pc/packages/sdkwork-documents-pc-sdk-reference",
+  "apps/sdkwork-documents-pc/packages/sdkwork-documents-pc-core",
+  "apps/sdkwork-documents-pc/packages/sdkwork-documents-pc-shell",
 ]) {
   assert(
     fs.existsSync(path.join(repoRoot, packageDir, "package.json")),
@@ -410,6 +412,39 @@ assert(
   fs.existsSync(path.join(repoRoot, "apps/sdkwork-documents-pc/AGENTS.md")),
   "apps/sdkwork-documents-pc/AGENTS.md must exist per SDKWORK_WORKSPACE_SPEC.md",
 );
+
+const pcRootFiles = [
+  "apps/sdkwork-documents-pc/index.html",
+  "apps/sdkwork-documents-pc/vite.config.ts",
+  "apps/sdkwork-documents-pc/src/main.tsx",
+  "apps/sdkwork-documents-pc/src/App.tsx",
+  "apps/sdkwork-documents-pc/src/AuthGate.tsx",
+  "apps/sdkwork-documents-pc/src/bootstrap/runtime.ts",
+  "apps/sdkwork-documents-pc/src/bootstrap/sdkClients.ts",
+  "apps/sdkwork-documents-pc/specs/component.spec.json",
+  "apps/sdkwork-documents-pc/tests/documents-pc-architecture.contract.test.mjs",
+];
+for (const relativePath of pcRootFiles) {
+  assert(
+    fs.existsSync(path.join(repoRoot, relativePath)),
+    `${relativePath} must exist per APP_PC_ARCHITECTURE_SPEC.md`,
+  );
+}
+
+const pcPackageJson = readJson("apps/sdkwork-documents-pc/package.json");
+assert(pcPackageJson.scripts?.dev === "vite", "sdkwork-documents-pc dev script must use vite");
+assert(pcPackageJson.scripts?.build === "vite build", "sdkwork-documents-pc build script must use vite build");
+assert(
+  pcPackageJson.dependencies?.["@sdkwork/documents-app-sdk"],
+  "sdkwork-documents-pc must depend on generated @sdkwork/documents-app-sdk",
+);
+
+const pcSdkClientsSource = readText("apps/sdkwork-documents-pc/src/bootstrap/sdkClients.ts");
+assert(
+  pcSdkClientsSource.includes("createClient") && pcSdkClientsSource.includes("@sdkwork/documents-app-sdk"),
+  "sdkwork-documents-pc bootstrap must construct generated documents app SDK client",
+);
+
 assert(
   fs.existsSync(path.join(repoRoot, ".sdkwork/.gitignore")),
   ".sdkwork/.gitignore must exist",

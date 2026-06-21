@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "kind": "sdkwork.component.spec",
+  "component": {
+    "name": "sdkwork-documents-pc-shell",
+    "displayName": "SDKWork Documents PC Shell",
+    "version": "0.1.0",
+    "type": "node-package",
+    "root": "sdkwork-documents/apps/sdkwork-documents-pc/packages/sdkwork-documents-pc-shell",
+    "domain": "content",
+    "capability": "documents",
+    "status": "ready",
+    "languages": ["typescript", "react"],
+    "generated": false,
+    "private": true,
+    "manifests": ["package.json"]
+  },
+  "contracts": {
+    "publicExports": ["."],
+    "runtimeEntrypoints": ["DocumentsPcShell"],
+    "sdkClients": [],
+    "events": [],
+    "configKeys": [],
+    "routeManifest": null
+  },
+  "verification": {
+    "commands": ["pnpm --filter @sdkwork/documents-pc-shell typecheck"]
+  },
+  "metadata": {
+    "managedBy": "sdkwork-documents",
+    "standardVersion": "2026-06-20"
+  }
+}
