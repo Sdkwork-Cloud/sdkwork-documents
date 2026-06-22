@@ -10,12 +10,18 @@ const pcRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const requiredFiles = [
   'src/App.tsx',
   'src/AuthGate.tsx',
+  'src/authGateLogic.ts',
+  'src/bootstrap/authConfig.ts',
+  'src/bootstrap/sessionStore.ts',
+  'src/bootstrap/sessionTokenManager.ts',
   'src/bootstrap/environment.ts',
   'src/bootstrap/iamRuntime.ts',
   'src/bootstrap/runtime.ts',
   'src/bootstrap/sdkClients.ts',
   'src/bootstrap/routes.ts',
   'config/browser/runtime-env.development.example.json',
+  'config/browser/runtime-env.test.example.json',
+  'config/browser/runtime-env.staging.example.json',
   'config/browser/runtime-env.production.example.json',
   'specs/component.spec.json',
   'packages/sdkwork-documents-pc-shell/package.json',
@@ -32,6 +38,11 @@ test('sdkwork-documents-pc matches APP_PC_ARCHITECTURE required layout', () => {
     );
   }
 
+  assert.ok(
+    !fs.existsSync(path.join(pcRoot, 'scripts/scaffold.mjs')),
+    'scaffold dev/build stubs must be removed',
+  );
+
   const packageJson = JSON.parse(fs.readFileSync(path.join(pcRoot, 'package.json'), 'utf8'));
   assert.equal(packageJson.scripts.dev, 'vite');
   assert.equal(packageJson.scripts.build, 'vite build');
@@ -41,13 +52,20 @@ test('sdkwork-documents-pc matches APP_PC_ARCHITECTURE required layout', () => {
   assert.match(appSource, /DocumentsPcShell/u);
   assert.doesNotMatch(appSource, /ApiReference/u, 'root App.tsx must stay thin');
 
-  const mainSource = fs.readFileSync(path.join(pcRoot, 'src/main.tsx'), 'utf8');
-  assert.match(mainSource, /DocumentsReferenceRuntimeProvider/u);
-  assert.match(mainSource, /createSdkworkDocumentsPcRuntime/u);
+  const authGateSource = fs.readFileSync(path.join(pcRoot, 'src/AuthGate.tsx'), 'utf8');
+  assert.match(authGateSource, /SdkworkIamAuthRoutes/u);
+
+  const iamRuntimeSource = fs.readFileSync(path.join(pcRoot, 'src/bootstrap/iamRuntime.ts'), 'utf8');
+  assert.match(iamRuntimeSource, /createSdkworkAppbasePcAuthRuntime/u);
 
   const sdkClientsSource = fs.readFileSync(path.join(pcRoot, 'src/bootstrap/sdkClients.ts'), 'utf8');
-  assert.match(sdkClientsSource, /createClient/u);
-  assert.match(sdkClientsSource, /@sdkwork\/documents-app-sdk/u);
+  assert.match(sdkClientsSource, /authMode: 'dual-token'/u);
+
+  const sessionTokenSource = fs.readFileSync(
+    path.join(pcRoot, 'packages/sdkwork-documents-pc-commons/src/app-session-token.ts'),
+    'utf8',
+  );
+  assert.match(sessionTokenSource, /sdkwork\.documents\.appSession\.v1/u);
 
   const componentSpec = JSON.parse(
     fs.readFileSync(path.join(pcRoot, 'specs/component.spec.json'), 'utf8'),

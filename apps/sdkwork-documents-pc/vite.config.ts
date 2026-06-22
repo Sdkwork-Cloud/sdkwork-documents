@@ -1,5 +1,6 @@
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
+import fs from 'node:fs';
 import path from 'node:path';
 import { defineConfig, loadEnv, type Plugin } from 'vite';
 
@@ -62,6 +63,15 @@ function buildDocumentsRuntimeEnvScript(): string {
 export default defineConfig(({ mode }) => {
   const configDir = import.meta.dirname;
   const repoRoot = path.resolve(configDir, '../..');
+  const sdkCommonDist = path.resolve(
+    repoRoot,
+    '../sdkwork-sdk-commons/sdkwork-sdk-common-typescript/dist/index.js',
+  );
+  const sdkCommonSource = path.resolve(
+    repoRoot,
+    '../sdkwork-sdk-commons/sdkwork-sdk-common-typescript/src/index.ts',
+  );
+  const workspaceRoot = path.resolve(repoRoot, '..');
   const env = loadEnv(mode, configDir, '');
 
   const applicationPublicHttpUrl =
@@ -129,9 +139,62 @@ export default defineConfig(({ mode }) => {
           configDir,
           'packages/sdkwork-documents-pc-shell/src/index.tsx',
         ),
-        '@sdkwork/sdk-common': path.resolve(
-          repoRoot,
-          '../sdkwork-sdk-commons/sdkwork-sdk-common-typescript/dist/index.js',
+        '@sdkwork/sdk-common': fs.existsSync(sdkCommonDist) ? sdkCommonDist : sdkCommonSource,
+        '@sdkwork/appbase-app-sdk': path.resolve(
+          workspaceRoot,
+          'sdkwork-appbase/sdks/sdkwork-appbase-app-sdk/sdkwork-appbase-app-sdk-typescript/generated/server-openapi/src/index.ts',
+        ),
+        '@sdkwork/appbase-backend-sdk': path.resolve(
+          workspaceRoot,
+          'sdkwork-appbase/sdks/sdkwork-appbase-backend-sdk/sdkwork-appbase-backend-sdk-typescript/generated/server-openapi/src/index.ts',
+        ),
+        '@sdkwork/appbase-pc-react': path.resolve(
+          workspaceRoot,
+          'sdkwork-appbase/packages/pc-react/foundation/sdkwork-appbase-pc-react/src/index.ts',
+        ),
+        '@sdkwork/auth-pc-react': path.resolve(
+          workspaceRoot,
+          'sdkwork-appbase/packages/pc-react/iam/sdkwork-auth-pc-react/src/index.ts',
+        ),
+        '@sdkwork/auth-runtime-pc-react': path.resolve(
+          workspaceRoot,
+          'sdkwork-appbase/packages/pc-react/iam/sdkwork-auth-runtime-pc-react/src/index.ts',
+        ),
+        '@sdkwork/core-pc-react': path.resolve(
+          workspaceRoot,
+          'sdkwork-core/sdkwork-core-pc-react/src/index.ts',
+        ),
+        '@sdkwork/i18n-pc-react': path.resolve(
+          workspaceRoot,
+          'sdkwork-appbase/packages/pc-react/foundation/sdkwork-i18n-pc-react/src/index.ts',
+        ),
+        '@sdkwork/iam-contracts': path.resolve(
+          workspaceRoot,
+          'sdkwork-appbase/packages/common/iam/sdkwork-iam-contracts/src/index.ts',
+        ),
+        '@sdkwork/iam-runtime': path.resolve(
+          workspaceRoot,
+          'sdkwork-appbase/packages/common/iam/sdkwork-iam-runtime/src/index.ts',
+        ),
+        '@sdkwork/iam-sdk-adapter': path.resolve(
+          workspaceRoot,
+          'sdkwork-appbase/packages/common/iam/sdkwork-iam-sdk-adapter/src/index.ts',
+        ),
+        '@sdkwork/iam-sdk-ports': path.resolve(
+          workspaceRoot,
+          'sdkwork-appbase/packages/common/iam/sdkwork-iam-sdk-ports/src/index.ts',
+        ),
+        '@sdkwork/runtime-bootstrap': path.resolve(
+          workspaceRoot,
+          'sdkwork-appbase/packages/common/foundation/sdkwork-runtime-bootstrap/src/index.ts',
+        ),
+        '@sdkwork/ui-pc-react': path.resolve(
+          workspaceRoot,
+          'sdkwork-ui/sdkwork-ui-pc-react/src/index.ts',
+        ),
+        '@sdkwork/utils': path.resolve(
+          workspaceRoot,
+          'sdkwork-utils/packages/sdkwork-utils-typescript/src/index.ts',
         ),
       },
     },
@@ -140,7 +203,15 @@ export default defineConfig(({ mode }) => {
       port: Number.parseInt(env.VITE_SDKWORK_DOCUMENTS_PC_DEV_PORT ?? '3902', 10),
       strictPort: true,
       fs: {
-        allow: [configDir, repoRoot, path.resolve(repoRoot, '../sdkwork-sdk-commons')],
+        allow: [
+          configDir,
+          repoRoot,
+          path.resolve(repoRoot, '../sdkwork-sdk-commons'),
+          path.resolve(repoRoot, '../sdkwork-appbase'),
+          path.resolve(repoRoot, '../sdkwork-ui'),
+          path.resolve(repoRoot, '../sdkwork-core'),
+          path.resolve(repoRoot, '../sdkwork-utils'),
+        ],
       },
       proxy: {
         '/app/v3/api': {

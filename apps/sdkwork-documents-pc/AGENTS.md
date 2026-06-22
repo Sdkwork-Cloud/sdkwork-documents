@@ -32,4 +32,13 @@ This is the PC browser/desktop app surface for SDKWork Documents. Read `../../sd
 
 ## Build, Test, and Verification
 
-Run app-surface commands from this directory when the task is limited to this surface. From the repository root, use `pnpm verify` for cross-surface validation.
+Run app-surface commands from this directory when the task is limited to this surface:
+
+- `pnpm dev` — Vite dev server only (requires backend at topology URLs)
+- `pnpm build` — production browser bundle
+
+From the repository root:
+
+- `pnpm dev:browser` — topology-aware backend + PC Vite dev (`http://127.0.0.1:3902`)
+- `pnpm dev:browser:postgres:unified-process:standalone:local` — PC Vite only when backend is already running
+- `pnpm verify` — cross-surface validation including `build:browser`

@@ -31,4 +31,14 @@ for (const sdkRoot of generatedSdkRoots) {
   }
 }
 
+const pcArtifactPaths = [
+  "apps/sdkwork-documents-pc/dist",
+  "apps/sdkwork-documents-pc/node_modules/.vite",
+];
+for (const relativePath of pcArtifactPaths) {
+  if (removeIfExists(path.join(repoRoot, relativePath))) {
+    removed += 1;
+  }
+}
+
 process.stdout.write(`cleaned ${removed} generated SDK build artifact path(s)\n`);

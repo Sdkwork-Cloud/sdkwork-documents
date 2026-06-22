@@ -419,10 +419,19 @@ const pcRootFiles = [
   "apps/sdkwork-documents-pc/src/main.tsx",
   "apps/sdkwork-documents-pc/src/App.tsx",
   "apps/sdkwork-documents-pc/src/AuthGate.tsx",
+  "apps/sdkwork-documents-pc/src/bootstrap/environment.ts",
+  "apps/sdkwork-documents-pc/src/authGateLogic.ts",
+  "apps/sdkwork-documents-pc/src/bootstrap/authConfig.ts",
+  "apps/sdkwork-documents-pc/src/bootstrap/sessionStore.ts",
+  "apps/sdkwork-documents-pc/src/bootstrap/sessionTokenManager.ts",
   "apps/sdkwork-documents-pc/src/bootstrap/runtime.ts",
   "apps/sdkwork-documents-pc/src/bootstrap/sdkClients.ts",
   "apps/sdkwork-documents-pc/specs/component.spec.json",
   "apps/sdkwork-documents-pc/tests/documents-pc-architecture.contract.test.mjs",
+  "apps/sdkwork-documents-pc/config/browser/runtime-env.development.example.json",
+  "apps/sdkwork-documents-pc/config/browser/runtime-env.test.example.json",
+  "apps/sdkwork-documents-pc/config/browser/runtime-env.staging.example.json",
+  "apps/sdkwork-documents-pc/config/browser/runtime-env.production.example.json",
 ];
 for (const relativePath of pcRootFiles) {
   assert(
@@ -438,11 +447,57 @@ assert(
   pcPackageJson.dependencies?.["@sdkwork/documents-app-sdk"],
   "sdkwork-documents-pc must depend on generated @sdkwork/documents-app-sdk",
 );
+for (const dependency of [
+  "@sdkwork/auth-runtime-pc-react",
+  "@sdkwork/auth-pc-react",
+  "@sdkwork/appbase-app-sdk",
+  "@sdkwork/iam-contracts",
+  "@sdkwork/iam-runtime",
+]) {
+  assert(
+    pcPackageJson.dependencies?.[dependency],
+    `sdkwork-documents-pc must depend on ${dependency} for IAM login integration`,
+  );
+}
+
+const authGateSource = readText("apps/sdkwork-documents-pc/src/AuthGate.tsx");
+assert(
+  authGateSource.includes("SdkworkIamAuthRoutes"),
+  "sdkwork-documents-pc AuthGate must render SdkworkIamAuthRoutes per IAM_LOGIN_INTEGRATION_SPEC.md",
+);
+
+const iamRuntimeSource = readText("apps/sdkwork-documents-pc/src/bootstrap/iamRuntime.ts");
+assert(
+  iamRuntimeSource.includes("createSdkworkAppbasePcAuthRuntime"),
+  "sdkwork-documents-pc iamRuntime must compose Appbase PC auth runtime",
+);
 
 const pcSdkClientsSource = readText("apps/sdkwork-documents-pc/src/bootstrap/sdkClients.ts");
 assert(
   pcSdkClientsSource.includes("createClient") && pcSdkClientsSource.includes("@sdkwork/documents-app-sdk"),
   "sdkwork-documents-pc bootstrap must construct generated documents app SDK client",
+);
+assert(
+  pcSdkClientsSource.includes("authMode: 'dual-token'"),
+  "sdkwork-documents-pc bootstrap must use dual-token auth mode for generated SDK clients",
+);
+
+assert(
+  !fs.existsSync(path.join(repoRoot, "apps/sdkwork-documents-pc/scripts/scaffold.mjs")),
+  "sdkwork-documents-pc must not keep scaffold dev/build stubs",
+);
+
+assert(
+  fs.existsSync(path.join(repoRoot, "tools/ensure-sdk-common-built.mjs")),
+  "tools/ensure-sdk-common-built.mjs must exist for PC/SDK build alignment",
+);
+
+const appSessionTokenSource = readText(
+  "apps/sdkwork-documents-pc/packages/sdkwork-documents-pc-commons/src/app-session-token.ts",
+);
+assert(
+  appSessionTokenSource.includes("sdkwork.documents.appSession.v1"),
+  "documents PC commons must use documents-owned app session storage key",
 );
 
 assert(
@@ -577,6 +632,44 @@ assert(
   packageJson.scripts?.verify?.includes("clean-generated-sdk-artifacts.mjs"),
   "package.json verify must clean generated SDK build artifacts before verification",
 );
+assert(
+  packageJson.scripts?.["build:browser"],
+  "package.json must expose pnpm build:browser for documents PC bundle verification",
+);
+assert(
+  packageJson.scripts?.verify?.includes("build:browser"),
+  "package.json verify must build documents PC browser bundle",
+);
+assert(
+  packageJson.scripts?.["dev:browser"],
+  "package.json must expose pnpm dev:browser for documents PC development",
+);
+assert(
+  packageJson.scripts?.["dev:browser:postgres:unified-process:standalone"]?.includes(
+    "documents-dev.mjs --target browser",
+  ),
+  "dev:browser must route through topology-aware documents-dev.mjs browser orchestration",
+);
+
+const topologyStandard = readText("docs/topology-standard.md");
+assert(
+  topologyStandard.includes("pnpm dev:browser"),
+  "docs/topology-standard.md must document pnpm dev:browser",
+);
+assert(
+  topologyStandard.includes("3902"),
+  "docs/topology-standard.md must document PC browser dev port 3902",
+);
+
+const documentsDevScript = readText("scripts/documents-dev.mjs");
+assert(
+  documentsDevScript.includes("partitionOrchestrationProcesses"),
+  "scripts/documents-dev.mjs must partition backend and pc-renderer orchestration processes",
+);
+assert(
+  documentsDevScript.includes("browser-only"),
+  "scripts/documents-dev.mjs must support browser-only target when backend is already running",
+);
 
 const apiPrefixesSource = readText("crates/sdkwork-content-documents-sdk-reference/src/api_prefixes.rs");
 for (const [constant, prefix] of [
@@ -600,6 +693,13 @@ assert(
     'export const DOCUMENTS_OPEN_API_PREFIX = \'/doc/v3/api\'',
   ),
   "PC commons must export DOCUMENTS_OPEN_API_PREFIX aligned with sdkwork-documents-open-api",
+);
+
+const topologyOrchestrationStandalone =
+  topologySpec.orchestration?.profiles?.["standalone.unified-process.development"]?.processes ?? [];
+assert(
+  topologyOrchestrationStandalone.some((entry) => entry.id === "pc-renderer"),
+  "topology standalone development profile must declare pc-renderer orchestration process",
 );
 
 const topologyOrchestration =

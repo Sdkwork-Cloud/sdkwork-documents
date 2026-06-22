@@ -79,5 +79,11 @@ void i18n.use(initReactI18next).init({
   },
 });
 
-export { documentsPcMessages, navigationMessages, resources };
+export { navigationMessages, resources };
+export {
+  documentsPcMessages,
+  publicApiReferenceMessages,
+  publicDocsMessages,
+  publicSdkReferenceMessages,
+} from './resources/index.ts';
 export type { I18nMessageBundle, I18nResources, LocaleCode, LocaleMessages } from './resources/types.ts';

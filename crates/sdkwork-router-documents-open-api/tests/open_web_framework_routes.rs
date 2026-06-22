@@ -33,7 +33,7 @@ async fn open_router_web_framework_rejects_unauthenticated_requests() {
 }
 
 #[tokio::test]
-async fn open_router_web_framework_accepts_dev_inline_api_key_before_handler() {
+async fn open_router_web_framework_accepts_dev_api_key_claim_string_before_handler() {
     let service = RecordingOpenApi::default();
     let app = wrap_router_with_web_framework(
         IamDatabaseWebRequestContextResolver::new(None),

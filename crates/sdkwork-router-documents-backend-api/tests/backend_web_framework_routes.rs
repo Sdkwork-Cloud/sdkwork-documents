@@ -9,13 +9,25 @@ use sdkwork_iam_web_adapter::IamDatabaseWebRequestContextResolver;
 use sdkwork_router_documents_backend_api::{
     build_router_with_shared_backend_api, wrap_router_with_web_framework,
 };
+use sdkwork_web_core::{access_token_jwt, auth_token_jwt};
 use std::sync::{Arc, Mutex};
 use tower::util::ServiceExt;
 
-const DEV_AUTH_TOKEN: &str =
-    "Bearer tenant_id=1;user_id=99;session_id=s-1;app_id=documents;auth_level=password";
-const DEV_ACCESS_TOKEN: &str =
-    "tenant_id=1;user_id=99;session_id=s-1;app_id=documents;environment=dev;deployment_mode=saas";
+const DEV_TENANT_ID: &str = "1";
+const DEV_USER_ID: &str = "99";
+const DEV_SESSION_ID: &str = "s-1";
+const DEV_APP_ID: &str = "documents";
+
+fn dev_auth_token() -> String {
+    format!(
+        "Bearer {}",
+        auth_token_jwt(DEV_TENANT_ID, DEV_USER_ID, DEV_SESSION_ID, DEV_APP_ID)
+    )
+}
+
+fn dev_access_token() -> String {
+    access_token_jwt(DEV_TENANT_ID, DEV_USER_ID, DEV_SESSION_ID, DEV_APP_ID)
+}
 
 #[tokio::test]
 async fn backend_router_web_framework_rejects_unauthenticated_requests() {
@@ -38,7 +50,7 @@ async fn backend_router_web_framework_rejects_unauthenticated_requests() {
 }
 
 #[tokio::test]
-async fn backend_router_web_framework_accepts_dev_inline_dual_tokens_before_handler() {
+async fn backend_router_web_framework_accepts_dev_jwt_dual_tokens_before_handler() {
     let service = RecordingBackendApi::default();
     let app = wrap_router_with_web_framework(
         IamDatabaseWebRequestContextResolver::new(None),
@@ -49,8 +61,8 @@ async fn backend_router_web_framework_accepts_dev_inline_dual_tokens_before_hand
         .oneshot(
             Request::builder()
                 .uri("/backend/v3/api/documents")
-                .header("Authorization", DEV_AUTH_TOKEN)
-                .header("Access-Token", DEV_ACCESS_TOKEN)
+                .header("Authorization", dev_auth_token())
+                .header("Access-Token", dev_access_token())
                 .body(Body::empty())
                 .unwrap(),
         )

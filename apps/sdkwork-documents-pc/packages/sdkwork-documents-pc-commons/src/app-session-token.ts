@@ -1,7 +1,8 @@
 import { readApiRecord } from './api-result.ts';
 import { dispatchPortalSessionChange } from './portal-session-events.ts';
 
-const APP_SESSION_STORAGE_KEY = 'sdkwork.clawRouter.appSession.v1';
+const APP_SESSION_STORAGE_KEY = 'sdkwork.documents.appSession.v1';
+const LEGACY_HOST_SESSION_STORAGE_KEYS = ['sdkwork.clawRouter.appSession.v1'] as const;
 const EXPIRY_SKEW_SECONDS = 30;
 
 export interface StoredAppSessionToken {
@@ -199,11 +200,35 @@ function removeBrowserStorage(): void {
 }
 
 function readLocalStorage(): string | null {
+  return readStorageValue(globalThis.localStorage);
+}
+
+function readSessionStorage(): string | null {
+  return readStorageValue(globalThis.sessionStorage);
+}
+
+function readStorageValue(storage: Storage | undefined): string | null {
+  if (!storage) {
+    return null;
+  }
+
   try {
-    return globalThis.localStorage?.getItem(APP_SESSION_STORAGE_KEY) ?? null;
+    const primary = storage.getItem(APP_SESSION_STORAGE_KEY);
+    if (primary) {
+      return primary;
+    }
+
+    for (const legacyKey of LEGACY_HOST_SESSION_STORAGE_KEYS) {
+      const legacy = storage.getItem(legacyKey);
+      if (legacy) {
+        return legacy;
+      }
+    }
   } catch {
     return null;
   }
+
+  return null;
 }
 
 function writeLocalStorage(token: StoredAppSessionToken): void {
@@ -215,18 +240,25 @@ function writeLocalStorage(token: StoredAppSessionToken): void {
 }
 
 function removeLocalStorage(): void {
-  try {
-    globalThis.localStorage?.removeItem(APP_SESSION_STORAGE_KEY);
-  } catch {
-    // Nothing to clear when storage is unavailable.
-  }
+  removeStorageKeys(globalThis.localStorage);
 }
 
-function readSessionStorage(): string | null {
+function removeSessionStorage(): void {
+  removeStorageKeys(globalThis.sessionStorage);
+}
+
+function removeStorageKeys(storage: Storage | undefined): void {
+  if (!storage) {
+    return;
+  }
+
   try {
-    return globalThis.sessionStorage?.getItem(APP_SESSION_STORAGE_KEY) ?? null;
+    storage.removeItem(APP_SESSION_STORAGE_KEY);
+    for (const legacyKey of LEGACY_HOST_SESSION_STORAGE_KEYS) {
+      storage.removeItem(legacyKey);
+    }
   } catch {
-    return null;
+    // Nothing to clear when storage is unavailable.
   }
 }
 
@@ -238,10 +270,3 @@ function writeSessionStorage(token: StoredAppSessionToken): void {
   }
 }
 
-function removeSessionStorage(): void {
-  try {
-    globalThis.sessionStorage?.removeItem(APP_SESSION_STORAGE_KEY);
-  } catch {
-    // Nothing to clear when storage is unavailable.
-  }
-}

@@ -30,6 +30,10 @@
       "src/bootstrap/sdkClients.ts",
       "src/bootstrap/iamRuntime.ts",
       "src/bootstrap/routes.ts",
+      "config/browser/runtime-env.development.example.json",
+      "config/browser/runtime-env.test.example.json",
+      "config/browser/runtime-env.staging.example.json",
+      "config/browser/runtime-env.production.example.json",
       "packages/sdkwork-documents-pc-shell/package.json",
       "packages/sdkwork-documents-pc-core/package.json"
     ],

@@ -1,8 +1,12 @@
 import { createClient, type SdkworkDocumentsAppClient } from '@sdkwork/documents-app-sdk';
 import type { DocumentsAppSdkClient } from '@sdkwork/documents-pc-commons';
 import { listSdkworkDocumentsPcAppSdkFamilies } from '@sdkwork/documents-pc-core';
+import type { AuthTokenManager } from '@sdkwork/sdk-common';
+import { normalizeSdkworkApiBaseUrl } from '@sdkwork/runtime-bootstrap';
+
 import type { SdkworkDocumentsPcRuntimeConfig } from './environment.ts';
-import { getDocumentsPcTokenManager } from './iamRuntime.ts';
+
+const APP_API_PREFIX = '/app/v3/api';
 
 export interface SdkworkDocumentsPcSdkClientInventory {
   appApiBaseUrl: string;
@@ -18,23 +22,28 @@ export interface SdkworkDocumentsPcSdkClientInventory {
 
 let documentsAppSdkClient: SdkworkDocumentsAppClient | null = null;
 
-export function createSdkworkDocumentsPcSdkClients(
+export function createSdkworkDocumentsPcSdkClientsWithTokenManager(
   config: SdkworkDocumentsPcRuntimeConfig,
+  tokenManager: AuthTokenManager,
 ): SdkworkDocumentsPcSdkClientInventory {
   if (!documentsAppSdkClient) {
     documentsAppSdkClient = createClient({
-      baseUrl: config.appApiBaseUrl,
-      tokenManager: getDocumentsPcTokenManager(),
+      authMode: 'dual-token',
+      baseUrl: normalizeGeneratedSdkBaseUrl(config.appApiBaseUrl, APP_API_PREFIX),
+      platform: 'pc',
+      tokenManager,
     });
+  } else {
+    documentsAppSdkClient.setTokenManager(tokenManager);
   }
 
   return {
-    appApiBaseUrl: config.appApiBaseUrl,
-    backendApiBaseUrl: config.backendApiBaseUrl,
+    appApiBaseUrl: normalizeSdkworkApiBaseUrl(config.appApiBaseUrl, 'app'),
+    backendApiBaseUrl: normalizeSdkworkApiBaseUrl(config.backendApiBaseUrl, 'backend'),
     openApiBaseUrl: config.openApiBaseUrl,
     documentsAppClient: documentsAppSdkClient,
     sdkFamilies: {
-      app: listSdkworkDocumentsPcAppSdkFamilies(),
+      app: [...listSdkworkDocumentsPcAppSdkFamilies(), 'sdkwork-appbase-app-sdk'],
       backend: ['sdkwork-documents-backend-sdk'],
       open: ['sdkwork-documents-sdk'],
     },
@@ -50,4 +59,13 @@ export function getDocumentsAppSdkClientForReference(): DocumentsAppSdkClient {
 
 export function resetSdkworkDocumentsPcSdkClients(): void {
   documentsAppSdkClient = null;
+}
+
+function normalizeGeneratedSdkBaseUrl(baseUrl: string, apiPrefix: string): string {
+  const normalizedBaseUrl = baseUrl.replace(/\/+$/u, '');
+  const normalizedApiPrefix = apiPrefix.replace(/\/+$/u, '');
+  if (normalizedBaseUrl.endsWith(normalizedApiPrefix)) {
+    return normalizedBaseUrl.slice(0, -normalizedApiPrefix.length) || normalizedBaseUrl;
+  }
+  return normalizedBaseUrl;
 }

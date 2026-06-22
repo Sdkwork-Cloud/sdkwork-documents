@@ -80,14 +80,42 @@ test("declares cloud gateway config bundles referenced by topology spec", async 
 test("documents dev orchestrator loads topology profile env", async () => {
   const devScript = await read("scripts/documents-dev.mjs");
   assert.match(devScript, /listOrchestrationProcesses/);
-  assert.match(devScript, /buildProcessesFromOrchestration/);
+  assert.match(devScript, /partitionOrchestrationProcesses/);
   assert.match(devScript, /resolveCloudGatewayConfigPath/);
   assert.match(devScript, /SDKWORK_DOCUMENTS_DEPLOYMENT_PROFILE/);
   assert.match(devScript, /SDKWORK_DOCUMENTS_SERVICE_LAYOUT/);
   assert.match(devScript, /DEFAULT_API_SERVER_CRATE/);
   assert.match(devScript, /processDef\.binary/);
+  assert.match(devScript, /partitionOrchestrationProcesses/);
+  assert.match(devScript, /isRendererProcess/);
+  assert.match(devScript, /browser-only/);
+  assert.match(devScript, /loadEnvFile/);
   assert.doesNotMatch(devScript, /--hosting/);
   assert.doesNotMatch(devScript, /self-hosted|cloud-hosted/);
+});
+
+test("root package.json wires browser dev through topology orchestrator", async () => {
+  const packageJson = await readJson("package.json");
+  assert.match(
+    packageJson.scripts["dev:browser:postgres:unified-process:standalone"],
+    /documents-dev\.mjs --target browser/,
+  );
+});
+
+test("topology standard documents PC browser dev surface", async () => {
+  const topologyDoc = await read("docs/topology-standard.md");
+  assert.match(topologyDoc, /pnpm dev:browser/);
+  assert.match(topologyDoc, /3902/);
+});
+
+test("standalone development orchestration declares pc-renderer process", async () => {
+  const spec = await readJson("specs/topology.spec.json");
+  const processes =
+    spec.orchestration?.profiles?.["standalone.unified-process.development"]?.processes ?? [];
+  const pcRenderer = processes.find((entry) => entry.id === "pc-renderer");
+  assert.ok(pcRenderer, "standalone development profile must declare pc-renderer");
+  assert.equal(pcRenderer.package, "apps/sdkwork-documents-pc");
+  assert.equal(pcRenderer.script, "dev");
 });
 
 test("cloud split-services orchestration maps each HTTP surface to its canonical binary", async () => {

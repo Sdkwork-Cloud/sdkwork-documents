@@ -13,6 +13,8 @@ This app follows `APP_PC_ARCHITECTURE_SPEC.md`, composes capability packages und
 
 Run repository verification from the repository root with `pnpm verify`.
 
+From the repository root, start the PC browser surface with `pnpm dev:browser`.
+
 ## Runtime
 
 - Generated SDK: `@sdkwork/documents-app-sdk` (alias to repository generated OpenAPI transport).

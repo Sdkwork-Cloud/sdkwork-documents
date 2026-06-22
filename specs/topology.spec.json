@@ -105,6 +105,12 @@
             "crate": "sdkwork-documents-api-server",
             "binary": "sdkwork-documents-app-api",
             "required": true
+          },
+          {
+            "id": "pc-renderer",
+            "package": "apps/sdkwork-documents-pc",
+            "script": "dev",
+            "required": true
           }
         ],
         "healthSurfaces": ["application.public-ingress"]
