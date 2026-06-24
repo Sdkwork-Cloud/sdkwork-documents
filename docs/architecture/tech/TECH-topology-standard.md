@@ -1,4 +1,5 @@
-# SDKWork Documents Runtime Topology
+> Migrated from `docs/topology-standard.md` on 2026-06-24.
+> Owner: SDKWork maintainers
 
 This repository adopts the shared SDKWork runtime topology framework.
 
@@ -55,3 +56,4 @@ Cloud gateway config bundles:
 
 - `configs/sdkwork-api-cloud-gateway.documents.development.toml`
 - `configs/sdkwork-api-cloud-gateway.documents.production.toml`
+

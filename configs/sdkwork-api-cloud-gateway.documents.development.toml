@@ -1,11 +1,11 @@
 mode = "embedded"
 
 [service]
-name = "sdkwork-api-gateway"
-environment = "production"
+name = "sdkwork-api-cloud-gateway"
+environment = "development"
 
 [server]
-bind = "0.0.0.0:3900"
+bind = "127.0.0.1:3900"
 
 [[dependencySurfaces]]
 serviceId = "sdkwork-documents-app-api"
@@ -45,26 +45,26 @@ coverage = "documents-open-api-upstream-routes"
 
 [[upstreams]]
 serviceId = "sdkwork-documents-app-api"
-baseUrl = "https://documents.sdkwork.com"
+baseUrl = "http://127.0.0.1:18084"
 
 [[upstreams]]
 serviceId = "sdkwork-documents-backend-api"
-baseUrl = "https://documents-admin.sdkwork.com"
+baseUrl = "http://127.0.0.1:18085"
 
 [[upstreams]]
 serviceId = "sdkwork-documents-open-api"
-baseUrl = "https://doc.sdkwork.com"
+baseUrl = "http://127.0.0.1:18086"
 
 [cors]
-allowAnyOrigin = false
-allowedOrigins = ["https://documents.sdkwork.com", "https://documents-admin.sdkwork.com"]
+allowAnyOrigin = true
+allowedOrigins = []
 
 [request]
 maxBodyBytes = 33554432
 timeoutMs = 0
 
 [readiness]
-checkUpstreams = true
+checkUpstreams = false
 timeoutMs = 1000
 
 [observability]
@@ -72,9 +72,9 @@ accessLogEnabled = true
 auditLogEnabled = true
 accessLogSampleRateBasisPoints = 10000
 auditLogSampleRateBasisPoints = 10000
-metricsEnabled = true
+metricsEnabled = false
 metricsPath = "/metrics"
-tracingEnabled = true
+tracingEnabled = false
 redactHeaders = ["authorization", "access-token", "cookie", "x-api-key", "set-cookie"]
 
 [diagnostics]
@@ -84,23 +84,23 @@ includePolicyInventory = true
 includeRouteInventory = true
 
 [security]
-allowedHosts = ["api.sdkwork.com", "documents.sdkwork.com", "documents-admin.sdkwork.com", "doc.sdkwork.com"]
+allowedHosts = []
 trustedProxyCidrs = []
 secureHeadersEnabled = true
 maxHeaderBytes = 65536
 maxHeaderCount = 128
 rejectCredentialHeadersOnAnonymousAuthRoutes = true
-csrfGuardEnabled = true
+csrfGuardEnabled = false
 
 [security.waf]
-enabled = true
-mode = "enforce"
+enabled = false
+mode = "monitor"
 inspectQuery = true
 inspectHeaders = true
-inspectJsonBody = true
+inspectJsonBody = false
 
 [traffic]
-rateLimitEnabled = true
+rateLimitEnabled = false
 compatXRateLimitHeaders = true
 globalMaxInFlight = 1024
 rateLimits = []
@@ -112,11 +112,11 @@ dryRun = false
 rules = []
 
 [resilience]
-retryEnabled = true
-maxAttempts = 2
+retryEnabled = false
+maxAttempts = 1
 retryStatuses = [502, 503, 504]
-retryBackoffMs = 100
-circuitBreakerEnabled = true
+retryBackoffMs = 0
+circuitBreakerEnabled = false
 failureThreshold = 5
 openSeconds = 30
 halfOpenMaxAttempts = 1

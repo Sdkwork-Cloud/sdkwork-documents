@@ -189,14 +189,14 @@ function createPlatformGatewayProcess(env) {
     env.SDKWORK_DOCUMENTS_ENVIRONMENT ?? 'development',
   );
   return {
-    label: 'sdkwork-api-gateway',
+    label: 'sdkwork-api-cloud-gateway',
     command: cargoCommand(),
     args: [
       'run',
       '-p',
-      'sdkwork-api-gateway-api-server',
+      'sdkwork-api-cloud-gateway-api-server',
       '--bin',
-      'sdkwork-api-gateway',
+      'sdkwork-api-cloud-gateway',
       '--',
       '--config',
       gatewayConfig,
@@ -204,8 +204,8 @@ function createPlatformGatewayProcess(env) {
     cwd: API_GATEWAY_REPO,
     env: {
       ...env,
-      SDKWORK_API_GATEWAY_BIND: bind,
-      SDKWORK_API_GATEWAY_CONFIG: gatewayConfig,
+      SDKWORK_API_CLOUD_GATEWAY_BIND: bind,
+      SDKWORK_API_CLOUD_GATEWAY_CONFIG: gatewayConfig,
     },
     shell: false,
   };
@@ -252,7 +252,7 @@ function partitionOrchestrationProcesses(profileId, env, target) {
   }
 
   if (
-    !backendProcesses.some((entry) => entry.label === 'sdkwork-api-gateway')
+    !backendProcesses.some((entry) => entry.label === 'sdkwork-api-cloud-gateway')
     && shouldAutostartGateway(env)
   ) {
     backendProcesses.unshift(createPlatformGatewayProcess(env));
