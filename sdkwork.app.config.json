@@ -28,7 +28,8 @@
       "iam.users.read"
     ],
     "tenantId": "100001",
-    "organizationId": "0"
+    "organizationId": "0",
+    "appId": "sdkwork-documents"
   },
   "runtime": {
     "family": "server",

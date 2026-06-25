@@ -16,12 +16,15 @@ import {
   REPO_ROOT,
   resolveCloudGatewayConfigPath,
   resolveDevProfileId,
+  IAM_APPLICATION_BOOTSTRAP_ENV,
+  resolveIamDevEnv,
   resolveGatewayBind,
   resolveSurfaceBind,
   resolveSurfaceHttpUrl,
   shouldAutostartGateway,
   waitForHttpHealthy,
 } from './lib/documents-topology.mjs';
+import { mergeRepoDevBootstrapAccessTokenEnv } from '../../sdkwork-iam/scripts/dev/create-dev-bootstrap-access-token-env.mjs';
 
 const HEALTH_PATH = '/healthz';
 const HEALTH_TIMEOUT_MS = 2000;
@@ -204,6 +207,7 @@ function createPlatformGatewayProcess(env) {
     cwd: API_GATEWAY_REPO,
     env: {
       ...env,
+      ...IAM_APPLICATION_BOOTSTRAP_ENV,
       SDKWORK_API_CLOUD_GATEWAY_BIND: bind,
       SDKWORK_API_CLOUD_GATEWAY_CONFIG: gatewayConfig,
     },
@@ -322,24 +326,34 @@ function buildRuntimeEnv(settings, profileId, profileEnv) {
   const devEnvOverride = settings.devEnvFile ? loadEnvFile(settings.devEnvFile) : {};
   const runtimeTarget =
     settings.target === 'browser-only' || settings.target === 'browser' ? 'browser' : 'server';
-
-  return mergeRuntimeEnv(
+  const iamSourceEnv = mergeRuntimeEnv(
     process.env,
     profileEnv,
     devEnvOverride,
     resolveDocumentsDatabaseEnv(settings),
-    {
-      SDKWORK_DOCUMENTS_DEPLOYMENT_PROFILE: settings.deploymentProfile,
-      SDKWORK_DOCUMENTS_SERVICE_LAYOUT: settings.serviceLayout,
-      SDKWORK_DOCUMENTS_DATABASE_PROFILE: settings.database,
-      SDKWORK_DOCUMENTS_PROFILE_ID: profileId,
-      SDKWORK_DOCUMENTS_DEV_MODE: '1',
-      SDKWORK_DOCUMENTS_RUNTIME_TARGET: runtimeTarget,
-      SDKWORK_DOCUMENTS_DEV_AUTH_BYPASS: 'true',
-      VITE_SDKWORK_DOCUMENTS_DEPLOYMENT_PROFILE: settings.deploymentProfile,
-      VITE_SDKWORK_DOCUMENTS_RUNTIME_TARGET: runtimeTarget,
-    },
   );
+
+  return mergeRepoDevBootstrapAccessTokenEnv({
+    repoRoot: REPO_ROOT,
+    manifestPath: 'sdkwork.app.config.json',
+    appId: 'sdkwork-documents',
+    env: mergeRuntimeEnv(
+      iamSourceEnv,
+      resolveIamDevEnv(iamSourceEnv),
+      IAM_APPLICATION_BOOTSTRAP_ENV,
+      {
+        SDKWORK_DOCUMENTS_DEPLOYMENT_PROFILE: settings.deploymentProfile,
+        SDKWORK_DOCUMENTS_SERVICE_LAYOUT: settings.serviceLayout,
+        SDKWORK_DOCUMENTS_DATABASE_PROFILE: settings.database,
+        SDKWORK_DOCUMENTS_PROFILE_ID: profileId,
+        SDKWORK_DOCUMENTS_DEV_MODE: '1',
+        SDKWORK_DOCUMENTS_RUNTIME_TARGET: runtimeTarget,
+        SDKWORK_DOCUMENTS_DEV_AUTH_BYPASS: 'true',
+        VITE_SDKWORK_DOCUMENTS_DEPLOYMENT_PROFILE: settings.deploymentProfile,
+        VITE_SDKWORK_DOCUMENTS_RUNTIME_TARGET: runtimeTarget,
+      },
+    ),
+  });
 }
 
 async function runBrowserOnly(settings, runtimeEnv, profileId) {

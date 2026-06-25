@@ -43,7 +43,7 @@ export function createSdkworkDocumentsPcSdkClientsWithTokenManager(
     openApiBaseUrl: config.openApiBaseUrl,
     documentsAppClient: documentsAppSdkClient,
     sdkFamilies: {
-      app: [...listSdkworkDocumentsPcAppSdkFamilies(), 'sdkwork-appbase-app-sdk'],
+      app: [...listSdkworkDocumentsPcAppSdkFamilies(), 'sdkwork-iam-app-sdk'],
       backend: ['sdkwork-documents-backend-sdk'],
       open: ['sdkwork-documents-sdk'],
     },

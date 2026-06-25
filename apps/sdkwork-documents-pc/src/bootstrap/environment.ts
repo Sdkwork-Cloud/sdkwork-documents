@@ -83,7 +83,7 @@ function parseSdkBaseUrls(applicationPublicHttpUrl: string): SdkworkDocumentsPcS
     appApiBaseUrl: `${normalizedBaseUrl}/app/v3/api`,
     backendApiBaseUrl: `${normalizedBaseUrl}/backend/v3/api`,
     dependencySdkBaseUrls: {
-      [ 'sdkwork-appbase-app-sdk' ]: {
+      [ 'sdkwork-iam-app-sdk' ]: {
         appApiBaseUrl: `${normalizedBaseUrl}/app/v3/api`,
       },
     },

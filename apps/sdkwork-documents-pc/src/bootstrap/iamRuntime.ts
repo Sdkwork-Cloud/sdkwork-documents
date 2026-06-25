@@ -1,4 +1,4 @@
-import { createClient as createAppbaseAppClient, type SdkworkAppClient } from '@sdkwork/appbase-app-sdk';
+import { createClient as createAppbaseAppClient, type SdkworkAppClient } from '@sdkwork/iam-app-sdk';
 import {
   createSdkworkAppbasePcAuthRuntime,
   type SdkworkAppbasePcAuthRuntimeComposition,
@@ -16,7 +16,7 @@ import {
 } from './sessionStore.ts';
 import { createSdkworkDocumentsPcSessionTokenManager } from './sessionTokenManager.ts';
 
-const APPBASE_APP_SDK_FAMILY_ID = 'sdkwork-appbase-app-sdk';
+const APPBASE_APP_SDK_FAMILY_ID = 'sdkwork-iam-app-sdk';
 const APP_API_PREFIX = '/app/v3/api';
 
 export type SdkworkDocumentsPcIamRuntime = IamRuntime & {

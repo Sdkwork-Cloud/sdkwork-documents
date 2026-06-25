@@ -90,6 +90,8 @@ test("documents dev orchestrator loads topology profile env", async () => {
   assert.match(devScript, /isRendererProcess/);
   assert.match(devScript, /browser-only/);
   assert.match(devScript, /loadEnvFile/);
+  assert.match(devScript, /resolveIamDevEnv/);
+  assert.match(devScript, /IAM_APPLICATION_BOOTSTRAP_ENV/);
   assert.doesNotMatch(devScript, /--hosting/);
   assert.doesNotMatch(devScript, /self-hosted|cloud-hosted/);
 });

@@ -450,7 +450,7 @@ assert(
 for (const dependency of [
   "@sdkwork/auth-runtime-pc-react",
   "@sdkwork/auth-pc-react",
-  "@sdkwork/appbase-app-sdk",
+  "@sdkwork/iam-app-sdk",
   "@sdkwork/iam-contracts",
   "@sdkwork/iam-runtime",
 ]) {
