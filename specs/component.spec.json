@@ -130,7 +130,7 @@
       "sdkwork-documents-app-api",
       "sdkwork-documents-backend-api",
       "sdkwork-documents-open-api",
-      "crates/sdkwork-router-documents-app-api/src/runtime.rs"
+      "crates/sdkwork-routes-documents-app-api/src/runtime.rs"
     ],
     "configKeys": [
       "SDKWORK_DOCUMENTS_DATABASE_URL",

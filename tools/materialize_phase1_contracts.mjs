@@ -35,9 +35,9 @@ const PHASE1_REQUIRED_ARTIFACTS = [
   "database/database.manifest.json",
   "configs/topology/standalone.unified-process.development.env",
   "scripts/documents-dev.mjs",
-  "sdks/_route-manifests/open-api/sdkwork-router-documents-open-api.route-manifest.json",
-  "sdks/_route-manifests/app-api/sdkwork-router-documents-app-api.route-manifest.json",
-  "sdks/_route-manifests/backend-api/sdkwork-router-documents-backend-api.route-manifest.json",
+  "sdks/_route-manifests/open-api/sdkwork-routes-documents-open-api.route-manifest.json",
+  "sdks/_route-manifests/app-api/sdkwork-routes-documents-app-api.route-manifest.json",
+  "sdks/_route-manifests/backend-api/sdkwork-routes-documents-backend-api.route-manifest.json",
   "sdks/sdkwork-documents-sdk/.sdkwork-assembly.json",
   "sdks/sdkwork-documents-sdk/sdk-manifest.json",
   "sdks/sdkwork-documents-sdk/openapi/documents-open-api.openapi.json",
@@ -760,7 +760,7 @@ const sdkFamilies = [
     client: "SdkworkDocumentsOpenClient",
     openApi: openApiOpen,
     surface: "open-api",
-    crate: "sdkwork-router-documents-open-api",
+    crate: "sdkwork-routes-documents-open-api",
     authMode: "api-key",
   },
   {
@@ -772,7 +772,7 @@ const sdkFamilies = [
     client: "SdkworkDocumentsAppClient",
     openApi: openApiApp,
     surface: "app-api",
-    crate: "sdkwork-router-documents-app-api",
+    crate: "sdkwork-routes-documents-app-api",
     authMode: "dual-token",
   },
   {
@@ -784,7 +784,7 @@ const sdkFamilies = [
     client: "SdkworkDocumentsBackendClient",
     openApi: openApiBackend,
     surface: "backend-api",
-    crate: "sdkwork-router-documents-backend-api",
+    crate: "sdkwork-routes-documents-backend-api",
     authMode: "dual-token",
   },
 ];
@@ -896,7 +896,7 @@ writeJson("specs/component.spec.json", {
       "sdkwork-documents-app-api",
       "sdkwork-documents-backend-api",
       "sdkwork-documents-open-api",
-      "crates/sdkwork-router-documents-app-api/src/runtime.rs",
+      "crates/sdkwork-routes-documents-app-api/src/runtime.rs",
     ],
     configKeys: [
       "SDKWORK_DOCUMENTS_DATABASE_URL",

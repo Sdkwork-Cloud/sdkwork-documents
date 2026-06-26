@@ -132,7 +132,7 @@
             }
           }
         },
-        "x-sdkwork-source-route-crate": "sdkwork-router-documents-app-api"
+        "x-sdkwork-source-route-crate": "sdkwork-routes-documents-app-api"
       },
       "post": {
         "operationId": "documents.create",
@@ -266,7 +266,7 @@
             }
           }
         },
-        "x-sdkwork-source-route-crate": "sdkwork-router-documents-app-api"
+        "x-sdkwork-source-route-crate": "sdkwork-routes-documents-app-api"
       }
     },
     "/app/v3/api/documents/{documentId}": {
@@ -391,7 +391,7 @@
             }
           }
         ],
-        "x-sdkwork-source-route-crate": "sdkwork-router-documents-app-api"
+        "x-sdkwork-source-route-crate": "sdkwork-routes-documents-app-api"
       },
       "patch": {
         "operationId": "documents.update",
@@ -524,7 +524,7 @@
             }
           }
         },
-        "x-sdkwork-source-route-crate": "sdkwork-router-documents-app-api"
+        "x-sdkwork-source-route-crate": "sdkwork-routes-documents-app-api"
       }
     }
   },

@@ -1,0 +1,40 @@
+{
+  "kind": "sdkwork.gateway.assembly",
+  "schemaVersion": 1,
+  "applicationCode": "documents",
+  "packageName": "sdkwork-documents-gateway-assembly",
+  "crateDir": "crates/sdkwork-documents-gateway-assembly",
+  "generatedAt": "2026-06-25T13:08:05.527Z",
+  "routeCrates": [
+    {
+      "packageName": "sdkwork-routes-documents-app-api",
+      "memberDir": "crates/sdkwork-routes-documents-app-api",
+      "libName": "sdkwork_routes_documents_app_api",
+      "surface": "app-api",
+      "pathPrefix": null,
+      "mountOrder": 0,
+      "hasGatewayMount": true,
+      "hasGatewayRouteManifest": true
+    },
+    {
+      "packageName": "sdkwork-routes-documents-backend-api",
+      "memberDir": "crates/sdkwork-routes-documents-backend-api",
+      "libName": "sdkwork_routes_documents_backend_api",
+      "surface": "backend-api",
+      "pathPrefix": null,
+      "mountOrder": 1,
+      "hasGatewayMount": true,
+      "hasGatewayRouteManifest": true
+    },
+    {
+      "packageName": "sdkwork-routes-documents-open-api",
+      "memberDir": "crates/sdkwork-routes-documents-open-api",
+      "libName": "sdkwork_routes_documents_open_api",
+      "surface": "open-api",
+      "pathPrefix": null,
+      "mountOrder": 2,
+      "hasGatewayMount": true,
+      "hasGatewayRouteManifest": true
+    }
+  ]
+}

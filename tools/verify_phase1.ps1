@@ -116,9 +116,9 @@ foreach ($specFile in $canonicalSpecFiles) {
 }
 
 $routerTests = @{
-    "sdkwork-router-documents-open-api" = @("open_api_routes.rs", "open_web_framework_routes.rs", "open_openapi_routes.rs")
-    "sdkwork-router-documents-app-api" = @("app_api_routes.rs", "app_web_framework_routes.rs", "app_openapi_routes.rs")
-    "sdkwork-router-documents-backend-api" = @("backend_api_routes.rs", "backend_web_framework_routes.rs", "backend_openapi_routes.rs")
+    "sdkwork-routes-documents-open-api" = @("open_api_routes.rs", "open_web_framework_routes.rs", "open_openapi_routes.rs")
+    "sdkwork-routes-documents-app-api" = @("app_api_routes.rs", "app_web_framework_routes.rs", "app_openapi_routes.rs")
+    "sdkwork-routes-documents-backend-api" = @("backend_api_routes.rs", "backend_web_framework_routes.rs", "backend_openapi_routes.rs")
 }
 foreach ($entry in $routerTests.GetEnumerator()) {
     foreach ($testFile in $entry.Value) {
@@ -129,7 +129,7 @@ foreach ($entry in $routerTests.GetEnumerator()) {
     }
 }
 
-$hostedRuntimeTest = "crates/sdkwork-router-documents-app-api/tests/hosted_runtime_routes.rs"
+$hostedRuntimeTest = "crates/sdkwork-routes-documents-app-api/tests/hosted_runtime_routes.rs"
 if (!(Test-Path $hostedRuntimeTest)) {
     throw "Missing hosted runtime integration test: $hostedRuntimeTest"
 }
@@ -138,7 +138,7 @@ $rootRuntimeEntrypoints = @(
     "sdkwork-documents-app-api",
     "sdkwork-documents-backend-api",
     "sdkwork-documents-open-api",
-    "crates/sdkwork-router-documents-app-api/src/runtime.rs"
+    "crates/sdkwork-routes-documents-app-api/src/runtime.rs"
 )
 foreach ($entrypoint in $rootRuntimeEntrypoints) {
     $found = $false
@@ -157,7 +157,7 @@ Invoke-Checked node tools/patch-route-manifest-extensions.mjs
 Invoke-Checked powershell -ExecutionPolicy Bypass -File tools/verify_openapi_operation_ids.ps1
 Invoke-Checked node sdks/standardize-documents-sdk-family.mjs --check
 Invoke-Checked node tools/materialize-apis-authority.mjs --check
-Invoke-Checked node tools/check_sdkwork_documents_architecture_alignment.mjs
+Invoke-Checked node tools/check_sdkwork_ai_prod_architecture_alignment.mjs
 Invoke-Checked node sdks/test/verify-sdk-ownership-boundaries.test.mjs
 
 $requiredGeneratedSdkRoots = @(
@@ -233,9 +233,9 @@ $packages = @(
     "sdkwork-content-documents-service",
     "sdkwork-content-documents-repository-sqlx",
     "sdkwork-content-documents-sdk-reference",
-    "sdkwork-router-documents-app-api",
-    "sdkwork-router-documents-backend-api",
-    "sdkwork-router-documents-open-api",
+    "sdkwork-routes-documents-app-api",
+    "sdkwork-routes-documents-backend-api",
+    "sdkwork-routes-documents-open-api",
     "sdkwork-documents-api-server",
     "sdkwork-documents-observability"
 )

@@ -9,7 +9,7 @@ const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../
 test("architecture alignment script passes", () => {
   const result = spawnSync(
     process.execPath,
-    ["tools/check_sdkwork_documents_architecture_alignment.mjs"],
+    ["tools/check_sdkwork_ai_prod_architecture_alignment.mjs"],
     { cwd: repoRoot, encoding: "utf8" },
   );
   assert.equal(result.status, 0, result.stderr || result.stdout);

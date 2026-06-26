@@ -47,6 +47,8 @@
     "test:contract:database": "node --test tests/contract/database-framework.contract.test.mjs",
     "test:pc-architecture": "node --test apps/sdkwork-documents-pc/tests/documents-pc-architecture.contract.test.mjs",
     "gateway:package:cloud": "node ../sdkwork-app-topology/scripts/gateway-cloud-bundle.mjs bundle --root .",
-    "gateway:validate:cloud": "node ../sdkwork-app-topology/scripts/gateway-cloud-bundle.mjs validate --root ."
+    "gateway:validate:cloud": "node ../sdkwork-app-topology/scripts/gateway-cloud-bundle.mjs validate --root .",
+    "gateway:assembly:materialize": "node scripts/gateway/assembly-materialize.mjs",
+    "gateway:assembly:validate": "node scripts/gateway/assembly-validate.mjs"
   }
 }

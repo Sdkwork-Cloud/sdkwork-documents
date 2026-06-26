@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "sdkwork.route.manifest",
-  "packageName": "sdkwork-router-documents-open-api",
+  "packageName": "sdkwork-routes-documents-open-api",
   "surface": "open-api",
   "owner": "sdkwork-documents",
   "domain": "content",
@@ -10,8 +10,8 @@
   "sdkFamily": "sdkwork-documents-sdk",
   "prefix": "/doc/v3/api",
   "source": {
-    "crateRoot": "crates/sdkwork-router-documents-open-api",
-    "crateImport": "sdkwork_router_documents_open_api",
+    "crateRoot": "crates/sdkwork-routes-documents-open-api",
+    "crateImport": "sdkwork_routes_documents_open_api",
     "openApiAuthority": "sdks/sdkwork-documents-sdk/openapi/documents-open-api.openapi.json"
   },
   "routes": [

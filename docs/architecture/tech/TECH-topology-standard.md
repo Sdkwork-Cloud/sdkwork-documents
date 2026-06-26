@@ -10,7 +10,7 @@ This repository adopts the shared SDKWork runtime topology framework.
 
 ## Archetype
 
-`application-http-gateway`: Documents exposes application HTTP surfaces through `sdkwork-router-documents-*` route crates. Cloud split-services profiles route through `platform.api-gateway`.
+`application-http-gateway`: Documents exposes application HTTP surfaces through `sdkwork-routes-documents-*` route crates. Cloud split-services profiles route through `platform.api-gateway`.
 
 ## Default Dev Profile
 

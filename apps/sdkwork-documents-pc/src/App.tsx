@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { SdkworkSessionAuthBrowserRoot } from '@sdkwork/auth-pc-react';
 import { AuthGate } from './AuthGate.tsx';
 import type { SdkworkDocumentsPcRuntime } from './bootstrap/runtime.ts';
 import { DocumentsPcShell } from '@sdkwork/documents-pc-shell';
@@ -10,6 +11,7 @@ export interface AppProps {
 export function App({ runtime }: AppProps) {
   return (
     <BrowserRouter>
+      <SdkworkSessionAuthBrowserRoot>
       <Routes>
         <Route
           element={
@@ -20,6 +22,7 @@ export function App({ runtime }: AppProps) {
           path="/*"
         />
       </Routes>
+          </SdkworkSessionAuthBrowserRoot>
     </BrowserRouter>
   );
 }

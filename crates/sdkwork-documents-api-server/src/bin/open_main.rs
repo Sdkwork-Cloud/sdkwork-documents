@@ -1,5 +1,5 @@
 use sdkwork_documents_api_server::serve_router;
-use sdkwork_router_documents_app_api::{
+use sdkwork_routes_documents_app_api::{
     bootstrap,
     runtime::{build_served_open_router, DocumentsRuntime},
 };

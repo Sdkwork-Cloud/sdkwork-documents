@@ -70,7 +70,7 @@ const families = [
 ];
 
 function routeCrateFor(family) {
-  return `sdkwork-router-documents-${family.sdkTarget}-api`;
+  return `sdkwork-routes-documents-${family.sdkTarget}-api`;
 }
 
 function jsonText(value) {

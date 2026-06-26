@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "sdkwork.route.manifest",
-  "packageName": "sdkwork-router-documents-backend-api",
+  "packageName": "sdkwork-routes-documents-backend-api",
   "surface": "backend-api",
   "owner": "sdkwork-documents",
   "domain": "content",
@@ -10,8 +10,8 @@
   "sdkFamily": "sdkwork-documents-backend-sdk",
   "prefix": "/backend/v3/api",
   "source": {
-    "crateRoot": "crates/sdkwork-router-documents-backend-api",
-    "crateImport": "sdkwork_router_documents_backend_api",
+    "crateRoot": "crates/sdkwork-routes-documents-backend-api",
+    "crateImport": "sdkwork_routes_documents_backend_api",
     "openApiAuthority": "sdks/sdkwork-documents-backend-sdk/openapi/documents-backend-api.openapi.json"
   },
   "routes": [

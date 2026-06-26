@@ -152,24 +152,24 @@ foreach ($componentSpec in $componentSpecs) {
 
 $routeManifests = @(
     @{
-        Path = "sdks/_route-manifests/open-api/sdkwork-router-documents-open-api.route-manifest.json"
-        PackageName = "sdkwork-router-documents-open-api"
+        Path = "sdks/_route-manifests/open-api/sdkwork-routes-documents-open-api.route-manifest.json"
+        PackageName = "sdkwork-routes-documents-open-api"
         Surface = "open-api"
         Prefix = "/doc/v3/api"
         ApiAuthority = "sdkwork-documents-open-api"
         SdkFamily = "sdkwork-documents-sdk"
     },
     @{
-        Path = "sdks/_route-manifests/app-api/sdkwork-router-documents-app-api.route-manifest.json"
-        PackageName = "sdkwork-router-documents-app-api"
+        Path = "sdks/_route-manifests/app-api/sdkwork-routes-documents-app-api.route-manifest.json"
+        PackageName = "sdkwork-routes-documents-app-api"
         Surface = "app-api"
         Prefix = "/app/v3/api"
         ApiAuthority = "sdkwork-documents.app"
         SdkFamily = "sdkwork-documents-app-sdk"
     },
     @{
-        Path = "sdks/_route-manifests/backend-api/sdkwork-router-documents-backend-api.route-manifest.json"
-        PackageName = "sdkwork-router-documents-backend-api"
+        Path = "sdks/_route-manifests/backend-api/sdkwork-routes-documents-backend-api.route-manifest.json"
+        PackageName = "sdkwork-routes-documents-backend-api"
         Surface = "backend-api"
         Prefix = "/backend/v3/api"
         ApiAuthority = "sdkwork-documents.backend"
@@ -196,8 +196,8 @@ foreach ($manifestExpectation in $routeManifests) {
 }
 
 $forbiddenImportNames = @(
-    "sdkwork_documents_core",
-    "sdkwork_documents_storage_sqlx"
+    "sdkwork_ai_prod_core",
+    "sdkwork_ai_prod_storage_sqlx"
 )
 
 $activeSearchRoots = @(
@@ -241,9 +241,9 @@ $expectedPackages = @(
     "sdkwork-content-documents-sdk-reference",
     "sdkwork-documents-api-server",
     "sdkwork-documents-observability",
-    "sdkwork-router-documents-open-api",
-    "sdkwork-router-documents-app-api",
-    "sdkwork-router-documents-backend-api"
+    "sdkwork-routes-documents-open-api",
+    "sdkwork-routes-documents-app-api",
+    "sdkwork-routes-documents-backend-api"
 )
 
 $cargoTomls = Get-ChildItem -Path . -Recurse -Filter Cargo.toml -File |
@@ -270,9 +270,9 @@ foreach ($expectedPackage in $expectedPackages) {
 }
 
 foreach ($routerCrate in @(
-    "sdkwork-router-documents-open-api",
-    "sdkwork-router-documents-app-api",
-    "sdkwork-router-documents-backend-api"
+    "sdkwork-routes-documents-open-api",
+    "sdkwork-routes-documents-app-api",
+    "sdkwork-routes-documents-backend-api"
 )) {
     Assert-PathExists "crates/$routerCrate/README.md" "Router crate README"
     Assert-PathExists "crates/$routerCrate/specs/component.spec.json" "Router crate component spec"

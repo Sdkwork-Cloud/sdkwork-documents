@@ -135,7 +135,7 @@
           {
             "id": "application.public-ingress",
             "crate": "sdkwork-documents-api-server",
-            "binary": "sdkwork-documents-app-api",
+            "binary": "sdkwork-documents-standalone-gateway",
             "required": true
           },
           {
@@ -161,27 +161,13 @@
           {
             "id": "application.public-ingress",
             "crate": "sdkwork-documents-api-server",
-            "binary": "sdkwork-documents-app-api",
-            "required": true
-          },
-          {
-            "id": "application.backend-http",
-            "crate": "sdkwork-documents-api-server",
-            "binary": "sdkwork-documents-backend-api",
-            "required": true
-          },
-          {
-            "id": "application.open-http",
-            "crate": "sdkwork-documents-api-server",
-            "binary": "sdkwork-documents-open-api",
+            "binary": "sdkwork-documents-standalone-gateway",
             "required": true
           }
         ],
         "healthSurfaces": [
           "platform.api-gateway",
-          "application.public-ingress",
-          "application.backend-http",
-          "application.open-http"
+          "application.public-ingress"
         ]
       },
       "cloud.split-services.production": {
@@ -196,7 +182,7 @@
           {
             "id": "application.public-ingress",
             "crate": "sdkwork-documents-api-server",
-            "binary": "sdkwork-documents-app-api",
+            "binary": "sdkwork-documents-standalone-gateway",
             "required": true
           },
           {

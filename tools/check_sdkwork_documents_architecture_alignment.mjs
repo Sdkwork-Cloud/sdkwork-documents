@@ -163,9 +163,9 @@ for (const [scriptName, command] of Object.entries(packageJson.scripts ?? {})) {
 }
 
 const routerCrates = [
-  "crates/sdkwork-router-documents-open-api/Cargo.toml",
-  "crates/sdkwork-router-documents-app-api/Cargo.toml",
-  "crates/sdkwork-router-documents-backend-api/Cargo.toml",
+  "crates/sdkwork-routes-documents-open-api/Cargo.toml",
+  "crates/sdkwork-routes-documents-app-api/Cargo.toml",
+  "crates/sdkwork-routes-documents-backend-api/Cargo.toml",
 ];
 
 const cargoToml = readText("Cargo.toml");
@@ -303,7 +303,7 @@ for (const entrypoint of [
   "sdkwork-documents-app-api",
   "sdkwork-documents-backend-api",
   "sdkwork-documents-open-api",
-  "crates/sdkwork-router-documents-app-api/src/runtime.rs",
+  "crates/sdkwork-routes-documents-app-api/src/runtime.rs",
 ]) {
   assert(
     rootRuntimeEntrypoints.includes(entrypoint),
@@ -326,9 +326,9 @@ for (const workspace of [
 assert(!sdkDependencyIds.has("sdkwork-discovery"), "component spec must not declare sdkwork-discovery yet");
 
 const routeManifestPaths = [
-  "sdks/_route-manifests/open-api/sdkwork-router-documents-open-api.route-manifest.json",
-  "sdks/_route-manifests/app-api/sdkwork-router-documents-app-api.route-manifest.json",
-  "sdks/_route-manifests/backend-api/sdkwork-router-documents-backend-api.route-manifest.json",
+  "sdks/_route-manifests/open-api/sdkwork-routes-documents-open-api.route-manifest.json",
+  "sdks/_route-manifests/app-api/sdkwork-routes-documents-app-api.route-manifest.json",
+  "sdks/_route-manifests/backend-api/sdkwork-routes-documents-backend-api.route-manifest.json",
 ];
 
 for (const relativePath of routeManifestPaths) {
@@ -354,12 +354,12 @@ assert(
   "configs/topology/standalone.unified-process.development.env must exist",
 );
 assert(
-  fs.existsSync(path.join(repoRoot, "crates/sdkwork-router-documents-app-api/src/runtime.rs")),
-  "sdkwork-router-documents-app-api must provide runtime.rs",
+  fs.existsSync(path.join(repoRoot, "crates/sdkwork-routes-documents-app-api/src/runtime.rs")),
+  "sdkwork-routes-documents-app-api must provide runtime.rs",
 );
 assert(
-  fs.existsSync(path.join(repoRoot, "crates/sdkwork-router-documents-app-api/src/bootstrap.rs")),
-  "sdkwork-router-documents-app-api must provide bootstrap.rs",
+  fs.existsSync(path.join(repoRoot, "crates/sdkwork-routes-documents-app-api/src/bootstrap.rs")),
+  "sdkwork-routes-documents-app-api must provide bootstrap.rs",
 );
 assert(
   fs.existsSync(path.join(repoRoot, "scripts/documents-dev.mjs")),
@@ -509,16 +509,16 @@ assert(
   "tests/contract/database-framework.contract.test.mjs must exist",
 );
 for (const routeTest of [
-  "crates/sdkwork-router-documents-open-api/tests/open_api_routes.rs",
-  "crates/sdkwork-router-documents-open-api/tests/open_web_framework_routes.rs",
-  "crates/sdkwork-router-documents-open-api/tests/open_openapi_routes.rs",
-  "crates/sdkwork-router-documents-app-api/tests/app_api_routes.rs",
-  "crates/sdkwork-router-documents-app-api/tests/app_web_framework_routes.rs",
-  "crates/sdkwork-router-documents-app-api/tests/app_openapi_routes.rs",
-  "crates/sdkwork-router-documents-backend-api/tests/backend_api_routes.rs",
-  "crates/sdkwork-router-documents-backend-api/tests/backend_web_framework_routes.rs",
-  "crates/sdkwork-router-documents-backend-api/tests/backend_openapi_routes.rs",
-  "crates/sdkwork-router-documents-app-api/tests/hosted_runtime_routes.rs",
+  "crates/sdkwork-routes-documents-open-api/tests/open_api_routes.rs",
+  "crates/sdkwork-routes-documents-open-api/tests/open_web_framework_routes.rs",
+  "crates/sdkwork-routes-documents-open-api/tests/open_openapi_routes.rs",
+  "crates/sdkwork-routes-documents-app-api/tests/app_api_routes.rs",
+  "crates/sdkwork-routes-documents-app-api/tests/app_web_framework_routes.rs",
+  "crates/sdkwork-routes-documents-app-api/tests/app_openapi_routes.rs",
+  "crates/sdkwork-routes-documents-backend-api/tests/backend_api_routes.rs",
+  "crates/sdkwork-routes-documents-backend-api/tests/backend_web_framework_routes.rs",
+  "crates/sdkwork-routes-documents-backend-api/tests/backend_openapi_routes.rs",
+  "crates/sdkwork-routes-documents-app-api/tests/hosted_runtime_routes.rs",
   "crates/sdkwork-content-documents-repository-sqlx/tests/migration_manifest.rs",
   "crates/sdkwork-content-documents-repository-sqlx/tests/sqlite_document_store.rs",
   "crates/sdkwork-content-documents-repository-sqlx/tests/postgres_document_store.rs",

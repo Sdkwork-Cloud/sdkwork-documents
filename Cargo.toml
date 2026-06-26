@@ -1,14 +1,15 @@
 [workspace]
 resolver = "2"
 members = [
+    "crates/sdkwork-documents-gateway-assembly",
   "crates/sdkwork-documents-contract",
   "crates/sdkwork-documents-database-host",
   "crates/sdkwork-content-documents-service",
   "crates/sdkwork-content-documents-sdk-reference",
   "crates/sdkwork-content-documents-repository-sqlx",
-  "crates/sdkwork-router-documents-open-api",
-  "crates/sdkwork-router-documents-app-api",
-  "crates/sdkwork-router-documents-backend-api",
+  "crates/sdkwork-routes-documents-open-api",
+  "crates/sdkwork-routes-documents-app-api",
+  "crates/sdkwork-routes-documents-backend-api",
   "crates/sdkwork-documents-api-server",
   "crates/sdkwork-documents-observability",
 ]
@@ -38,9 +39,9 @@ sdkwork-documents-database-host = { path = "crates/sdkwork-documents-database-ho
 sdkwork-content-documents-service = { path = "crates/sdkwork-content-documents-service" }
 sdkwork-content-documents-sdk-reference = { path = "crates/sdkwork-content-documents-sdk-reference" }
 sdkwork-content-documents-repository-sqlx = { path = "crates/sdkwork-content-documents-repository-sqlx" }
-sdkwork-router-documents-open-api = { path = "crates/sdkwork-router-documents-open-api" }
-sdkwork-router-documents-app-api = { path = "crates/sdkwork-router-documents-app-api" }
-sdkwork-router-documents-backend-api = { path = "crates/sdkwork-router-documents-backend-api" }
+sdkwork-routes-documents-open-api = { path = "crates/sdkwork-routes-documents-open-api" }
+sdkwork-routes-documents-app-api = { path = "crates/sdkwork-routes-documents-app-api" }
+sdkwork-routes-documents-backend-api = { path = "crates/sdkwork-routes-documents-backend-api" }
 sdkwork-documents-api-server = { path = "crates/sdkwork-documents-api-server" }
 sdkwork-documents-observability = { path = "crates/sdkwork-documents-observability" }
 
