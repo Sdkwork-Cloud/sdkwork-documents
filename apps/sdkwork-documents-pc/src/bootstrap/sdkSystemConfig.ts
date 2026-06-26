@@ -86,12 +86,12 @@ const MEMORY_OPEN_API_METADATA = sdkMetadata({
 
 const AGENT_OPEN_API_METADATA = sdkMetadata({
   name: 'SdkworkAgentAppClient',
-  packageName: '@sdkwork/agent-app-sdk',
+  packageName: '@sdkwork/agents-app-sdk',
   sdkType: 'agent',
   apiPrefix: '/agent/v3/api',
   runtimeEnvName: 'VITE_SDKWORK_AGENT_OPEN_API_BASE_URL',
-  sourceDir: 'sdks/sdkwork-agent-app-sdk/sdkwork-agent-app-sdk-typescript/generated/server-openapi',
-  archiveName: 'sdkwork-agent-app-sdk-typescript-0.1.0.zip',
+  sourceDir: 'sdks/sdkwork-agents-app-sdk/sdkwork-agent-app-sdk-typescript/generated/server-openapi',
+  archiveName: 'sdkwork-agents-app-sdk-typescript-0.1.0.zip',
   description: 'SDKWork Agent Open API SDK',
 });
 

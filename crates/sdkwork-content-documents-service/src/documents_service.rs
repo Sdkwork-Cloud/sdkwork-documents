@@ -284,7 +284,7 @@ mod tests {
         let created = DocumentsAppApi::create_document(
             &service,
             DocumentsAppRequestContext {
-                tenant_id: 1,
+                tenant_id: 100_001,
                 user_id: 10,
             },
             DocumentCreateRequest {

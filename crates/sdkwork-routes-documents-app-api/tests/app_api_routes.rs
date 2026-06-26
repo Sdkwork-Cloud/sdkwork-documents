@@ -74,12 +74,12 @@ async fn app_list_documents_returns_payload_with_context() {
     assert_eq!(response.status(), StatusCode::OK);
     let body = to_bytes(response.into_body(), usize::MAX).await.unwrap();
     assert!(body.starts_with(b"{\"items\""));
-    assert_eq!(service.contexts(), vec![(1, 42)]);
+    assert_eq!(service.contexts(), vec![(100_001, 42)]);
 }
 
 fn app_context() -> DocumentsAppRequestContext {
     DocumentsAppRequestContext {
-        tenant_id: 1,
+        tenant_id: 100_001,
         user_id: 42,
     }
 }

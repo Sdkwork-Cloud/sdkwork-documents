@@ -13,7 +13,8 @@ use sdkwork_web_core::{access_token_jwt, auth_token_jwt};
 use std::sync::{Arc, Mutex};
 use tower::util::ServiceExt;
 
-const DEV_TENANT_ID: &str = "1";
+const DEV_TENANT_ID: &str = "100001";
+const DEV_ORGANIZATION_ID: &str = "0";
 const DEV_USER_ID: &str = "99";
 const DEV_SESSION_ID: &str = "s-1";
 const DEV_APP_ID: &str = "documents";
@@ -70,7 +71,7 @@ async fn backend_router_web_framework_accepts_dev_jwt_dual_tokens_before_handler
         .unwrap();
 
     assert_eq!(response.status(), StatusCode::OK);
-    assert_eq!(service.contexts(), vec![(1, 99)]);
+    assert_eq!(service.contexts(), vec![(100_001, 99)]);
 }
 
 #[derive(Clone, Default)]

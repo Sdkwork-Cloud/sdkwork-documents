@@ -80,7 +80,7 @@ async fn open_list_documents_returns_payload_with_context() {
 fn open_context() -> DocumentsOpenApiRequestContext {
     DocumentsOpenApiRequestContext {
         api_key_id: "dev-key".to_owned(),
-        tenant_id: 1,
+        tenant_id: 100_001,
     }
 }
 

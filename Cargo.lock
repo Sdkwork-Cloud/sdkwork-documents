@@ -1729,6 +1729,7 @@ name = "sdkwork-documents-api-server"
 version = "0.1.0"
 dependencies = [
  "axum",
+ "sdkwork-documents-gateway-assembly",
  "sdkwork-documents-observability",
  "sdkwork-routes-documents-app-api",
  "tokio",
@@ -1759,6 +1760,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "sdkwork-documents-gateway-assembly"
+version = "0.1.0"
+dependencies = [
+ "axum",
+ "sdkwork-routes-documents-app-api",
+ "sdkwork-routes-documents-backend-api",
+ "sdkwork-routes-documents-open-api",
+ "tokio",
+]
+
+[[package]]
 name = "sdkwork-documents-observability"
 version = "0.1.0"
 dependencies = [
@@ -1777,6 +1789,7 @@ dependencies = [
  "rand_core 0.6.4",
  "sdkwork-iam-context-service",
  "sdkwork-iam-module-registry",
+ "sdkwork-id-core",
  "sha2",
  "sqlx",
  "uuid",

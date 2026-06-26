@@ -8,10 +8,7 @@ use sdkwork_routes_documents_app_api::{
 async fn main() {
     bootstrap::validate_process_config();
 
-    let tenant_id = std::env::var("SDKWORK_DOCUMENTS_TENANT_ID")
-        .ok()
-        .and_then(|value| value.parse::<i64>().ok())
-        .unwrap_or(1);
+    let tenant_id = bootstrap::resolve_deployment_tenant_id();
     let listen_addr = std::env::var("SDKWORK_DOCUMENTS_APPLICATION_OPEN_HTTP_BIND")
         .unwrap_or_else(|_| "127.0.0.1:18086".to_string());
 
