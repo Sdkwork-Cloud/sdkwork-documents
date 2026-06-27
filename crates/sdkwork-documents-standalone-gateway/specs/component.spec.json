@@ -2,11 +2,11 @@
   "schemaVersion": 1,
   "kind": "sdkwork.component.spec",
   "component": {
-    "name": "sdkwork-documents-api-server",
+    "name": "sdkwork-documents-standalone-gateway",
     "displayName": "SDKWork Documents API Server",
     "version": "0.1.0",
     "type": "rust-binary",
-    "root": "sdkwork-documents/crates/sdkwork-documents-api-server",
+    "root": "sdkwork-documents/crates/sdkwork-documents-standalone-gateway",
     "domain": "content",
     "capability": "documents",
     "surface": "backend-service",
@@ -37,6 +37,6 @@
     "configKeys": []
   },
   "verification": {
-    "commands": ["cargo build -p sdkwork-documents-api-server"]
+    "commands": ["cargo build -p sdkwork-documents-standalone-gateway"]
   }
 }

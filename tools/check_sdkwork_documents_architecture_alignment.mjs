@@ -176,7 +176,7 @@ assert(cargoToml.includes("sdkwork-database-config"), "Cargo.toml must declare s
 assert(cargoToml.includes("sdkwork-database-sqlx"), "Cargo.toml must declare sdkwork-database-sqlx");
 assert(cargoToml.includes("sdkwork-database-repository"), "Cargo.toml must declare sdkwork-database-repository");
 assert(cargoToml.includes("sdkwork-utils-rust"), "Cargo.toml must declare sdkwork-utils-rust");
-assert(cargoToml.includes("sdkwork-documents-api-server"), "Cargo.toml must include sdkwork-documents-api-server");
+assert(cargoToml.includes("sdkwork-documents-standalone-gateway"), "Cargo.toml must include sdkwork-documents-standalone-gateway");
 assert(
   cargoToml.includes("sdkwork-documents-observability"),
   "Cargo.toml must include sdkwork-documents-observability",
@@ -218,8 +218,8 @@ for (const target of workflow.targets || []) {
   );
   for (const glob of target.outputGlobs ?? []) {
     assert(
-      !glob.includes("sdkwork-documents-api-server"),
-      `sdkwork.workflow.json target ${target.id} must package per-surface binaries, not unified sdkwork-documents-api-server`,
+      !glob.includes("sdkwork-documents-standalone-gateway"),
+      `sdkwork.workflow.json target ${target.id} must package per-surface binaries, not unified sdkwork-documents-standalone-gateway`,
     );
   }
 }
@@ -251,7 +251,7 @@ for (const routerCrate of routerCrates) {
   );
 }
 
-const apiServerToml = readText("crates/sdkwork-documents-api-server/Cargo.toml");
+const apiServerToml = readText("crates/sdkwork-documents-standalone-gateway/Cargo.toml");
 for (const binaryName of [
   "sdkwork-documents-app-api",
   "sdkwork-documents-backend-api",
@@ -259,7 +259,7 @@ for (const binaryName of [
 ]) {
   assert(
     apiServerToml.includes(`name = "${binaryName}"`),
-    `sdkwork-documents-api-server must declare binary ${binaryName}`,
+    `sdkwork-documents-standalone-gateway must declare binary ${binaryName}`,
   );
 }
 
@@ -613,7 +613,7 @@ const crateComponentSpecs = [
   "crates/sdkwork-content-documents-repository-sqlx/specs/component.spec.json",
   "crates/sdkwork-content-documents-sdk-reference/specs/component.spec.json",
   "crates/sdkwork-documents-database-host/specs/component.spec.json",
-  "crates/sdkwork-documents-api-server/specs/component.spec.json",
+  "crates/sdkwork-documents-standalone-gateway/specs/component.spec.json",
   "crates/sdkwork-documents-observability/specs/component.spec.json",
 ];
 for (const relativePath of crateComponentSpecs) {

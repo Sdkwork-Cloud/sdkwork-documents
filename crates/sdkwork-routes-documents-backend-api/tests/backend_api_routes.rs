@@ -77,13 +77,13 @@ async fn backend_list_documents_returns_payload_with_context() {
     assert_eq!(response.status(), StatusCode::OK);
     let body = to_bytes(response.into_body(), usize::MAX).await.unwrap();
     assert!(body.starts_with(b"{\"items\""));
-    assert_eq!(service.contexts(), vec![(100_001, 99)]);
+    assert_eq!(service.contexts(), vec![(100_001, 1)]);
 }
 
 fn backend_context() -> DocumentsBackendRequestContext {
     DocumentsBackendRequestContext {
         tenant_id: 100_001,
-        operator_id: 99,
+        operator_id: 1,
     }
 }
 

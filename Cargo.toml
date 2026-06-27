@@ -10,7 +10,7 @@ members = [
   "crates/sdkwork-routes-documents-open-api",
   "crates/sdkwork-routes-documents-app-api",
   "crates/sdkwork-routes-documents-backend-api",
-  "crates/sdkwork-documents-api-server",
+  "crates/sdkwork-documents-standalone-gateway",
   "crates/sdkwork-documents-observability",
 ]
 
@@ -42,7 +42,7 @@ sdkwork-content-documents-repository-sqlx = { path = "crates/sdkwork-content-doc
 sdkwork-routes-documents-open-api = { path = "crates/sdkwork-routes-documents-open-api" }
 sdkwork-routes-documents-app-api = { path = "crates/sdkwork-routes-documents-app-api" }
 sdkwork-routes-documents-backend-api = { path = "crates/sdkwork-routes-documents-backend-api" }
-sdkwork-documents-api-server = { path = "crates/sdkwork-documents-api-server" }
+sdkwork-documents-standalone-gateway = { path = "crates/sdkwork-documents-standalone-gateway" }
 sdkwork-documents-observability = { path = "crates/sdkwork-documents-observability" }
 
 sdkwork-iam-web-adapter = { path = "../sdkwork-iam/crates/sdkwork-iam-web-adapter" }

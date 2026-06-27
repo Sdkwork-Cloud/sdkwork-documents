@@ -285,7 +285,7 @@ mod tests {
             &service,
             DocumentsAppRequestContext {
                 tenant_id: 100_001,
-                user_id: 10,
+                user_id: 1,
             },
             DocumentCreateRequest {
                 title: "Hello".to_owned(),

@@ -1664,6 +1664,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "sdkwork-database-id"
+version = "0.1.0"
+dependencies = [
+ "sdkwork-database-config",
+ "sdkwork-database-sqlx",
+ "sdkwork-id-core",
+ "sqlx",
+ "tokio",
+ "tracing",
+]
+
+[[package]]
 name = "sdkwork-database-lifecycle"
 version = "0.1.0"
 dependencies = [
@@ -1688,8 +1700,8 @@ dependencies = [
  "chrono",
  "paste",
  "sdkwork-database-config",
+ "sdkwork-database-id",
  "sdkwork-database-sqlx",
- "sdkwork-id-core",
  "serde",
  "serde_json",
  "sqlx",
@@ -1722,19 +1734,6 @@ dependencies = [
  "thiserror 2.0.18",
  "tokio",
  "tracing",
-]
-
-[[package]]
-name = "sdkwork-documents-api-server"
-version = "0.1.0"
-dependencies = [
- "axum",
- "sdkwork-documents-gateway-assembly",
- "sdkwork-documents-observability",
- "sdkwork-routes-documents-app-api",
- "tokio",
- "tracing",
- "tracing-subscriber",
 ]
 
 [[package]]
@@ -1780,6 +1779,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "sdkwork-documents-standalone-gateway"
+version = "0.1.0"
+dependencies = [
+ "axum",
+ "sdkwork-documents-gateway-assembly",
+ "sdkwork-documents-observability",
+ "tokio",
+ "tracing",
+ "tracing-subscriber",
+]
+
+[[package]]
 name = "sdkwork-iam-bootstrap"
 version = "0.1.0"
 dependencies = [
@@ -1787,9 +1798,9 @@ dependencies = [
  "base64",
  "chrono",
  "rand_core 0.6.4",
+ "sdkwork-database-id",
  "sdkwork-iam-context-service",
  "sdkwork-iam-module-registry",
- "sdkwork-id-core",
  "sha2",
  "sqlx",
  "uuid",
@@ -1923,11 +1934,14 @@ dependencies = [
 name = "sdkwork-utils-rust"
 version = "0.10.0"
 dependencies = [
+ "aes-gcm",
  "base64",
  "chrono",
+ "hkdf",
  "hmac",
  "rand 0.8.6",
  "regex",
+ "serde",
  "serde_json",
  "sha2",
  "urlencoding",

@@ -15,7 +15,7 @@ use tower::util::ServiceExt;
 
 const DEV_TENANT_ID: &str = "100001";
 const DEV_ORGANIZATION_ID: &str = "0";
-const DEV_USER_ID: &str = "42";
+const DEV_USER_ID: &str = "1";
 const DEV_SESSION_ID: &str = "s-1";
 const DEV_APP_ID: &str = "documents";
 
@@ -73,7 +73,7 @@ async fn app_router_web_framework_accepts_dev_jwt_dual_tokens_before_handler() {
         .unwrap();
 
     assert_eq!(response.status(), StatusCode::OK);
-    assert_eq!(service.contexts(), vec![(100_001, 42)]);
+    assert_eq!(service.contexts(), vec![(100_001, 1)]);
     std::env::remove_var("SDKWORK_ENV");
     std::env::remove_var("SDKWORK_IAM_ALLOW_DEV_AUTH_FALLBACK");
 }

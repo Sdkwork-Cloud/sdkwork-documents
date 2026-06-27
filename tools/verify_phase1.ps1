@@ -236,7 +236,7 @@ $packages = @(
     "sdkwork-routes-documents-app-api",
     "sdkwork-routes-documents-backend-api",
     "sdkwork-routes-documents-open-api",
-    "sdkwork-documents-api-server",
+    "sdkwork-documents-standalone-gateway",
     "sdkwork-documents-observability"
 )
 

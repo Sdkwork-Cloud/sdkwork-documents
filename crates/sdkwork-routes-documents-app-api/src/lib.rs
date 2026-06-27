@@ -12,6 +12,12 @@ mod handlers;
 mod ports;
 mod response;
 
+use std::sync::Arc;
+
+use axum::Router;
+use sdkwork_documents_contract::DocumentsAppApi;
+use sdkwork_web_core::HttpRouteManifest;
+
 pub use error::{created_json, ok_json, ApiProblem, ApiResult, DocumentsApiProblem};
 pub use http_route_manifest::app_route_manifest;
 pub use manifest::ROUTES;

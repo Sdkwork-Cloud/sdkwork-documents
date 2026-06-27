@@ -46,7 +46,7 @@ async fn open_router_web_framework_accepts_dev_api_key_claim_string_before_handl
                 .uri("/doc/v3/api/documents")
                 .header(
                     "x-api-key",
-                    "api_key_id=dev-key;tenant_id=100001;user_id=42;app_id=documents",
+                    "api_key_id=dev-key;tenant_id=100001;user_id=1;app_id=documents",
                 )
                 .body(Body::empty())
                 .unwrap(),

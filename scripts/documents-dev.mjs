@@ -30,7 +30,7 @@ const HEALTH_PATH = '/healthz';
 const HEALTH_TIMEOUT_MS = 2000;
 const STARTUP_WAIT_MS = 500;
 const MAX_STARTUP_ATTEMPTS = 60;
-const DEFAULT_API_SERVER_CRATE = 'sdkwork-documents-api-server';
+const DEFAULT_API_SERVER_CRATE = 'sdkwork-documents-standalone-gateway';
 const PC_APP_FILTER = 'sdkwork-documents-pc';
 const DEFAULT_PC_DEV_PORT = 3902;
 const ALLOWED_TARGETS = new Set(['server', 'browser', 'browser-only']);
@@ -197,7 +197,7 @@ function createPlatformGatewayProcess(env) {
     args: [
       'run',
       '-p',
-      'sdkwork-api-cloud-gateway-api-server',
+      'sdkwork-api-cloud-gateway',
       '--bin',
       'sdkwork-api-cloud-gateway',
       '--',

@@ -9,6 +9,12 @@ mod response;
 mod routes;
 mod web_bootstrap;
 
+use std::sync::Arc;
+
+use axum::Router;
+use sdkwork_documents_contract::DocumentsOpenApi;
+use sdkwork_web_core::HttpRouteManifest;
+
 pub use error::{ok_json, ApiProblem, ApiResult, DocumentsApiProblem};
 pub use http_route_manifest::open_route_manifest;
 pub use manifest::ROUTES;
