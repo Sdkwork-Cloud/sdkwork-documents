@@ -252,16 +252,18 @@ for (const routerCrate of routerCrates) {
 }
 
 const apiServerToml = readText("crates/sdkwork-documents-standalone-gateway/Cargo.toml");
-for (const binaryName of [
-  "sdkwork-documents-app-api",
-  "sdkwork-documents-backend-api",
-  "sdkwork-documents-open-api",
-]) {
-  assert(
-    apiServerToml.includes(`name = "${binaryName}"`),
-    `sdkwork-documents-standalone-gateway must declare binary ${binaryName}`,
-  );
-}
+assert(
+  apiServerToml.includes('name = "sdkwork-documents-standalone-gateway"'),
+  "sdkwork-documents-standalone-gateway must declare unified standalone gateway binary",
+);
+assert(
+  apiServerToml.includes("sdkwork-documents-gateway-assembly"),
+  "sdkwork-documents-standalone-gateway must depend on sdkwork-documents-gateway-assembly",
+);
+assert(
+  fs.existsSync(path.join(repoRoot, "crates/sdkwork-documents-gateway-assembly/Cargo.toml")),
+  "sdkwork-documents-gateway-assembly crate must exist",
+);
 
 const repositorySqlxToml = readText("crates/sdkwork-content-documents-repository-sqlx/Cargo.toml");
 assert(
@@ -702,21 +704,32 @@ assert(
   "topology standalone development profile must declare pc-renderer orchestration process",
 );
 
-const topologyOrchestration =
-  topologySpec.orchestration?.profiles?.["cloud.split-services.development"]?.processes ?? [];
 const topologyComponents = topologySpec.components ?? {};
-for (const [surfaceId, componentKey] of [
-  ["application.public-ingress", "appApiRouter"],
-  ["application.backend-http", "backendApiRouter"],
-  ["application.open-http", "openApiRouter"],
-]) {
-  const expectedBinary = topologyComponents[componentKey]?.binary;
-  const processDef = topologyOrchestration.find((entry) => entry.id === surfaceId);
-  assert(expectedBinary, `topology components.${componentKey}.binary must be declared`);
-  assert(processDef, `topology orchestration must declare process ${surfaceId}`);
+for (const componentKey of ["appApiRouter", "backendApiRouter", "openApiRouter"]) {
   assert(
-    processDef.binary === expectedBinary,
-    `topology orchestration ${surfaceId} must launch ${expectedBinary}`,
+    topologyComponents[componentKey]?.binary,
+    `topology components.${componentKey}.binary must be declared`,
+  );
+  assert(
+    topologyComponents[componentKey]?.crate,
+    `topology components.${componentKey}.crate must be declared`,
+  );
+}
+
+const cloudSplitDevProcesses =
+  topologySpec.orchestration?.profiles?.["cloud.split-services.development"]?.processes ?? [];
+const publicIngressProcess = cloudSplitDevProcesses.find(
+  (entry) => entry.id === "application.public-ingress",
+);
+assert(publicIngressProcess, "topology cloud split development must declare application.public-ingress");
+assert(
+  /standalone-gateway/u.test(String(publicIngressProcess.binary ?? "")),
+  "topology cloud split development application.public-ingress must launch standalone gateway binary",
+);
+for (const processDef of cloudSplitDevProcesses) {
+  assert(
+    processDef.id !== "application.backend-http" && processDef.id !== "application.open-http",
+    `topology cloud split development must not start decomposed HTTP process ${processDef.id}`,
   );
 }
 
