@@ -1,4 +1,5 @@
 # SDKWork Documents
+repository-kind: application
 
 SDKWork Documents is the content-domain document storage and delivery service.
 

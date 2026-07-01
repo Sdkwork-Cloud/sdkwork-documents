@@ -3,9 +3,9 @@
   "private": true,
   "license": "UNLICENSED",
   "type": "module",
-  "packageManager": "pnpm@10.30.3",
+  "packageManager": "pnpm@10.33.0",
   "dependencies": {
-    "@sdkwork/app-topology": "file:../sdkwork-app-topology"
+    "@sdkwork/app-topology": "workspace:*"
   },
   "scripts": {
     "dev": "pnpm dev:server",
@@ -19,11 +19,11 @@
     "build": "cargo build --workspace --release",
     "build:browser": "node tools/ensure-sdk-common-built.mjs && pnpm --filter sdkwork-documents-pc build",
     "test": "pnpm topology:validate && pnpm test:topology && pnpm test:pc-architecture && cargo test --workspace && node --test tests/contracts/architecture_alignment.test.mjs tests/contract/database-framework.contract.test.mjs sdks/test/verify-sdk-ownership-boundaries.test.mjs",
-    "check": "pnpm check:architecture-alignment && pnpm check:pnpm-script-standard && pnpm check:agent-workflow-standard && pnpm db:validate && pnpm test:pc-architecture && pnpm --filter sdkwork-documents-pc typecheck",
+    "check": "pnpm run check:app-composition && pnpm check:architecture-alignment && pnpm check:pnpm-script-standard && pnpm check:agent-workflow-standard && pnpm db:validate && pnpm test:pc-architecture && pnpm --filter sdkwork-documents-pc typecheck",
     "check:architecture-alignment": "node tools/check_sdkwork_documents_architecture_alignment.mjs",
     "check:pnpm-script-standard": "node ../sdkwork-specs/tools/check-pnpm-script-standard.mjs --root . --product-prefix documents,doc",
     "check:agent-workflow-standard": "node ../sdkwork-specs/tools/check-agent-workflow-standard.mjs --root .",
-    "verify": "node tools/clean-generated-sdk-artifacts.mjs && node tools/materialize_phase1_contracts.mjs && node tools/materialize_phase1_contracts.mjs --check && node sdks/standardize-documents-sdk-family.mjs && node tools/materialize-apis-authority.mjs && node tools/patch-route-manifest-extensions.mjs && powershell -ExecutionPolicy Bypass -File tools/verify_phase1.ps1 && pnpm check && pnpm build:browser && pnpm topology:validate && pnpm test:topology && cargo fmt -- --check && cargo clippy --workspace --tests -- -D warnings && cargo test --workspace && node --test tests/contracts/architecture_alignment.test.mjs tests/contract/database-framework.contract.test.mjs sdks/test/verify-sdk-ownership-boundaries.test.mjs",
+    "verify": "node tools/clean-generated-sdk-artifacts.mjs && node tools/materialize_phase1_contracts.mjs && node tools/materialize_phase1_contracts.mjs --check && node sdks/standardize-documents-sdk-family.mjs && node tools/materialize-apis-authority.mjs && node tools/patch-route-manifest-extensions.mjs && powershell -ExecutionPolicy Bypass -File tools/verify_phase1.ps1 && pnpm check && pnpm build:browser && pnpm topology:validate && pnpm test:topology && cargo fmt -- --check && cargo clippy --workspace --tests -- -D warnings && cargo test --workspace && node --test tests/contracts/architecture_alignment.test.mjs tests/contract/database-framework.contract.test.mjs sdks/test/verify-sdk-ownership-boundaries.test.mjs && pnpm run check:app-composition",
     "sdk:generate": "node sdks/standardize-documents-sdk-family.mjs && node scripts/generate-documents-sdk.mjs",
     "sdk:generate:check": "node sdks/standardize-documents-sdk-family.mjs --check",
     "sdk:check": "node sdks/test/verify-sdk-ownership-boundaries.test.mjs",
@@ -31,7 +31,7 @@
     "api:materialize": "node sdks/standardize-documents-sdk-family.mjs && node tools/materialize-apis-authority.mjs && node tools/patch-route-manifest-extensions.mjs",
     "api:materialize:check": "node sdks/standardize-documents-sdk-family.mjs --check && node tools/materialize-apis-authority.mjs --check",
     "api:check": "node sdks/standardize-documents-sdk-family.mjs --check && node tools/materialize-apis-authority.mjs --check && powershell -ExecutionPolicy Bypass -File tools/verify_phase1.ps1",
-    "db:materialize:contract": "node tools/materialize_documents_database_contract.mjs",
+    "db:materialize:contract": "node ../sdkwork-specs/tools/materialize-database-contract-from-baseline.mjs --root . --baseline database/ddl/baseline/postgres/0001_documents_baseline.sql --module-id documents --owner documents-platform --prefixes documents_ --engines postgres,sqlite",
     "db:validate": "node ../sdkwork-specs/tools/check-database-framework-standard.mjs --root .",
     "db:plan": "cargo run --manifest-path ../sdkwork-database/Cargo.toml -p sdkwork-database-cli -- --app-root . plan",
     "db:init": "cargo run --manifest-path ../sdkwork-database/Cargo.toml -p sdkwork-database-cli -- --app-root . init",
@@ -49,6 +49,7 @@
     "gateway:package:cloud": "node ../sdkwork-app-topology/scripts/gateway-cloud-bundle.mjs bundle --root .",
     "gateway:validate:cloud": "node ../sdkwork-app-topology/scripts/gateway-cloud-bundle.mjs validate --root .",
     "gateway:assembly:materialize": "node scripts/gateway/assembly-materialize.mjs",
-    "gateway:assembly:validate": "node scripts/gateway/assembly-validate.mjs"
+    "gateway:assembly:validate": "node scripts/gateway/assembly-validate.mjs",
+    "check:app-composition": "node ../sdkwork-specs/tools/verify-repo.mjs --root ."
   }
 }
