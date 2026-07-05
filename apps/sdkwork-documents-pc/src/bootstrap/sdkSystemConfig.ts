@@ -23,7 +23,7 @@ const DOCUMENTS_APP_SDK_METADATA = sdkMetadata({
   apiPrefix: APP_API_PREFIX,
   runtimeEnvName: 'VITE_SDKWORK_DOCUMENTS_APP_API_BASE_URL',
   sourceDir:
-    'sdks/sdkwork-documents-app-sdk/sdkwork-documents-app-sdk-typescript/generated/server-openapi',
+    'sdks/sdkwork-documents-app-sdk/sdkwork-documents-app-sdk-typescript/src/index.ts',
   archiveName: 'sdkwork-documents-app-sdk-typescript-0.1.0.zip',
   description: 'SDKWork Documents app API SDK',
 });
@@ -35,7 +35,7 @@ const DOCUMENTS_BACKEND_SDK_METADATA = sdkMetadata({
   apiPrefix: BACKEND_API_PREFIX,
   runtimeEnvName: 'VITE_SDKWORK_DOCUMENTS_BACKEND_API_BASE_URL',
   sourceDir:
-    'sdks/sdkwork-documents-backend-sdk/sdkwork-documents-backend-sdk-typescript/generated/server-openapi',
+    'sdks/sdkwork-documents-backend-sdk/sdkwork-documents-backend-sdk-typescript/src/index.ts',
   archiveName: 'sdkwork-documents-backend-sdk-typescript-0.1.0.zip',
   description: 'SDKWork Documents backend API SDK',
 });
@@ -46,7 +46,7 @@ const DOCUMENTS_OPEN_SDK_METADATA = sdkMetadata({
   sdkType: 'ai',
   apiPrefix: DOCUMENTS_OPEN_API_PREFIX,
   runtimeEnvName: 'VITE_SDKWORK_DOCUMENTS_OPEN_API_BASE_URL',
-  sourceDir: 'sdks/sdkwork-documents-sdk/sdkwork-documents-sdk-typescript/generated/server-openapi',
+  sourceDir: 'sdks/sdkwork-documents-sdk/sdkwork-documents-sdk-typescript/src/index.ts',
   archiveName: 'sdkwork-documents-sdk-typescript-0.1.0.zip',
   description: 'SDKWork Documents open API SDK',
 });
@@ -57,7 +57,7 @@ const LLM_OPEN_API_METADATA = sdkMetadata({
   sdkType: 'ai',
   apiPrefix: OPEN_API_PREFIX,
   runtimeEnvName: 'VITE_API_BASE_URL',
-  sourceDir: 'sdks/clawrouter-open-sdk/clawrouter-open-sdk-typescript/generated/server-openapi',
+  sourceDir: 'sdks/clawrouter-open-sdk/clawrouter-open-sdk-typescript/src/index.ts',
   archiveName: 'sdkwork-clawrouter-open-sdk-typescript-0.1.0.zip',
   description: 'SDKWork LLM Open API SDK',
 });
@@ -68,7 +68,7 @@ const DRIVE_OPEN_API_METADATA = sdkMetadata({
   sdkType: 'drive',
   apiPrefix: '/open/v3/api',
   runtimeEnvName: 'VITE_SDKWORK_DRIVE_OPEN_API_BASE_URL',
-  sourceDir: 'sdks/sdkwork-drive-app-sdk/sdkwork-drive-app-sdk-typescript/generated/server-openapi',
+  sourceDir: 'sdks/sdkwork-drive-app-sdk/sdkwork-drive-app-sdk-typescript/src/index.ts',
   archiveName: 'sdkwork-drive-app-sdk-typescript-0.1.0.zip',
   description: 'SDKWork Drive Open API SDK',
 });
@@ -79,7 +79,7 @@ const MEMORY_OPEN_API_METADATA = sdkMetadata({
   sdkType: 'memory',
   apiPrefix: '/mem/v3/api',
   runtimeEnvName: 'VITE_SDKWORK_MEMORY_OPEN_API_BASE_URL',
-  sourceDir: 'sdks/sdkwork-memory-app-sdk/sdkwork-memory-app-sdk-typescript/generated/server-openapi',
+  sourceDir: 'sdks/sdkwork-memory-app-sdk/sdkwork-memory-app-sdk-typescript/src/index.ts',
   archiveName: 'sdkwork-memory-app-sdk-typescript-0.1.0.zip',
   description: 'SDKWork Memory Open API SDK',
 });
@@ -90,18 +90,18 @@ const AGENT_OPEN_API_METADATA = sdkMetadata({
   sdkType: 'agent',
   apiPrefix: '/agent/v3/api',
   runtimeEnvName: 'VITE_SDKWORK_AGENT_OPEN_API_BASE_URL',
-  sourceDir: 'sdks/sdkwork-agents-app-sdk/sdkwork-agent-app-sdk-typescript/generated/server-openapi',
+  sourceDir: 'sdks/sdkwork-agents-app-sdk/sdkwork-agent-app-sdk-typescript/src/index.ts',
   archiveName: 'sdkwork-agents-app-sdk-typescript-0.1.0.zip',
   description: 'SDKWork Agent Open API SDK',
 });
 
 const PAYMENT_OPEN_API_METADATA = sdkMetadata({
   name: 'SdkworkPaymentClient',
-  packageName: '@sdkwork/commerce-app-sdk',
+  packageName: '@sdkwork/clawrouter-app-sdk/domains',
   sdkType: 'payment',
   apiPrefix: '/payments/v3',
   runtimeEnvName: 'VITE_SDKWORK_COMMERCE_APP_API_BASE_URL',
-  sourceDir: 'sdks/sdkwork-commerce-app-sdk/sdkwork-commerce-app-sdk-typescript/generated/server-openapi',
+  sourceDir: 'sdks/sdkwork-commerce-app-sdk/sdkwork-commerce-app-sdk-typescript/src/index.ts',
   archiveName: 'sdkwork-commerce-app-sdk-typescript-0.1.0.zip',
   description: 'SDKWork Payment Open API SDK',
 });
@@ -112,7 +112,7 @@ const IAAS_OPEN_API_METADATA = sdkMetadata({
   sdkType: 'iaas',
   apiPrefix: '/cloud/v3',
   runtimeEnvName: 'VITE_SDKWORK_IAAS_OPEN_API_BASE_URL',
-  sourceDir: 'sdks/clawrouter-open-sdk/clawrouter-open-sdk-typescript/generated/server-openapi',
+  sourceDir: 'sdks/clawrouter-open-sdk/clawrouter-open-sdk-typescript/src/index.ts',
   archiveName: 'sdkwork-clawrouter-open-sdk-typescript-0.1.0.zip',
   description: 'SDKWork IaaS Open API SDK',
 });
@@ -123,7 +123,7 @@ const PAAS_OPEN_API_METADATA = sdkMetadata({
   sdkType: 'paas',
   apiPrefix: '/paas/v3',
   runtimeEnvName: 'VITE_SDKWORK_PAAS_OPEN_API_BASE_URL',
-  sourceDir: 'sdks/clawrouter-open-sdk/clawrouter-open-sdk-typescript/generated/server-openapi',
+  sourceDir: 'sdks/clawrouter-open-sdk/clawrouter-open-sdk-typescript/src/index.ts',
   archiveName: 'sdkwork-clawrouter-open-sdk-typescript-0.1.0.zip',
   description: 'SDKWork PaaS Open API SDK',
 });

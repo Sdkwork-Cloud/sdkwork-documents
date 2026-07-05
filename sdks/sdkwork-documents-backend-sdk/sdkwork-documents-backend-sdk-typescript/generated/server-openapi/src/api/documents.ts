@@ -1,7 +1,7 @@
 import { backendApiPath } from './paths';
 import type { HttpClient } from '../http/client';
 
-import type { Document, DocumentCreateRequest, DocumentList, DocumentUpdateRequest } from '../types';
+import type { Document, DocumentCreateRequest, DocumentUpdateRequest, PageInfo } from '../types';
 
 
 export interface DocumentsCreateParams {
@@ -16,8 +16,8 @@ export class DocumentsApi {
   }
 
 
-async list(): Promise<DocumentList> {
-    return this.client.get<DocumentList>(backendApiPath(`/documents`));
+async list(): Promise<Record<string, unknown>> {
+    return this.client.get<Record<string, unknown>>(backendApiPath(`/documents`));
   }
 
 async create(body: DocumentCreateRequest, params: DocumentsCreateParams): Promise<Document> {

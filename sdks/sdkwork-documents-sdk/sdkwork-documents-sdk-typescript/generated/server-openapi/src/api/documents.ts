@@ -1,7 +1,7 @@
 import { customApiPath } from './paths';
 import type { HttpClient } from '../http/client';
 
-import type { Document, DocumentCapabilities, DocumentList } from '../types';
+import type { Document, DocumentCapabilities, PageInfo } from '../types';
 
 
 export class DocumentsCapabilitiesApi {
@@ -27,8 +27,8 @@ export class DocumentsApi {
   }
 
 
-async list(): Promise<DocumentList> {
-    return this.client.get<DocumentList>(customApiPath(`/documents`));
+async list(): Promise<Record<string, unknown>> {
+    return this.client.get<Record<string, unknown>>(customApiPath(`/documents`));
   }
 
 async retrieve(documentId: string): Promise<Document> {

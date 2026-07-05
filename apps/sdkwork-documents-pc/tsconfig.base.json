@@ -15,7 +15,7 @@
     "allowImportingTsExtensions": true,
     "paths": {
       "@sdkwork/documents-app-sdk": [
-        "../../sdks/sdkwork-documents-app-sdk/sdkwork-documents-app-sdk-typescript/generated/server-openapi/src/index.ts"
+        "../../sdks/sdkwork-documents-app-sdk/sdkwork-documents-app-sdk-typescript/src/index.ts"
       ],
       "@sdkwork/documents-pc-api-reference": [
         "./packages/sdkwork-documents-pc-api-reference/src/index.ts"
@@ -32,10 +32,10 @@
       ],
       "@sdkwork/documents-pc-shell": ["./packages/sdkwork-documents-pc-shell/src/index.tsx"],
       "@sdkwork/iam-app-sdk": [
-        "../../../sdkwork-iam/sdks/sdkwork-iam-app-sdk/sdkwork-iam-app-sdk-typescript/generated/server-openapi/src/index.ts"
+        "../../../sdkwork-iam/sdks/sdkwork-iam-app-sdk/sdkwork-iam-app-sdk-typescript/src/index.ts"
       ],
       "@sdkwork/iam-backend-sdk": [
-        "../../../sdkwork-iam/sdks/sdkwork-iam-backend-sdk/sdkwork-iam-backend-sdk-typescript/generated/server-openapi/src/index.ts"
+        "../../../sdkwork-iam/sdks/sdkwork-iam-backend-sdk/sdkwork-iam-backend-sdk-typescript/src/index.ts"
       ],
       "@sdkwork/appbase-pc-react": [
         "../../../sdkwork-appbase/packages/pc-react/foundation/sdkwork-appbase-pc-react/src/index.ts"

@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@sdkwork/documents-pc-commons": "workspace:*",
+    "@sdkwork/utils": "workspace:*",
     "lucide-react": "^0.511.0",
     "motion": "^12.38.0",
     "react": "^19.1.0",

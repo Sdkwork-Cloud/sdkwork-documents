@@ -55,7 +55,6 @@ const client = new SdkworkDocumentsAppClient({
 ## API Modules
 
 - `client.documents` - documents API
-- `client.sdkReference` - sdk_reference API
 
 ## Usage Examples
 
@@ -64,33 +63,6 @@ const client = new SdkworkDocumentsAppClient({
 ```typescript
 // GET /app/v3/api/documents
 const result = await client.documents.list();
-```
-
-### sdk_reference
-
-```typescript
-// Generate SDK archive
-const body = {
-  config: {
-    apiPrefix: 'apiPrefix',
-    apiSpecPath: 'apiSpecPath',
-    author: 'author',
-    baseUrl: 'baseUrl',
-    description: 'description',
-    language: 'language',
-    license: 'license',
-    name: 'name',
-    outputPath: 'outputPath',
-    packageName: 'packageName',
-    sdkType: 'app',
-    version: 'version',
-  },
-  language: 'language',
-  spec: {
-    value: 'value',
-  },
-};
-const result = await client.sdkReference.archives.create(body);
 ```
 
 ## Error Handling

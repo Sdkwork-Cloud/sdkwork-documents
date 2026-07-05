@@ -4,7 +4,9 @@
   "version": "0.1.0",
   "language": "typescript",
   "sdkType": "backend",
-  "packageName": "@sdkwork/documents-backend-sdk",
+  "packageName": "sdkwork-documents-backend-sdk-generated-typescript",
+  "transportPackageName": "sdkwork-documents-backend-sdk-generated-typescript",
+  "consumerPackageName": "@sdkwork/documents-backend-sdk",
   "generator": "@sdkwork/sdk-generator",
   "capabilities": {
     "supportsGeneratedTests": true,

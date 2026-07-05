@@ -1,17 +1,67 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ChevronRight, Terminal, BookOpen, Key, Zap, Cpu } from 'lucide-react';
+import { ChevronRight, Terminal, BookOpen, Key, Zap, Cpu, Wrench } from 'lucide-react';
+import { CopyButton } from '@sdkwork/documents-pc-commons';
 import { useDocumentsReferenceRuntime } from '@sdkwork/documents-pc-commons/runtime';
 import { documentsShellLayout, getDocumentsShellScrollOffsetPx } from '@sdkwork/documents-pc-commons';
+import { ModelKitConfigureAction } from '../components/ModelKitConfigureAction';
+import { ModelKitOverviewSection } from '../components/ModelKitOverviewSection';
+import { ToolConfigurationGrid } from '../components/ToolConfigurationGrid';
+import { ToolConfigurationGuide } from '../components/ToolConfigurationGuide';
+import { ToolProtocolBadge } from '../components/ToolProtocolBadge';
+import {
+  IDE_TOOL_CATEGORY_META,
+  IDE_TOOL_CATEGORY_ORDER,
+  IDE_TOOL_PROFILES,
+  buildIdeToolSnippets,
+  groupIdeToolProfilesByCategory,
+  resolveGatewayEndpoints,
+} from '../ideToolProfiles';
 
 const NODE_ENV_REFERENCE = 'process' + '.env';
 const API_KEY_ENV_NAME = 'SDKWORK_API_KEY';
+const API_KEY_PLACEHOLDER = '<YOUR_API_KEY>';
+
+const DOC_SECTION_IDS = [
+  'introduction',
+  'quickstart',
+  'authentication',
+  'models',
+  'tool-configuration',
+  'tool-modelkit',
+  ...IDE_TOOL_PROFILES.map((profile) => `tool-${profile.id}`),
+] as const;
+
+type DocSectionId = (typeof DOC_SECTION_IDS)[number];
+
+function resolveOpenApiBaseUrl(
+  readRuntimeEnv: (name: string) => string | undefined,
+): string {
+  return readRuntimeEnv('VITE_CLAWROUTER_OPEN_API_BASE_URL')
+    ?? readRuntimeEnv('VITE_API_BASE_URL')
+    ?? '/v1';
+}
 
 export function Docs() {
   const { t } = useTranslation();
-  const { sdkSystemConfig } = useDocumentsReferenceRuntime();
-  const [activeSection, setActiveSection] = useState('introduction');
+  const { sdkSystemConfig, readRuntimeEnv } = useDocumentsReferenceRuntime();
+  const [activeSection, setActiveSection] = useState<DocSectionId>('introduction');
   const appSdk = sdkSystemConfig['app-api'];
+
+  const gatewayEndpoints = useMemo(
+    () => resolveGatewayEndpoints(resolveOpenApiBaseUrl(readRuntimeEnv)),
+    [readRuntimeEnv],
+  );
+
+  const toolSnippets = useMemo(
+    () => buildIdeToolSnippets({
+      apiKeyPlaceholder: API_KEY_PLACEHOLDER,
+      ...gatewayEndpoints,
+    }),
+    [gatewayEndpoints],
+  );
+
+  const groupedToolProfiles = useMemo(() => groupIdeToolProfilesByCategory(), []);
 
   const installSnippet = useMemo(
     () => `npm install ${appSdk.packageName}`,
@@ -41,10 +91,9 @@ main();`;
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['introduction', 'quickstart', 'authentication', 'models'];
-      let current = sections[0];
+      let current: DocSectionId = DOC_SECTION_IDS[0];
 
-      for (const section of sections) {
+      for (const section of DOC_SECTION_IDS) {
         const element = document.getElementById(section);
         if (element && window.scrollY >= element.offsetTop - 100) {
           current = section;
@@ -67,6 +116,22 @@ main();`;
     }
   };
 
+  const sidebarButtonClass = (sectionId: string) => (
+    `text-[14px] w-full text-left px-2 py-1.5 rounded-md transition-colors ${
+      activeSection === sectionId
+        ? 'bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white font-medium'
+        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-white/5'
+    }`
+  );
+
+  const tocButtonClass = (sectionId: string) => (
+    `text-left transition-colors ${
+      activeSection === sectionId
+        ? 'text-blue-600 dark:text-blue-400 font-medium'
+        : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
+    }`
+  );
+
   return (
     <div className={documentsShellLayout.pageRoot}>
       <aside className={`w-64 shrink-0 border-r border-slate-200 dark:border-white/10 hidden md:block py-8 px-6 custom-scrollbar ${documentsShellLayout.stickySidebar}`}>
@@ -74,17 +139,47 @@ main();`;
           <div>
             <h3 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-3">{t('docs.gettingStarted')}</h3>
             <ul className="space-y-1.5">
-              <li><button onClick={() => scrollTo('introduction')} className={`text-[14px] w-full text-left px-2 py-1.5 rounded-md transition-colors ${activeSection === 'introduction' ? 'bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white font-medium' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-white/5'}`}>{t('docs.introduction')}</button></li>
-              <li><button onClick={() => scrollTo('quickstart')} className={`text-[14px] w-full text-left px-2 py-1.5 rounded-md transition-colors ${activeSection === 'quickstart' ? 'bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white font-medium' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-white/5'}`}>{t('docs.quickstart')}</button></li>
-              <li><button onClick={() => scrollTo('authentication')} className={`text-[14px] w-full text-left px-2 py-1.5 rounded-md transition-colors ${activeSection === 'authentication' ? 'bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white font-medium' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-white/5'}`}>{t('docs.authentication')}</button></li>
+              <li><button onClick={() => scrollTo('introduction')} className={sidebarButtonClass('introduction')}>{t('docs.introduction')}</button></li>
+              <li><button onClick={() => scrollTo('quickstart')} className={sidebarButtonClass('quickstart')}>{t('docs.quickstart')}</button></li>
+              <li><button onClick={() => scrollTo('authentication')} className={sidebarButtonClass('authentication')}>{t('docs.authentication')}</button></li>
             </ul>
           </div>
           <div>
             <h3 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-3">{t('docs.coreConcepts')}</h3>
             <ul className="space-y-1.5">
-              <li><button onClick={() => scrollTo('models')} className={`text-[14px] w-full text-left px-2 py-1.5 rounded-md transition-colors ${activeSection === 'models' ? 'bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white font-medium' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-white/5'}`}>{t('docs.models')}</button></li>
+              <li><button onClick={() => scrollTo('models')} className={sidebarButtonClass('models')}>{t('docs.models')}</button></li>
               <li><button className="text-[14px] w-full text-left px-2 py-1.5 rounded-md transition-colors text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-white/5">{t('docs.routing')}</button></li>
               <li><button className="text-[14px] w-full text-left px-2 py-1.5 rounded-md transition-colors text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-white/5">{t('docs.billing')}</button></li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-3">{t('docs.toolConfiguration')}</h3>
+            <ul className="space-y-4">
+              <li><button onClick={() => scrollTo('tool-configuration')} className={sidebarButtonClass('tool-configuration')}>{t('docs.page.toolConfigOverview', 'Overview')}</button></li>
+              <li><button onClick={() => scrollTo('tool-modelkit')} className={sidebarButtonClass('tool-modelkit')}>{t('docs.modelkit.title', 'ModelKit')}</button></li>
+              {IDE_TOOL_CATEGORY_ORDER.map((category) => {
+                const meta = IDE_TOOL_CATEGORY_META[category];
+                const profiles = groupedToolProfiles[category];
+                return (
+                  <li key={category}>
+                    <div className="px-2 pt-1 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                      {t(meta.labelKey, meta.fallbackLabel)}
+                    </div>
+                    <ul className="space-y-1">
+                      {profiles.map((profile) => (
+                        <li key={profile.id}>
+                          <button
+                            onClick={() => scrollTo(`tool-${profile.id}`)}
+                            className={sidebarButtonClass(`tool-${profile.id}`)}
+                          >
+                            {t(profile.labelKey, profile.fallbackLabel)}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </nav>
@@ -238,6 +333,164 @@ main();`;
               </table>
             </div>
           </div>
+
+          <div id="tool-configuration" className="mb-16 scroll-mt-24">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2 border-b border-slate-200 dark:border-white/10 pb-4">
+              <Wrench className="w-6 h-6 text-emerald-500" />
+              {t('docs.toolConfiguration')}
+            </h2>
+            <p className="text-base text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
+              {t('docs.page.toolConfigIntro')}
+            </p>
+
+            <div className="p-4 rounded-xl bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 mb-4">
+              <p className="text-sm text-amber-900 dark:text-amber-300/90 leading-relaxed">
+                {t('docs.page.toolConfigApiKeyHint')}{' '}
+                <a
+                  href="/console/api-keys"
+                  className="font-medium underline underline-offset-2 hover:text-amber-950 dark:hover:text-amber-200"
+                >
+                  {t('docs.page.toolConfigApiKeyLink', 'Open API Keys')}
+                </a>
+              </p>
+            </div>
+
+            <div className="p-4 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 mb-8">
+              <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed mb-2">
+                {t('docs.page.toolConfigModelHint', 'Use model IDs that are enabled for your API key group in the gateway catalog, such as gpt-4o-mini or claude-3-5-sonnet.')}
+              </p>
+              <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                {t('docs.page.toolConfigConsoleHint', 'Create and copy a real API key from the console API Keys page before applying manual snippets or launching ModelKit.')}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0a0a0a] p-4">
+                <div className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-2">
+                  {t('docs.page.openAiEndpoint')}
+                </div>
+                <code className="text-sm font-mono text-slate-800 dark:text-slate-200 break-all">
+                  {gatewayEndpoints.openAiBaseUrl}
+                </code>
+              </div>
+              <div className="rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0a0a0a] p-4">
+                <div className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-2">
+                  {t('docs.page.anthropicEndpoint')}
+                </div>
+                <code className="text-sm font-mono text-slate-800 dark:text-slate-200 break-all">
+                  {gatewayEndpoints.anthropicBaseUrl}
+                </code>
+              </div>
+              <div className="rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0a0a0a] p-4">
+                <div className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-2">
+                  {t('docs.page.geminiEndpoint')}
+                </div>
+                <code className="text-sm font-mono text-slate-800 dark:text-slate-200 break-all">
+                  {gatewayEndpoints.geminiBaseUrl}
+                </code>
+              </div>
+            </div>
+
+            <ToolConfigurationGrid onSelectTool={scrollTo} />
+          </div>
+
+          <ModelKitOverviewSection endpoints={gatewayEndpoints} apiKeyPlaceholder={API_KEY_PLACEHOLDER} />
+
+          {IDE_TOOL_CATEGORY_ORDER.map((category) => {
+            const meta = IDE_TOOL_CATEGORY_META[category];
+            const profiles = groupedToolProfiles[category];
+
+            return (
+              <div key={category} className="mb-10">
+                <h3 className="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-6 border-b border-slate-200 dark:border-white/10 pb-3">
+                  {t(meta.labelKey, meta.fallbackLabel)}
+                </h3>
+
+                {profiles.map((profile) => {
+                  const sectionId = `tool-${profile.id}`;
+                  const activeEndpoint = profile.endpointKind === 'anthropic'
+                    ? gatewayEndpoints.anthropicBaseUrl
+                    : profile.endpointKind === 'gemini'
+                      ? gatewayEndpoints.geminiBaseUrl
+                      : gatewayEndpoints.openAiBaseUrl;
+                  const snippet = toolSnippets[profile.id];
+
+                  return (
+                    <div key={profile.id} id={sectionId} className="mb-16 scroll-mt-24">
+                      <div className="flex flex-wrap items-center gap-3 mb-3">
+                        <h3 className="text-xl font-bold text-slate-900 dark:text-white">
+                          {t(profile.labelKey, profile.fallbackLabel)}
+                        </h3>
+                        <ToolProtocolBadge
+                          profile={profile}
+                          label={t(profile.protocolKey, profile.fallbackProtocol)}
+                        />
+                      </div>
+                      <p className="text-base text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
+                        {t(profile.summaryKey, profile.fallbackSummary)}
+                      </p>
+
+                      <dl className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 text-sm">
+                        <div className="rounded-lg border border-slate-200 dark:border-white/10 p-4">
+                          <dt className="font-semibold text-slate-900 dark:text-white mb-1">
+                            {t('docs.page.toolConfigLocation')}
+                          </dt>
+                          <dd className="text-slate-600 dark:text-slate-400">
+                            {t(profile.configPathKey, profile.fallbackConfigPath)}
+                          </dd>
+                        </div>
+                        <div className="rounded-lg border border-slate-200 dark:border-white/10 p-4">
+                          <dt className="font-semibold text-slate-900 dark:text-white mb-1">
+                            {t('docs.page.toolConfigEndpoint')}
+                          </dt>
+                          <dd className="font-mono text-slate-600 dark:text-slate-400 break-all">
+                            {activeEndpoint}
+                          </dd>
+                        </div>
+                        <div className="rounded-lg border border-slate-200 dark:border-white/10 p-4">
+                          <dt className="font-semibold text-slate-900 dark:text-white mb-1">
+                            {t('docs.page.toolConfigReference')}
+                          </dt>
+                          <dd className="text-slate-600 dark:text-slate-400">
+                            {t(profile.referenceKey, profile.fallbackReference)}
+                          </dd>
+                        </div>
+                      </dl>
+
+                      <ToolConfigurationGuide profile={profile} />
+
+                      <div className="mb-6">
+                        <ModelKitConfigureAction
+                          profile={profile}
+                          endpoints={gatewayEndpoints}
+                          apiKeyPlaceholder={API_KEY_PLACEHOLDER}
+                        />
+                      </div>
+
+                      <div className="rounded-xl overflow-hidden border border-slate-200 bg-slate-50 shadow-sm dark:border-white/10 dark:bg-[#0d1117]">
+                        <div className="flex items-center justify-between px-4 py-2.5 bg-slate-100 border-b border-slate-200 dark:bg-[#161b22] dark:border-white/5">
+                          <span className="text-[13px] font-medium text-slate-500 dark:text-slate-400">
+                            {profile.snippetLanguage}
+                          </span>
+                          <CopyButton
+                            text={snippet}
+                            label={t('common.actions.copyCode', 'Copy code')}
+                            copiedLabel={t('common.actions.codeCopied', 'Code copied')}
+                            variant="inline"
+                          />
+                        </div>
+                        <div className="p-4 overflow-x-auto">
+                          <pre className="text-[13px] font-mono text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-wrap">
+                            <code>{snippet}</code>
+                          </pre>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })}
         </div>
       </main>
 
@@ -245,37 +498,58 @@ main();`;
         <h4 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-4">{t('docs.page.onThisPage')}</h4>
         <ul className="space-y-2.5 text-[13px]">
           <li>
-            <button
-              onClick={() => scrollTo('introduction')}
-              className={`text-left transition-colors ${activeSection === 'introduction' ? 'text-blue-600 dark:text-blue-400 font-medium' : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'}`}
-            >
+            <button onClick={() => scrollTo('introduction')} className={tocButtonClass('introduction')}>
               {t('common.actions.introduction')}
             </button>
           </li>
           <li>
-            <button
-              onClick={() => scrollTo('quickstart')}
-              className={`text-left transition-colors ${activeSection === 'quickstart' ? 'text-blue-600 dark:text-blue-400 font-medium' : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'}`}
-            >
+            <button onClick={() => scrollTo('quickstart')} className={tocButtonClass('quickstart')}>
               {t('common.actions.quickstart')}
             </button>
           </li>
           <li>
-            <button
-              onClick={() => scrollTo('authentication')}
-              className={`text-left transition-colors ${activeSection === 'authentication' ? 'text-blue-600 dark:text-blue-400 font-medium' : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'}`}
-            >
+            <button onClick={() => scrollTo('authentication')} className={tocButtonClass('authentication')}>
               {t('common.actions.authorization')}
             </button>
           </li>
           <li>
-            <button
-              onClick={() => scrollTo('models')}
-              className={`text-left transition-colors ${activeSection === 'models' ? 'text-blue-600 dark:text-blue-400 font-medium' : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'}`}
-            >
+            <button onClick={() => scrollTo('models')} className={tocButtonClass('models')}>
               {t('common.actions.models')}
             </button>
           </li>
+          <li>
+            <button onClick={() => scrollTo('tool-configuration')} className={tocButtonClass('tool-configuration')}>
+              {t('docs.toolConfiguration')}
+            </button>
+          </li>
+          <li>
+            <button onClick={() => scrollTo('tool-modelkit')} className={`${tocButtonClass('tool-modelkit')} pl-3`}>
+              {t('docs.modelkit.title', 'ModelKit')}
+            </button>
+          </li>
+          {IDE_TOOL_CATEGORY_ORDER.map((category) => {
+            const meta = IDE_TOOL_CATEGORY_META[category];
+            const profiles = groupedToolProfiles[category];
+            return (
+              <li key={category}>
+                <div className="pt-2 pb-1 pl-3 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+                  {t(meta.labelKey, meta.fallbackLabel)}
+                </div>
+                <ul className="space-y-2.5">
+                  {profiles.map((profile) => (
+                    <li key={profile.id}>
+                      <button
+                        onClick={() => scrollTo(`tool-${profile.id}`)}
+                        className={`${tocButtonClass(`tool-${profile.id}`)} pl-5`}
+                      >
+                        {t(profile.labelKey, profile.fallbackLabel)}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            );
+          })}
         </ul>
       </aside>
     </div>

@@ -93,7 +93,7 @@ export default defineConfig(({ mode }) => {
         '@': path.resolve(configDir, '.'),
         '@sdkwork/documents-app-sdk': path.resolve(
           repoRoot,
-          'sdks/sdkwork-documents-app-sdk/sdkwork-documents-app-sdk-typescript/generated/server-openapi/src/index.ts',
+          'sdks/sdkwork-documents-app-sdk/sdkwork-documents-app-sdk-typescript/src/index.ts',
         ),
         '@sdkwork/documents-pc-api-reference/openapiTypes': path.resolve(
           configDir,
@@ -142,11 +142,11 @@ export default defineConfig(({ mode }) => {
         '@sdkwork/sdk-common': fs.existsSync(sdkCommonDist) ? sdkCommonDist : sdkCommonSource,
         '@sdkwork/iam-app-sdk': path.resolve(
           workspaceRoot,
-          'sdkwork-iam/sdks/sdkwork-iam-app-sdk/sdkwork-iam-app-sdk-typescript/generated/server-openapi/src/index.ts',
+          'sdkwork-iam/sdks/sdkwork-iam-app-sdk/sdkwork-iam-app-sdk-typescript/src/index.ts',
         ),
         '@sdkwork/iam-backend-sdk': path.resolve(
           workspaceRoot,
-          'sdkwork-iam/sdks/sdkwork-iam-backend-sdk/sdkwork-iam-backend-sdk-typescript/generated/server-openapi/src/index.ts',
+          'sdkwork-iam/sdks/sdkwork-iam-backend-sdk/sdkwork-iam-backend-sdk-typescript/src/index.ts',
         ),
         '@sdkwork/appbase-pc-react': path.resolve(
           workspaceRoot,

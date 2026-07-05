@@ -12,7 +12,7 @@
   "mode": "apply",
   "hasChanges": false,
   "hasDestructiveChanges": false,
-  "changeFingerprint": "b08dab18f9d86af9af71522012e2c57c880d3e6f41410ff005f5c0ec4923c476",
+  "changeFingerprint": "7e157ba8d00827085bcd6c6097eeed293dad920ce58f3be5f68be5471a2c177a",
   "changeImpact": {
     "schemaVersion": 1,
     "areas": [],
@@ -56,10 +56,10 @@
     "localVersions": []
   },
   "stats": {
-    "totalFiles": 30,
-    "models": 6,
+    "totalFiles": 45,
+    "models": 21,
     "apis": 1,
-    "types": 8
+    "types": 23
   },
   "warnings": [],
   "syncSummary": {
@@ -67,10 +67,10 @@
     "controlPlaneEnabled": true,
     "writtenFiles": 0,
     "skippedScaffoldFiles": 2,
-    "skippedUnchangedGeneratedFiles": 28,
+    "skippedUnchangedGeneratedFiles": 43,
     "deletedGeneratedFiles": 0,
     "changeSummaryPath": ".sdkwork/sdkwork-generator-changes.json",
-    "changeFingerprint": "b08dab18f9d86af9af71522012e2c57c880d3e6f41410ff005f5c0ec4923c476",
+    "changeFingerprint": "7e157ba8d00827085bcd6c6097eeed293dad920ce58f3be5f68be5471a2c177a",
     "changes": {
       "createdGeneratedFiles": [],
       "updatedGeneratedFiles": [],
@@ -100,8 +100,23 @@
         "src/types/document-list.ts",
         "src/types/document-update-request.ts",
         "src/types/document.ts",
+        "src/types/documents-create-response201.ts",
+        "src/types/documents-list-response.ts",
+        "src/types/documents-retrieve-response.ts",
+        "src/types/documents-update-response.ts",
+        "src/types/field-error.ts",
         "src/types/index.ts",
+        "src/types/page-info.ts",
+        "src/types/problem-detail.ts",
         "src/types/problem-details.ts",
+        "src/types/sdk-work-api-response.ts",
+        "src/types/sdk-work-command-data.ts",
+        "src/types/sdk-work-command-response.ts",
+        "src/types/sdk-work-list-response.ts",
+        "src/types/sdk-work-page-data.ts",
+        "src/types/sdk-work-platform-error-code.ts",
+        "src/types/sdk-work-resource-data.ts",
+        "src/types/sdk-work-resource-response.ts",
         "tsconfig.json"
       ],
       "deletedGeneratedFiles": [],

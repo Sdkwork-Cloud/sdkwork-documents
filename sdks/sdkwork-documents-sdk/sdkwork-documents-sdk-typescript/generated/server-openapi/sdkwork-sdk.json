@@ -4,7 +4,9 @@
   "version": "0.1.0",
   "language": "typescript",
   "sdkType": "custom",
-  "packageName": "@sdkwork/documents-sdk",
+  "packageName": "sdkwork-documents-sdk-generated-typescript",
+  "transportPackageName": "sdkwork-documents-sdk-generated-typescript",
+  "consumerPackageName": "@sdkwork/documents-sdk",
   "generator": "@sdkwork/sdk-generator",
   "capabilities": {
     "supportsGeneratedTests": true,
