@@ -2,7 +2,7 @@ import { MethodBadge } from '../components/MethodBadge';
 import React, { useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ApiEndpointView } from '../components/ApiEndpointView';
-import { ChevronRight, Search, Loader2, X, Clock3 } from 'lucide-react';
+import { ChevronRight, Search, Loader2, X, Clock3, AlertCircle, RefreshCw } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   createReferenceSidebarGroupElementId,
@@ -30,29 +30,33 @@ export function ApiReference() {
   const [activeEndpointId, setActiveEndpointId] = useState<string>('');
   const [apiData, setApiData] = useState<ApiSystemData[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [collapsedGroups, setCollapsedGroups] = useState<ReferenceSidebarCollapsedGroups>({});
   const [searchQuery, setSearchQuery] = useState('');
 
-  useEffect(() => {
-    const loadOpenApi = async () => {
-      try {
-        const systems = await loadApiReferenceSystems();
-        setApiData(systems);
+  const loadOpenApi = async () => {
+    setLoading(true);
+    setLoadError(false);
+    try {
+      const systems = await loadApiReferenceSystems();
+      setApiData(systems);
 
-        if (systems.length > 0) {
-          setActiveSystem(systems[0].id);
-          const defaultEndpoint = getDefaultApiReferenceEndpoint(systems[0]);
-          if (defaultEndpoint) {
-            setActiveEndpointId(defaultEndpoint.id);
-          }
+      if (systems.length > 0) {
+        setActiveSystem(systems[0].id);
+        const defaultEndpoint = getDefaultApiReferenceEndpoint(systems[0]);
+        if (defaultEndpoint) {
+          setActiveEndpointId(defaultEndpoint.id);
         }
-
-        setLoading(false);
-      } catch {
-        setLoading(false);
       }
-    };
 
+      setLoading(false);
+    } catch {
+      setLoading(false);
+      setLoadError(true);
+    }
+  };
+
+  useEffect(() => {
     loadOpenApi();
   }, []);
 
@@ -207,6 +211,29 @@ export function ApiReference() {
     return (
       <div className={documentsShellLayout.pageRootCentered}>
         <Loader2 className="w-8 h-8 animate-spin text-blue-500" />
+      </div>
+    );
+  }
+
+  if (loadError) {
+    return (
+      <div className={documentsShellLayout.pageRootCentered}>
+        <div className="flex flex-col items-center gap-4 max-w-md text-center">
+          <AlertCircle className="w-10 h-10 text-red-500" />
+          <h2 className="text-lg font-semibold text-slate-900 dark:text-white">
+            {t('api.loadError.title', 'Failed to load API schema')}
+          </h2>
+          <p className="text-sm text-slate-600 dark:text-slate-400">
+            {t('api.loadError.description', 'The backend service may be starting up or temporarily unavailable. Please try again.')}
+          </p>
+          <button
+            onClick={loadOpenApi}
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors shadow-sm"
+          >
+            <RefreshCw className="w-4 h-4" />
+            {t('api.loadError.retry', 'Retry')}
+          </button>
+        </div>
       </div>
     );
   }

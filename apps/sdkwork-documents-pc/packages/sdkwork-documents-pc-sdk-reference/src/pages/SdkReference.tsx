@@ -1,7 +1,7 @@
 import { MethodBadge } from '../components/MethodBadge';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { AlertCircle, Terminal, Code, Coffee, Box, BookOpen, ChevronRight, Download, Gem, FileCode2, Hash, Cog, Smartphone, Search, X } from 'lucide-react';
+import { AlertCircle, Terminal, Code, Coffee, Box, BookOpen, ChevronRight, Download, Gem, FileCode2, Hash, Cog, Smartphone, Search, X, RefreshCw, Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { SdkLanguage } from '../data/sdkData';
 import { getSdkDataForSystem } from '../data/sdkData';
@@ -60,29 +60,36 @@ export function SdkReference() {
   const [downloadError, setDownloadError] = useState<string | null>(null);
   const [collapsedGroups, setCollapsedGroups] = useState<ReferenceSidebarCollapsedGroups>({});
   const [searchQuery, setSearchQuery] = useState('');
+  const [loadError, setLoadError] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const sdkData = getSdkDataForSystem(activeSystem);
   const activeSdk = sdkData.find(s => s.id === activeSdkId) || sdkData[0];
   const activeLanguage = normalizeSdkReferenceLanguage(activeSdk.id);
 
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        const systems = await loadSdkReferenceSystems();
-        setApiData(systems);
-        const nextActiveSystem = systems.some((system) => system.id === activeSystem)
-          ? activeSystem
-          : systems[0]?.id ?? 'llm-open-api';
-        if (nextActiveSystem !== activeSystem) {
-          setActiveSystem(nextActiveSystem);
-        }
-      } catch {
-        setActiveSpec(null);
-        setReadmeContent(null);
+  const loadSdkData = async () => {
+    setLoading(true);
+    setLoadError(false);
+    try {
+      const systems = await loadSdkReferenceSystems();
+      setApiData(systems);
+      const nextActiveSystem = systems.some((system) => system.id === activeSystem)
+        ? activeSystem
+        : systems[0]?.id ?? 'llm-open-api';
+      if (nextActiveSystem !== activeSystem) {
+        setActiveSystem(nextActiveSystem);
       }
-    };
+      setLoading(false);
+    } catch {
+      setActiveSpec(null);
+      setReadmeContent(null);
+      setLoadError(true);
+      setLoading(false);
+    }
+  };
 
-    loadData();
+  useEffect(() => {
+    loadSdkData();
   }, []);
 
   const activeSystemData = apiData.find(s => s.id === activeSystem);
@@ -328,6 +335,37 @@ export function SdkReference() {
       </div>
     );
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen pt-20 bg-white dark:bg-[#0a0a0a]">
+        <Loader2 className="w-8 h-8 animate-spin text-blue-500" />
+      </div>
+    );
+  }
+
+  if (loadError) {
+    return (
+      <div className="flex items-center justify-center min-h-screen pt-20 bg-white dark:bg-[#0a0a0a]">
+        <div className="flex flex-col items-center gap-4 max-w-md text-center">
+          <AlertCircle className="w-10 h-10 text-red-500" />
+          <h2 className="text-lg font-semibold text-slate-900 dark:text-white">
+            {t('sdk.loadError.title', 'Failed to load SDK schema')}
+          </h2>
+          <p className="text-sm text-slate-600 dark:text-slate-400">
+            {t('sdk.loadError.description', 'The backend service may be starting up or temporarily unavailable. Please try again.')}
+          </p>
+          <button
+            onClick={loadSdkData}
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors shadow-sm"
+          >
+            <RefreshCw className="w-4 h-4" />
+            {t('sdk.loadError.retry', 'Retry')}
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col w-full min-h-screen pt-20 bg-white dark:bg-[#0a0a0a]">

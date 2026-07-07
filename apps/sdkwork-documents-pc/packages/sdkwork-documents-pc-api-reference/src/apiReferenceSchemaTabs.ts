@@ -820,12 +820,40 @@ function isOperationMethod(method: string): boolean {
   return OPEN_API_OPERATION_METHODS.includes(method as typeof OPEN_API_OPERATION_METHODS[number]);
 }
 
-async function defaultFetchJson(url: string): Promise<unknown> {
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error(`Failed to fetch ${url}: ${response.status}`);
+const FETCH_RETRY_COUNT = 3;
+const FETCH_RETRY_BASE_DELAY_MS = 500;
+
+function isTransientNetworkError(error: unknown): boolean {
+  if (error instanceof TypeError) {
+    return true;
   }
-  return response.json();
+  const message = error instanceof Error ? error.message : String(error);
+  return /failed to fetch|networkerror|err_connection_refused|load failed/i.test(message);
+}
+
+function delay(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function defaultFetchJson(url: string): Promise<unknown> {
+  let lastError: unknown;
+  for (let attempt = 0; attempt <= FETCH_RETRY_COUNT; attempt += 1) {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch ${url}: ${response.status}`);
+      }
+      return response.json();
+    } catch (error) {
+      lastError = error;
+      if (attempt < FETCH_RETRY_COUNT && isTransientNetworkError(error)) {
+        await delay(FETCH_RETRY_BASE_DELAY_MS * 2 ** attempt);
+        continue;
+      }
+      throw error;
+    }
+  }
+  throw lastError;
 }
 
 function iconForTab(id: string): ElementType {
