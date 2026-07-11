@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "kind": "sdkwork.iam.module",
+  "moduleId": "documents",
+  "domain": "documents",
+  "permissions": {
+    "catalog": [
+      {
+        "code": "documents.admin.delete",
+        "description": "Permission documents.admin.delete",
+        "source": "openapi"
+      },
+      {
+        "code": "documents.admin.read",
+        "description": "Permission documents.admin.read",
+        "source": "openapi"
+      },
+      {
+        "code": "documents.admin.write",
+        "description": "Permission documents.admin.write",
+        "source": "openapi"
+      },
+      {
+        "code": "documents.capabilities.read",
+        "description": "Permission documents.capabilities.read",
+        "source": "openapi"
+      },
+      {
+        "code": "documents.read",
+        "description": "Permission documents.read",
+        "source": "openapi"
+      },
+      {
+        "code": "documents.write",
+        "description": "Permission documents.write",
+        "source": "openapi"
+      }
+    ]
+  }
+}

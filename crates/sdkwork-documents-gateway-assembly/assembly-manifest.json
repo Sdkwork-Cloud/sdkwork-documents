@@ -4,7 +4,7 @@
   "applicationCode": "documents",
   "packageName": "sdkwork-documents-gateway-assembly",
   "crateDir": "crates/sdkwork-documents-gateway-assembly",
-  "generatedAt": "2026-06-25T13:08:05.527Z",
+  "generatedAt": "2026-07-08T01:33:37.544Z",
   "routeCrates": [
     {
       "packageName": "sdkwork-routes-documents-app-api",
