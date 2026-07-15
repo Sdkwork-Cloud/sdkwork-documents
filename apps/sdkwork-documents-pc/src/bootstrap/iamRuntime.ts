@@ -11,6 +11,7 @@ import type { SdkworkDocumentsPcRuntimeConfig } from './environment.ts';
 import type { SdkworkDocumentsPcSdkClientInventory } from './sdkClients.ts';
 import {
   createSdkworkDocumentsPcSessionStore,
+  SDKWORK_DOCUMENTS_PC_SESSION_STORAGE_KEY,
   type SdkworkDocumentsPcSessionSnapshot,
   type SdkworkDocumentsPcSessionStore,
 } from './sessionStore.ts';
@@ -166,7 +167,18 @@ function resolveSessionStorage(): Storage | undefined {
   if (typeof window === 'undefined') {
     return undefined;
   }
-  return window.sessionStorage;
+  migrateLegacySessionStorage(SDKWORK_DOCUMENTS_PC_SESSION_STORAGE_KEY);
+  return window.localStorage;
+}
+
+function migrateLegacySessionStorage(storageKey: string): void {
+  const legacySession = window.sessionStorage.getItem(storageKey);
+  if (legacySession && !window.localStorage.getItem(storageKey)) {
+    window.localStorage.setItem(storageKey, legacySession);
+  }
+  if (legacySession) {
+    window.sessionStorage.removeItem(storageKey);
+  }
 }
 
 function toIamDeploymentMode(deploymentProfile: string): IamDeploymentMode {
