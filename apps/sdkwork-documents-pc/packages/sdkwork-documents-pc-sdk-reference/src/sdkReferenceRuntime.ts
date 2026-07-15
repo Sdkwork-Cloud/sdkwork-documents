@@ -20,11 +20,15 @@ import type {
   ApiCategorySidebarNode,
   ApiSchemaTab,
   ApiSchemaTabsDocument,
+  ApiReferenceFetchJson,
   ApiSystemData as ApiReferenceSystemData,
 } from '@sdkwork/documents-pc-api-reference/apiReferenceSchemaTabs';
 import {
   buildApiCategorySidebarTree,
   buildApiReferenceSystemsFromTabs,
+  createApiReferenceSystemSummaries,
+  loadApiReferenceSchemaTabs,
+  loadApiReferenceSystem,
   loadApiReferenceSystems,
 } from '@sdkwork/documents-pc-api-reference/apiReferenceSchemaTabs';
 import { readDocumentsRuntimeEnv, getSdkSystemConfig } from '@sdkwork/documents-pc-commons/runtime';
@@ -121,6 +125,30 @@ export async function loadSdkReferenceSystems(): Promise<SdkReferenceSystemData[
   return systems
     .map(toSdkReferenceSystemData)
     .filter((system): system is SdkReferenceSystemData => system !== null);
+}
+
+export async function loadSdkReferenceSystemSummaries(
+  fetchJson?: ApiReferenceFetchJson,
+): Promise<SdkReferenceSystemData[]> {
+  const manifest = await loadApiReferenceSchemaTabs(fetchJson);
+  const normalizedManifest: ApiSchemaTabsDocument = {
+    ...manifest,
+    tabs: normalizeSdkReferenceTabs(manifest.tabs),
+  };
+  return createApiReferenceSystemSummaries(normalizedManifest)
+    .map(toSdkReferenceSystemData)
+    .filter((system): system is SdkReferenceSystemData => system !== null);
+}
+
+export async function loadSdkReferenceSystem(
+  system: SdkReferenceSystemData,
+  fetchJson?: ApiReferenceFetchJson,
+): Promise<SdkReferenceSystemData> {
+  const loadedSystem = toSdkReferenceSystemData(await loadApiReferenceSystem(system.schemaTab, fetchJson));
+  if (!loadedSystem) {
+    throw new Error(`Unsupported SDK reference system: ${system.id}`);
+  }
+  return loadedSystem;
 }
 
 export async function buildSdkReferenceSystems(

@@ -99,6 +99,7 @@ export interface ApiSystemData {
   id: string;
   name: string;
   icon: ElementType;
+  schemaTab: ApiSchemaTab;
   schemaUrl: string;
   requestBaseUrl: string;
   openApiSpec?: OpenApiDocument;
@@ -127,6 +128,44 @@ export function sortApiSchemaTabs(tabs: ApiSchemaTab[]): ApiSchemaTab[] {
     }
     return left.id.localeCompare(right.id);
   });
+}
+
+export async function loadApiReferenceSchemaTabs(
+  fetchJson: ApiReferenceFetchJson = defaultFetchJson,
+): Promise<ApiSchemaTabsDocument> {
+  try {
+    const manifestPayload = await fetchJson(API_SCHEMA_TABS_URL);
+    return normalizeApiSchemaTabsDocument(manifestPayload);
+  } catch {
+    return legacyApiSchemaTabsDocument();
+  }
+}
+
+export function createApiReferenceSystemSummaries(manifest: ApiSchemaTabsDocument): ApiSystemData[] {
+  return sortApiSchemaTabs(manifest.tabs).map((tab) => ({
+    id: tab.id,
+    name: tab.name,
+    icon: iconForTab(tab.id),
+    schemaTab: tab,
+    schemaUrl: tab.defaultSchemaUrl || tab.schemaUrls[0] || '',
+    requestBaseUrl: '',
+    categories: [],
+    status: tab.status ?? 'available',
+    description: tab.description,
+    serviceGroups: tab.serviceGroups ?? [],
+  }));
+}
+
+export async function loadApiReferenceSystem(
+  tab: ApiSchemaTab,
+  fetchJson: ApiReferenceFetchJson = defaultFetchJson,
+): Promise<ApiSystemData> {
+  const systems = await buildApiReferenceSystemsFromTabs({ tabs: [tab] }, fetchJson);
+  const system = systems[0];
+  if (!system) {
+    throw new Error(`API schema tab has no documented endpoints: ${tab.id}`);
+  }
+  return system;
 }
 
 export function buildApiCategorySidebarTree(categories: ApiCategory[]): ApiCategorySidebarNode[] {
@@ -195,6 +234,20 @@ export async function loadApiReferenceSystems(fetchJson: ApiReferenceFetchJson =
   }
 }
 
+function legacyApiSchemaTabsDocument(): ApiSchemaTabsDocument {
+  return {
+    tabs: [{
+      id: 'llm-open-api',
+      name: 'LLM Open API',
+      aliases: ['gateway'],
+      order: 10,
+      schemaUrls: [LEGACY_OPENAPI_URL],
+      defaultSchemaUrl: LEGACY_OPENAPI_URL,
+      status: 'available',
+    }],
+  };
+}
+
 export async function buildApiReferenceSystemsFromTabs(
   manifest: ApiSchemaTabsDocument,
   fetchJson: ApiReferenceFetchJson,
@@ -205,6 +258,7 @@ export async function buildApiReferenceSystemsFromTabs(
         id: tab.id,
         name: tab.name,
         icon: iconForTab(tab.id),
+        schemaTab: tab,
         schemaUrl: '',
         requestBaseUrl: '',
         categories: [],
@@ -228,6 +282,7 @@ export async function buildApiReferenceSystemsFromTabs(
       id: tab.id,
       name: tab.name,
       icon: iconForTab(tab.id),
+      schemaTab: tab,
       schemaUrl,
       requestBaseUrl: resolveApiSystemRequestBaseUrl(tab.id, schemaUrl, defaultSchemaDoc?.spec),
       openApiSpec: defaultSchemaDoc?.spec,

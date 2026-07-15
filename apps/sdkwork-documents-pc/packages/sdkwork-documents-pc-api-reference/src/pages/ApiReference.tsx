@@ -1,5 +1,5 @@
 import { MethodBadge } from '../components/MethodBadge';
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ApiEndpointView } from '../components/ApiEndpointView';
 import { ChevronRight, Search, Loader2, X, Clock3, AlertCircle, RefreshCw } from 'lucide-react';
@@ -15,9 +15,11 @@ import {
 import type { ApiReferenceEndpoint } from '../openapiTypes';
 import {
   buildApiCategorySidebarTree,
+  createApiReferenceSystemSummaries,
   getApiSystemDisplayName,
   getDefaultApiReferenceEndpoint,
-  loadApiReferenceSystems,
+  loadApiReferenceSchemaTabs,
+  loadApiReferenceSystem,
   type ApiCategorySidebarNode,
   type ApiSystemData,
 } from '../apiReferenceSchemaTabs';
@@ -31,33 +33,110 @@ export function ApiReference() {
   const [apiData, setApiData] = useState<ApiSystemData[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
+  const [loadingSystemIds, setLoadingSystemIds] = useState<Set<string>>(new Set());
+  const [systemLoadErrors, setSystemLoadErrors] = useState<Set<string>>(new Set());
   const [collapsedGroups, setCollapsedGroups] = useState<ReferenceSidebarCollapsedGroups>({});
   const [searchQuery, setSearchQuery] = useState('');
+  const loadedSystemIdsRef = useRef<Set<string>>(new Set());
+  const systemLoadPromisesRef = useRef<Map<string, Promise<ApiSystemData>>>(new Map());
+  const loadGenerationRef = useRef(0);
+
+  const activateSystem = (system: ApiSystemData) => {
+    setActiveSystem(system.id);
+    const defaultEndpoint = getDefaultApiReferenceEndpoint(system);
+    setActiveEndpointId(defaultEndpoint?.id ?? '');
+  };
+
+  const loadAndActivateSystem = async (system: ApiSystemData) => {
+    if (system.status === 'planned' || loadedSystemIdsRef.current.has(system.id)) {
+      activateSystem(system);
+      return;
+    }
+
+    const loadGeneration = loadGenerationRef.current;
+    let loadPromise = systemLoadPromisesRef.current.get(system.id);
+    if (!loadPromise) {
+      setLoadingSystemIds((current) => new Set(current).add(system.id));
+      setSystemLoadErrors((current) => {
+        const next = new Set(current);
+        next.delete(system.id);
+        return next;
+      });
+      loadPromise = loadApiReferenceSystem(system.schemaTab);
+      systemLoadPromisesRef.current.set(system.id, loadPromise);
+    }
+
+    try {
+      const loadedSystem = await loadPromise;
+      if (loadGeneration !== loadGenerationRef.current) {
+        return;
+      }
+      loadedSystemIdsRef.current.add(loadedSystem.id);
+      setApiData((current) => current.map((item) => (
+        item.id === loadedSystem.id ? loadedSystem : item
+      )));
+      activateSystem(loadedSystem);
+    } catch {
+      if (loadGeneration !== loadGenerationRef.current) {
+        return;
+      }
+      setSystemLoadErrors((current) => new Set(current).add(system.id));
+    } finally {
+      if (loadGeneration !== loadGenerationRef.current) {
+        return;
+      }
+      systemLoadPromisesRef.current.delete(system.id);
+      setLoadingSystemIds((current) => {
+        const next = new Set(current);
+        next.delete(system.id);
+        return next;
+      });
+    }
+  };
 
   const loadOpenApi = async () => {
+    const loadGeneration = loadGenerationRef.current + 1;
+    loadGenerationRef.current = loadGeneration;
     setLoading(true);
     setLoadError(false);
+    setSystemLoadErrors(new Set());
+    loadedSystemIdsRef.current.clear();
+    systemLoadPromisesRef.current.clear();
     try {
-      const systems = await loadApiReferenceSystems();
-      setApiData(systems);
-
-      if (systems.length > 0) {
-        setActiveSystem(systems[0].id);
-        const defaultEndpoint = getDefaultApiReferenceEndpoint(systems[0]);
-        if (defaultEndpoint) {
-          setActiveEndpointId(defaultEndpoint.id);
-        }
+      const manifest = await loadApiReferenceSchemaTabs();
+      const systems = createApiReferenceSystemSummaries(manifest);
+      if (systems.length === 0) {
+        throw new Error('API schema tabs document has no systems');
       }
 
+      const initialSummary = systems[0];
+      const initialSystem = initialSummary.status === 'planned'
+        ? initialSummary
+        : await loadApiReferenceSystem(initialSummary.schemaTab);
+      if (loadGeneration !== loadGenerationRef.current) {
+        return;
+      }
+      if (initialSystem.status !== 'planned') {
+        loadedSystemIdsRef.current.add(initialSystem.id);
+      }
+      systems[0] = initialSystem;
+      setApiData(systems);
+      activateSystem(initialSystem);
       setLoading(false);
     } catch {
+      if (loadGeneration !== loadGenerationRef.current) {
+        return;
+      }
       setLoading(false);
       setLoadError(true);
     }
   };
 
   useEffect(() => {
-    loadOpenApi();
+    void loadOpenApi();
+    return () => {
+      loadGenerationRef.current += 1;
+    };
   }, []);
 
   const activeSystemData = apiData.find(s => s.id === activeSystem);
@@ -249,15 +328,8 @@ export function ApiReference() {
             return (
               <button
                 key={system.id}
-                onClick={() => {
-                  setActiveSystem(system.id);
-                  const defaultEndpoint = getDefaultApiReferenceEndpoint(system);
-                  if (defaultEndpoint) {
-                    setActiveEndpointId(defaultEndpoint.id);
-                  } else {
-                    setActiveEndpointId('');
-                  }
-                }}
+                onClick={() => void loadAndActivateSystem(system)}
+                aria-busy={loadingSystemIds.has(system.id)}
                 className={`flex items-center gap-2 py-4 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
                   isActive
                     ? 'border-blue-500 text-blue-600 dark:text-blue-400'
@@ -266,6 +338,15 @@ export function ApiReference() {
               >
                 <Icon className="w-4 h-4" />
                 {getApiSystemDisplayName(system)}
+                {loadingSystemIds.has(system.id) && (
+                  <Loader2 className="h-3.5 w-3.5 animate-spin text-blue-500" />
+                )}
+                {systemLoadErrors.has(system.id) && (
+                  <AlertCircle
+                    className="h-3.5 w-3.5 text-red-500"
+                    aria-label={t('api.loadError.retry', 'Retry')}
+                  />
+                )}
                 {system.status === 'planned' && (
                   <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-semibold text-slate-500 dark:bg-white/10 dark:text-slate-300">
                     {t('api.planned.badge', 'Planned')}

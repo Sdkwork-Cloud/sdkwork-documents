@@ -1,8 +1,13 @@
-export {
+import {
   createClient,
-  SdkworkClient,
+  SdkworkDocumentsOpenClient,
 } from '../generated/server-openapi/src/index';
-export type { SdkworkConfig } from '../generated/server-openapi/src/types/common';
+import type { SdkworkCustomConfig } from '../generated/server-openapi/src/types/common';
+
+export { SdkworkDocumentsOpenClient, createClient };
+export type { SdkworkCustomConfig };
+export type SdkworkConfig = SdkworkCustomConfig;
+export type SdkworkClient = SdkworkDocumentsOpenClient;
 export * from '../generated/server-openapi/src/types';
 export * from '../generated/server-openapi/src/api';
 export * from '../generated/server-openapi/src/http';
