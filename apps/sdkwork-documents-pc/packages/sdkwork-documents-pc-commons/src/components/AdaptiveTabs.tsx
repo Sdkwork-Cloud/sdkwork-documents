@@ -233,7 +233,7 @@ export function AdaptiveTabs({ items, activeId, onSelect, moreLabel, ariaLabel }
         </div>
       )}
 
-      <div className="pointer-events-none absolute left-0 top-0 h-0 overflow-hidden opacity-0" aria-hidden="true">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-0 w-full max-w-full overflow-hidden opacity-0" aria-hidden="true">
         <div className="flex w-max items-center gap-8">
           {items.map((item) => (
             <button

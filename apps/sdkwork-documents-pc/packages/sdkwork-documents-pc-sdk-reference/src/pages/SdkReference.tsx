@@ -11,9 +11,9 @@ import {
   isReferenceSidebarGroupCollapsed,
   toggleReferenceSidebarGroup,
   filterReferenceSidebarTree,
-  AdaptiveTabs,
   type ReferenceSidebarCollapsedGroups,
 } from '@sdkwork/documents-pc-commons';
+import { AdaptiveTabs } from '@sdkwork/documents-pc-commons/adaptive-tabs';
 import { resolveDocumentsRuntimeBoolean } from '@sdkwork/documents-pc-commons/runtime';
 import { SdkEndpointView } from '../components/SdkEndpointView';
 import type { ApiReferenceEndpoint } from '@sdkwork/documents-pc-api-reference/openapiTypes';

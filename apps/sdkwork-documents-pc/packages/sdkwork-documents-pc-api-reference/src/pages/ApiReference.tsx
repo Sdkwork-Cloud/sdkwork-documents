@@ -10,9 +10,9 @@ import {
   toggleReferenceSidebarGroup,
   filterReferenceSidebarTree,
   documentsShellLayout,
-  AdaptiveTabs,
   type ReferenceSidebarCollapsedGroups,
 } from '@sdkwork/documents-pc-commons';
+import { AdaptiveTabs } from '@sdkwork/documents-pc-commons/adaptive-tabs';
 import type { ApiReferenceEndpoint } from '../openapiTypes';
 import {
   buildApiCategorySidebarTree,

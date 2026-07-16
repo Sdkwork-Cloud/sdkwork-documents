@@ -16,6 +16,10 @@
       "import": "./src/runtime.ts",
       "types": "./src/runtime.ts"
     },
+    "./adaptive-tabs": {
+      "import": "./src/components/AdaptiveTabs.tsx",
+      "types": "./src/components/AdaptiveTabs.tsx"
+    },
     "./documentsShellLayout.css": "./src/documentsShellLayout.css"
   },
   "scripts": {

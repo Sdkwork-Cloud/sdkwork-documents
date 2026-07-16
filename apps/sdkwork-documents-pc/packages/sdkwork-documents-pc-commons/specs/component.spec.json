@@ -16,7 +16,7 @@
     "manifests": ["package.json"]
   },
   "contracts": {
-    "publicExports": [".", "./runtime"],
+    "publicExports": [".", "./runtime", "./adaptive-tabs"],
     "runtimeEntrypoints": ["DocumentsReferenceRuntimeProvider", "getDocumentsAppSdkClient"],
     "sdkClients": ["@sdkwork/documents-app-sdk"],
     "events": [],
