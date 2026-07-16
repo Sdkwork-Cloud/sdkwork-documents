@@ -54,7 +54,7 @@ function operationEntries(openapi) {
 
 test("documents SDK family assemblies declare owner-only authority metadata", () => {
   for (const family of families) {
-    const assemblyPath = path.join("sdks", family.root, ".sdkwork-assembly.json");
+    const assemblyPath = path.join("sdks", family.root, "sdk-manifest.json");
     assert.ok(existsSync(path.join(workspaceRoot, assemblyPath)), `${family.root} must have ${assemblyPath}`);
 
     const assembly = readJson(assemblyPath);

@@ -1,18 +1,13 @@
-//! Generated gateway assembly for sdkwork-documents.
+//! Gateway assembly for the SDKWork Documents HTTP plane.
 
+pub mod bootstrap;
 mod generated;
 
-pub struct ApplicationAssembly {
-    pub router: axum::Router,
-}
-
-pub async fn assemble_application_router() -> ApplicationAssembly {
-    let mut router = axum::Router::new();
-    router = router.merge(sdkwork_routes_documents_app_api::gateway_mount());
-    router = router.merge(sdkwork_routes_documents_backend_api::gateway_mount());
-    router = router.merge(sdkwork_routes_documents_open_api::gateway_mount());
-    ApplicationAssembly { router }
-}
+pub use bootstrap::{
+    assemble_application_business_router, assemble_application_business_router_from_env,
+    assemble_application_router, ApplicationAssembly,
+};
+pub use sdkwork_routes_documents_app_api::DocumentsRuntime;
 
 pub fn assembly_route_count() -> usize {
     generated::ROUTE_CRATE_COUNT

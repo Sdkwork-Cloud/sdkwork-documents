@@ -17,8 +17,11 @@ where
 }
 
 pub fn build_router_with_shared_open_api(api: Arc<dyn DocumentsOpenApi>) -> Router {
+    build_business_router_with_shared_open_api(api).route(paths::HEALTHZ, get(handlers::health))
+}
+
+pub fn build_business_router_with_shared_open_api(api: Arc<dyn DocumentsOpenApi>) -> Router {
     Router::new()
-        .route(paths::HEALTHZ, get(handlers::health))
         .route(paths::CAPABILITIES, get(handlers::retrieve_capabilities))
         .route(paths::DOCUMENTS, get(handlers::list_documents))
         .route(paths::DOCUMENT, get(handlers::retrieve_document))

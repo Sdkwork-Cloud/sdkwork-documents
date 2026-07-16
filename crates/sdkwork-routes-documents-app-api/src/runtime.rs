@@ -7,13 +7,15 @@ use sdkwork_documents_contract::{
     DocumentsAppApi, DocumentsBackendApi, DocumentsOpenApi, DocumentsRepository,
 };
 use sdkwork_documents_database_host::bootstrap_documents_database_from_env;
+use sdkwork_iam_web_adapter::IamWebRequestContextResolver;
 use sdkwork_routes_documents_backend_api::{
-    build_router_with_shared_backend_api, wrap_router_with_web_framework as wrap_backend_router,
+    build_business_router_with_shared_backend_api, build_router_with_shared_backend_api,
+    wrap_router_with_web_framework as wrap_backend_router,
 };
 use sdkwork_routes_documents_open_api::{
-    build_router_with_shared_open_api, wrap_router_with_web_framework as wrap_open_router,
+    build_business_router_with_shared_open_api, build_router_with_shared_open_api,
+    wrap_router_with_web_framework as wrap_open_router,
 };
-use sdkwork_iam_web_adapter::IamWebRequestContextResolver;
 
 use crate::bootstrap;
 
@@ -66,6 +68,13 @@ impl DocumentsRuntime {
         self.build_app_router_with_web_framework_resolver(resolver)
     }
 
+    pub async fn build_app_business_router_with_web_framework(&self) -> Router {
+        let resolver = sdkwork_iam_web_adapter::iam_web_request_context_resolver_from_env().await;
+        let api: Arc<dyn DocumentsAppApi> = self.service.clone();
+        let router = crate::build_business_router_with_shared_app_api(api);
+        crate::wrap_router_with_web_framework(resolver, router)
+    }
+
     pub fn build_backend_router_with_web_framework_resolver(
         &self,
         resolver: IamWebRequestContextResolver,
@@ -80,6 +89,13 @@ impl DocumentsRuntime {
         self.build_backend_router_with_web_framework_resolver(resolver)
     }
 
+    pub async fn build_backend_business_router_with_web_framework(&self) -> Router {
+        let resolver = sdkwork_iam_web_adapter::iam_web_request_context_resolver_from_env().await;
+        let api: Arc<dyn DocumentsBackendApi> = self.service.clone();
+        let router = build_business_router_with_shared_backend_api(api);
+        wrap_backend_router(resolver, router)
+    }
+
     pub fn build_open_router_with_web_framework_resolver(
         &self,
         resolver: IamWebRequestContextResolver,
@@ -92,6 +108,13 @@ impl DocumentsRuntime {
     pub async fn build_open_router_with_web_framework(&self) -> Router {
         let resolver = sdkwork_iam_web_adapter::iam_web_request_context_resolver_from_env().await;
         self.build_open_router_with_web_framework_resolver(resolver)
+    }
+
+    pub async fn build_open_business_router_with_web_framework(&self) -> Router {
+        let resolver = sdkwork_iam_web_adapter::iam_web_request_context_resolver_from_env().await;
+        let api: Arc<dyn DocumentsOpenApi> = self.service.clone();
+        let router = build_business_router_with_shared_open_api(api);
+        wrap_open_router(resolver, router)
     }
 
     pub async fn build_unified_router_with_web_framework(&self) -> Router {
@@ -120,9 +143,7 @@ pub fn unified_process_layout() -> bool {
         .unwrap_or(true)
 }
 
-pub async fn build_served_app_router(
-    runtime: &DocumentsRuntime,
-) -> Router {
+pub async fn build_served_app_router(runtime: &DocumentsRuntime) -> Router {
     bootstrap::validate_process_config();
     if unified_process_layout() {
         runtime.build_unified_router_with_web_framework().await
@@ -131,16 +152,12 @@ pub async fn build_served_app_router(
     }
 }
 
-pub async fn build_served_backend_router(
-    runtime: &DocumentsRuntime,
-) -> Router {
+pub async fn build_served_backend_router(runtime: &DocumentsRuntime) -> Router {
     bootstrap::validate_process_config();
     runtime.build_backend_router_with_web_framework().await
 }
 
-pub async fn build_served_open_router(
-    runtime: &DocumentsRuntime,
-) -> Router {
+pub async fn build_served_open_router(runtime: &DocumentsRuntime) -> Router {
     bootstrap::validate_process_config();
     runtime.build_open_router_with_web_framework().await
 }

@@ -18,7 +18,10 @@ use sdkwork_web_core::HttpRouteManifest;
 pub use error::{created_json, no_content, ok_json, ApiProblem, ApiResult, DocumentsApiProblem};
 pub use http_route_manifest::backend_route_manifest;
 pub use manifest::ROUTES;
-pub use routes::{build_router_with_backend_api, build_router_with_shared_backend_api};
+pub use routes::{
+    build_business_router_with_shared_backend_api, build_router_with_backend_api,
+    build_router_with_shared_backend_api,
+};
 pub use web_bootstrap::{
     documents_backend_api_prefixes, documents_backend_api_public_path_prefixes,
     wrap_router_with_web_framework, wrap_router_with_web_framework_from_env,

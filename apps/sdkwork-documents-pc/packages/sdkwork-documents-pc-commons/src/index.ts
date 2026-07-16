@@ -1,5 +1,7 @@
 export * from './components/CopyButton.tsx';
 export * from './components/JsonSyntaxHighlight.tsx';
+export * from './components/AdaptiveTabs.tsx';
+export * from './adaptive-tabs-layout.ts';
 export * from './reference-sidebar-groups.ts';
 export * from './api-request-url.ts';
 export * from './api-result.ts';

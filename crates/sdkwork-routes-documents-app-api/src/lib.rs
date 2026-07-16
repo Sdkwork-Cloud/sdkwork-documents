@@ -21,7 +21,10 @@ use sdkwork_web_core::HttpRouteManifest;
 pub use error::{created_json, ok_json, ApiProblem, ApiResult, DocumentsApiProblem};
 pub use http_route_manifest::app_route_manifest;
 pub use manifest::ROUTES;
-pub use routes::{build_router_with_app_api, build_router_with_shared_app_api};
+pub use routes::{
+    build_business_router_with_shared_app_api, build_router_with_app_api,
+    build_router_with_shared_app_api,
+};
 pub use runtime::DocumentsRuntime;
 pub use web_bootstrap::{
     documents_app_api_prefixes, documents_app_api_public_path_prefixes,

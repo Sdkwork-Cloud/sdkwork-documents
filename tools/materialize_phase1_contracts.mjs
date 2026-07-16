@@ -38,13 +38,10 @@ const PHASE1_REQUIRED_ARTIFACTS = [
   "sdks/_route-manifests/open-api/sdkwork-routes-documents-open-api.route-manifest.json",
   "sdks/_route-manifests/app-api/sdkwork-routes-documents-app-api.route-manifest.json",
   "sdks/_route-manifests/backend-api/sdkwork-routes-documents-backend-api.route-manifest.json",
-  "sdks/sdkwork-documents-sdk/.sdkwork-assembly.json",
   "sdks/sdkwork-documents-sdk/sdk-manifest.json",
   "sdks/sdkwork-documents-sdk/openapi/documents-open-api.openapi.json",
-  "sdks/sdkwork-documents-app-sdk/.sdkwork-assembly.json",
   "sdks/sdkwork-documents-app-sdk/sdk-manifest.json",
   "sdks/sdkwork-documents-app-sdk/openapi/documents-app-api.openapi.json",
-  "sdks/sdkwork-documents-backend-sdk/.sdkwork-assembly.json",
   "sdks/sdkwork-documents-backend-sdk/sdk-manifest.json",
   "sdks/sdkwork-documents-backend-sdk/openapi/documents-backend-api.openapi.json",
 ];
@@ -792,25 +789,24 @@ const sdkFamilies = [
 for (const family of sdkFamilies) {
   writeJson(`${family.dir}/openapi/${path.basename(family.specFile)}`, family.openApi);
   writeJson(
-    `${family.dir}/.sdkwork-assembly.json`,
-    sdkFamilyAssembly({
-      sdkFamily: path.basename(family.dir),
-      authority: family.authority,
-      prefix: family.prefix,
-      schemaUrl: family.schemaUrl,
-      specFile: family.specFile,
-      clientName: family.client,
-    }),
-  );
-  writeJson(
     `${family.dir}/sdk-manifest.json`,
-    sdkManifest({
-      sdkFamily: path.basename(family.dir),
-      authority: family.authority,
-      prefix: family.prefix,
-      specFile: family.specFile,
-      clientName: family.client,
-    }),
+    {
+      ...sdkFamilyAssembly({
+        sdkFamily: path.basename(family.dir),
+        authority: family.authority,
+        prefix: family.prefix,
+        schemaUrl: family.schemaUrl,
+        specFile: family.specFile,
+        clientName: family.client,
+      }),
+      ...sdkManifest({
+        sdkFamily: path.basename(family.dir),
+        authority: family.authority,
+        prefix: family.prefix,
+        specFile: family.specFile,
+        clientName: family.client,
+      }),
+    },
   );
   writeText(
     `${family.dir}/README.md`,
@@ -869,7 +865,7 @@ writeJson("specs/component.spec.json", {
       "sdkwork.app.config.json",
       "AGENTS.md",
       "specs/component.spec.json",
-      ...sdkFamilies.map((f) => `${f.dir}/.sdkwork-assembly.json`),
+      ...sdkFamilies.map((f) => `${f.dir}/sdk-manifest.json`),
     ],
   },
   canonicalSpecs: [

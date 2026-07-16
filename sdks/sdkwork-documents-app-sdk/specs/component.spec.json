@@ -16,7 +16,6 @@
     "generated": true,
     "private": false,
     "manifests": [
-      ".sdkwork-assembly.json",
       "sdk-manifest.json"
     ]
   },
@@ -46,7 +45,7 @@
     },
     "publicExports": [],
     "runtimeEntrypoints": [
-      ".sdkwork-assembly.json"
+      "sdk-manifest.json"
     ],
     "sdkDependencies": [],
     "sdkClients": [
@@ -54,7 +53,6 @@
     ],
     "events": [],
     "configKeys": [
-      ".sdkwork-assembly.json",
       "sdk-manifest.json"
     ]
   },

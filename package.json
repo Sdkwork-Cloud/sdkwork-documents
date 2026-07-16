@@ -8,7 +8,7 @@
     "@sdkwork/app-topology": "workspace:*"
   },
   "scripts": {
-    "dev": "pnpm dev:server",
+    "stop": "node ../sdkwork-specs/tools/stop-sdkwork-workspace-processes.mjs --workspace .",    "dev": "pnpm dev:server",
     "dev:server": "pnpm dev:server:postgres:unified-process:standalone",
     "dev:server:postgres:unified-process:standalone": "node scripts/documents-dev.mjs --target server --deployment-profile standalone --service-layout unified-process --database postgres --dev-env-file configs/topology/standalone.unified-process.development.env",
     "dev:server:sqlite:unified-process:standalone": "node scripts/documents-dev.mjs --target server --deployment-profile standalone --service-layout unified-process --database sqlite --dev-env-file configs/topology/standalone.unified-process.development.env",

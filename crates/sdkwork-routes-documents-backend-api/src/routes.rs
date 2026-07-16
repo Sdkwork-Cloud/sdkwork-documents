@@ -17,8 +17,11 @@ where
 }
 
 pub fn build_router_with_shared_backend_api(api: Arc<dyn DocumentsBackendApi>) -> Router {
+    build_business_router_with_shared_backend_api(api).route(paths::HEALTHZ, get(handlers::health))
+}
+
+pub fn build_business_router_with_shared_backend_api(api: Arc<dyn DocumentsBackendApi>) -> Router {
     Router::new()
-        .route(paths::HEALTHZ, get(handlers::health))
         .route(
             paths::DOCUMENTS,
             get(handlers::list_documents).post(handlers::create_document),

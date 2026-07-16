@@ -3,6 +3,7 @@ import type { I18nMessageBundle } from '../types';
 export const publicApiReferenceMessages = {
   en: {
     "api.title": "API Reference",
+    "api.tabs.more": "More",
     "api.description": "Complete documentation for the {{platformName}} REST API.",
     "api.search": "Search endpoints...",
     "api.notFound": "No endpoints found.",
@@ -52,6 +53,7 @@ export const publicApiReferenceMessages = {
     "api.planned.description": "This API group is reserved for upcoming aggregation APIs. Endpoints will appear here after the OpenAPI contract is implemented.",
   },
   zh: {
+    "api.tabs.more": "\u66f4\u591a",
     "api.title": "API 参考",
     "api.description": "{{platformName}} REST API 的完整文档。",
     "api.search": "搜索端点...",

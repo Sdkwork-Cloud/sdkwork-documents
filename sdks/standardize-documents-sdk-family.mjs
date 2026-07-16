@@ -258,7 +258,7 @@ function componentSpecFor(family) {
       languages: ["typescript"],
       generated: true,
       private: false,
-      manifests: [".sdkwork-assembly.json", "sdk-manifest.json"],
+      manifests: ["sdk-manifest.json", "sdk-manifest.json"],
     },
     canonicalSpecs: [
       { file: "API_SPEC.md", path: "../sdkwork-specs/API_SPEC.md" },
@@ -274,11 +274,11 @@ function componentSpecFor(family) {
         owner,
       },
       publicExports: [],
-      runtimeEntrypoints: [".sdkwork-assembly.json"],
+      runtimeEntrypoints: ["sdk-manifest.json"],
       sdkDependencies: family.dependencies,
       sdkClients: [family.primaryClient],
       events: [],
-      configKeys: [".sdkwork-assembly.json", "sdk-manifest.json"],
+      configKeys: ["sdk-manifest.json", "sdk-manifest.json"],
     },
     verification: {
       commands: [
@@ -365,8 +365,10 @@ async function writeSdkgenConfig(family) {
 
 async function standardizeFamily(family) {
   const { openapi, operationCount, removedOperations } = await standardizeOpenApi(family);
-  await writeJson(path.join(sdksRoot, family.root, ".sdkwork-assembly.json"), assemblyFor(family, openapi, operationCount));
-  await writeJson(path.join(sdksRoot, family.root, "sdk-manifest.json"), sdkManifestFor(family, operationCount));
+  await writeJson(path.join(sdksRoot, family.root, "sdk-manifest.json"), {
+    ...assemblyFor(family, openapi, operationCount),
+    ...sdkManifestFor(family, operationCount),
+  });
   await writeJson(path.join(sdksRoot, family.root, "specs", "component.spec.json"), componentSpecFor(family));
   await writeSdkgenConfig(family);
   return {

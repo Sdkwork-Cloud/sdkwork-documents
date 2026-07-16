@@ -11,6 +11,7 @@ import {
   isReferenceSidebarGroupCollapsed,
   toggleReferenceSidebarGroup,
   filterReferenceSidebarTree,
+  AdaptiveTabs,
   type ReferenceSidebarCollapsedGroups,
 } from '@sdkwork/documents-pc-commons';
 import { resolveDocumentsRuntimeBoolean } from '@sdkwork/documents-pc-commons/runtime';
@@ -451,21 +452,16 @@ export function SdkReference() {
 
       {/* Sub-header Tabs for API Systems */}
       <div className="sticky top-[56px] z-40 bg-white/80 dark:bg-[#0a0a0a]/80 backdrop-blur-md border-b border-slate-200 dark:border-white/10">
-        <div className="w-full mx-auto px-4 md:px-6 lg:px-8 flex items-center gap-8 overflow-x-auto custom-scrollbar">
-          {apiData.map((system) => {
-            const Icon = system.icon;
-            const isActive = activeSystem === system.id;
-            return (
-              <button
-                key={system.id}
-                onClick={() => void loadAndActivateSystem(system)}
-                aria-busy={loadingSystemIds.has(system.id)}
-                className={`flex items-center gap-2 py-4 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
-                  isActive
-                    ? 'border-blue-500 text-blue-600 dark:text-blue-400'
-                    : 'border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:border-slate-300 dark:hover:border-slate-700'
-                }`}
-              >
+        <div className="w-full min-w-0 px-4 md:px-6 lg:px-8">
+          <AdaptiveTabs
+            items={apiData.map((system) => {
+              const Icon = system.icon;
+              return {
+                id: system.id,
+                label: getApiSystemDisplayName(system),
+                busy: loadingSystemIds.has(system.id),
+                content: (
+                  <>
                 <Icon className="w-4 h-4" />
                 {getApiSystemDisplayName(system)}
                 {loadingSystemIds.has(system.id) && (
@@ -477,9 +473,20 @@ export function SdkReference() {
                     aria-label={t('sdk.loadError.retry', 'Retry')}
                   />
                 )}
-              </button>
-            );
-          })}
+                  </>
+                ),
+              };
+            })}
+            activeId={activeSystem}
+            onSelect={(systemId) => {
+              const system = apiData.find((item) => item.id === systemId);
+              if (system) {
+                void loadAndActivateSystem(system);
+              }
+            }}
+            moreLabel={t('sdk.tabs.more', 'More')}
+            ariaLabel={t('nav.sdkReference', 'SDK Reference')}
+          />
         </div>
       </div>
 
