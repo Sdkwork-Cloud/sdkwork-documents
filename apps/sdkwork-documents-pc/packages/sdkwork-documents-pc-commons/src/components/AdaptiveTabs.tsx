@@ -24,23 +24,39 @@ export interface AdaptiveTabsProps {
   onSelect: (id: string) => void;
   moreLabel: string;
   ariaLabel: string;
+  variant?: 'underline' | 'pill';
 }
 
-const TAB_GAP = 32;
+const tabClassName = (isActive: boolean, variant: 'underline' | 'pill') => {
+  if (variant === 'pill') {
+    return `flex shrink-0 items-center gap-2 whitespace-nowrap rounded-lg border px-4 py-2 text-sm font-medium transition-colors ${
+      isActive
+        ? 'border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-500/20 dark:bg-blue-500/10 dark:text-blue-400'
+        : 'border-transparent text-slate-600 hover:bg-slate-50 dark:text-slate-400 dark:hover:bg-white/5'
+    }`;
+  }
 
-const tabClassName = (isActive: boolean) => (
-  `flex shrink-0 items-center gap-2 whitespace-nowrap border-b-2 py-4 text-sm font-medium transition-colors ${
+  return `flex shrink-0 items-center gap-2 whitespace-nowrap border-b-2 py-4 text-sm font-medium transition-colors ${
     isActive
       ? 'border-blue-500 text-blue-600 dark:text-blue-400'
       : 'border-transparent text-slate-600 hover:border-slate-300 hover:text-slate-900 dark:text-slate-400 dark:hover:border-slate-700 dark:hover:text-white'
-  }`
-);
+  }`;
+};
 
-export function AdaptiveTabs({ items, activeId, onSelect, moreLabel, ariaLabel }: AdaptiveTabsProps) {
+export function AdaptiveTabs({
+  items,
+  activeId,
+  onSelect,
+  moreLabel,
+  ariaLabel,
+  variant = 'underline',
+}: AdaptiveTabsProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const moreButtonRef = useRef<HTMLButtonElement>(null);
+  const visibleTabRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const measurementRefs = useRef(new Map<string, HTMLButtonElement>());
   const moreMeasurementRef = useRef<HTMLButtonElement>(null);
+  const measurementRowRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const menuItemRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const [visibleIds, setVisibleIds] = useState(() => items.map((item) => item.id));
@@ -49,7 +65,9 @@ export function AdaptiveTabs({ items, activeId, onSelect, moreLabel, ariaLabel }
 
   const itemIds = useMemo(() => items.map((item) => item.id), [items]);
   const visibleIdSet = useMemo(() => new Set(visibleIds), [visibleIds]);
+  const visibleItems = items.filter((item) => visibleIdSet.has(item.id));
   const hiddenItems = items.filter((item) => !visibleIdSet.has(item.id));
+  const tabGap = variant === 'pill' ? 8 : 32;
 
   const updateLayout = useCallback(() => {
     const containerWidth = containerRef.current?.clientWidth ?? 0;
@@ -74,7 +92,7 @@ export function AdaptiveTabs({ items, activeId, onSelect, moreLabel, ariaLabel }
       activeId,
       containerWidth,
       moreButtonWidth,
-      gap: TAB_GAP,
+      gap: tabGap,
     });
     setVisibleIds((current) => (
       current.length === nextVisibleIds.length
@@ -82,7 +100,7 @@ export function AdaptiveTabs({ items, activeId, onSelect, moreLabel, ariaLabel }
         ? current
         : nextVisibleIds
     ));
-  }, [activeId, itemIds]);
+  }, [activeId, itemIds, tabGap]);
 
   useLayoutEffect(() => {
     updateLayout();
@@ -96,6 +114,9 @@ export function AdaptiveTabs({ items, activeId, onSelect, moreLabel, ariaLabel }
 
     const observer = new ResizeObserver(updateLayout);
     observer.observe(container);
+    if (measurementRowRef.current) {
+      observer.observe(measurementRowRef.current);
+    }
     return () => observer.disconnect();
   }, [updateLayout]);
 
@@ -139,6 +160,25 @@ export function AdaptiveTabs({ items, activeId, onSelect, moreLabel, ariaLabel }
     }
   };
 
+  const handleTabKeyDown = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
+    let nextIndex: number | null = null;
+    if (event.key === 'ArrowRight') {
+      nextIndex = (index + 1) % visibleItems.length;
+    } else if (event.key === 'ArrowLeft') {
+      nextIndex = (index - 1 + visibleItems.length) % visibleItems.length;
+    } else if (event.key === 'Home') {
+      nextIndex = 0;
+    } else if (event.key === 'End') {
+      nextIndex = visibleItems.length - 1;
+    }
+
+    if (nextIndex !== null) {
+      event.preventDefault();
+      onSelect(visibleItems[nextIndex].id);
+      visibleTabRefs.current[nextIndex]?.focus();
+    }
+  };
+
   const handleMenuKeyDown = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
     let nextIndex: number | null = null;
     if (event.key === 'ArrowDown') {
@@ -163,18 +203,21 @@ export function AdaptiveTabs({ items, activeId, onSelect, moreLabel, ariaLabel }
   };
 
   return (
-    <div ref={containerRef} className="relative flex w-full min-w-0 items-center gap-8" aria-label={ariaLabel}>
-      <div className="flex min-w-0 flex-1 items-center gap-8 overflow-hidden" role="tablist">
-        {items.filter((item) => visibleIdSet.has(item.id)).map((item) => (
+    <div ref={containerRef} className={`relative flex w-full min-w-0 items-center ${variant === 'pill' ? 'gap-2' : 'gap-8'}`} aria-label={ariaLabel}>
+      <div className={`flex min-w-0 flex-1 items-center overflow-hidden ${variant === 'pill' ? 'gap-2' : 'gap-8'}`} role="tablist">
+        {visibleItems.map((item, index) => (
           <button
             key={item.id}
+            ref={(element) => { visibleTabRefs.current[index] = element; }}
             type="button"
             role="tab"
             aria-selected={activeId === item.id}
             aria-busy={item.busy}
             aria-label={item.label}
+            tabIndex={activeId === item.id ? 0 : -1}
             onClick={() => onSelect(item.id)}
-            className={tabClassName(activeId === item.id)}
+            onKeyDown={(event) => handleTabKeyDown(event, index)}
+            className={tabClassName(activeId === item.id, variant)}
           >
             {item.content}
           </button>
@@ -188,10 +231,14 @@ export function AdaptiveTabs({ items, activeId, onSelect, moreLabel, ariaLabel }
             type="button"
             aria-haspopup="menu"
             aria-expanded={menuOpen}
-            aria-label={`${moreLabel} (${hiddenItems.length})`}
+            aria-label={`${ariaLabel}: ${moreLabel} (${hiddenItems.length})`}
             onClick={() => setMenuOpen((open) => !open)}
             onKeyDown={handleMoreKeyDown}
-            className="flex max-w-full items-center gap-1.5 whitespace-nowrap border-b-2 border-transparent py-4 text-sm font-medium text-slate-600 transition-colors hover:border-slate-300 hover:text-slate-900 dark:text-slate-400 dark:hover:border-slate-700 dark:hover:text-white"
+            className={`flex max-w-full items-center gap-1.5 whitespace-nowrap text-sm font-medium text-slate-600 transition-colors dark:text-slate-400 ${
+              variant === 'pill'
+                ? 'rounded-lg border border-slate-200 px-3 py-2 hover:bg-slate-50 hover:text-slate-900 dark:border-white/10 dark:hover:bg-white/5 dark:hover:text-white'
+                : 'border-b-2 border-transparent py-4 hover:border-slate-300 hover:text-slate-900 dark:hover:border-slate-700 dark:hover:text-white'
+            }`}
           >
             <span>{moreLabel}</span>
             <span className="text-xs text-slate-400">{hiddenItems.length}</span>
@@ -233,8 +280,12 @@ export function AdaptiveTabs({ items, activeId, onSelect, moreLabel, ariaLabel }
         </div>
       )}
 
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-0 w-full max-w-full overflow-hidden opacity-0" aria-hidden="true">
-        <div className="flex w-max items-center gap-8">
+      <div
+        className="pointer-events-none fixed top-0 opacity-0"
+        style={{ left: -10_000 }}
+        aria-hidden="true"
+      >
+        <div ref={measurementRowRef} className={`flex w-max items-center ${variant === 'pill' ? 'gap-2' : 'gap-8'}`}>
           {items.map((item) => (
             <button
               key={item.id}
@@ -247,7 +298,7 @@ export function AdaptiveTabs({ items, activeId, onSelect, moreLabel, ariaLabel }
               }}
               type="button"
               tabIndex={-1}
-              className={tabClassName(activeId === item.id)}
+              className={tabClassName(activeId === item.id, variant)}
             >
               {item.content}
             </button>
@@ -256,7 +307,9 @@ export function AdaptiveTabs({ items, activeId, onSelect, moreLabel, ariaLabel }
             ref={moreMeasurementRef}
             type="button"
             tabIndex={-1}
-            className="flex items-center gap-1.5 whitespace-nowrap border-b-2 border-transparent py-4 text-sm font-medium"
+            className={`flex items-center gap-1.5 whitespace-nowrap text-sm font-medium ${
+              variant === 'pill' ? 'rounded-lg border px-3 py-2' : 'border-b-2 border-transparent py-4'
+            }`}
           >
             <span>{moreLabel}</span>
             <span className="text-xs">{items.length}</span>

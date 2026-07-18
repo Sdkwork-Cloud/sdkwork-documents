@@ -559,26 +559,28 @@ export function SdkReference() {
         <main className="flex-1 min-w-0 flex flex-col">
           {/* SDK Languages Tabs */}
           <div className="sticky top-[111px] z-30 bg-white/80 dark:bg-[#0a0a0a]/80 backdrop-blur-md border-b border-slate-200 dark:border-white/10 px-4 md:px-8 py-3 shrink-0">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-              <div className="flex items-center gap-2 overflow-x-auto hide-scrollbar">
-                {sdkData.map(sdk => {
-                  const isActive = activeSdkId === sdk.id;
-                  const Icon = IconMap[sdk.icon] || Box;
-                  return (
-                    <button
-                      key={sdk.id}
-                      onClick={() => setActiveSdkId(sdk.id)}
-                      className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-colors whitespace-nowrap ${
-                        isActive
-                          ? 'bg-blue-50 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20'
-                          : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-white/5 border border-transparent'
-                      }`}
-                    >
-                      <Icon className="w-4 h-4" />
-                      {sdk.name}
-                    </button>
-                  );
-                })}
+            <div className="flex min-w-0 flex-col items-center justify-between gap-4 lg:flex-row">
+              <div className="w-full min-w-0 flex-1">
+                <AdaptiveTabs
+                  items={sdkData.map((sdk) => {
+                    const Icon = IconMap[sdk.icon] || Box;
+                    return {
+                      id: sdk.id,
+                      label: sdk.name,
+                      content: (
+                        <>
+                          <Icon className="h-4 w-4" />
+                          {sdk.name}
+                        </>
+                      ),
+                    };
+                  })}
+                  activeId={activeSdkId}
+                  onSelect={setActiveSdkId}
+                  moreLabel={t('sdk.tabs.more', 'More')}
+                  ariaLabel={t('sdk.languages', 'SDK languages')}
+                  variant="pill"
+                />
               </div>
               <div className="flex items-center gap-3 shrink-0">
                 <a
