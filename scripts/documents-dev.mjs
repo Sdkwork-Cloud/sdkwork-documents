@@ -6,7 +6,6 @@ import path from 'node:path';
 import process from 'node:process';
 
 import {
-  API_GATEWAY_REPO,
   DEFAULT_DEV_PROFILE_ID,
   listHealthSurfaces,
   listOrchestrationProcesses,
@@ -14,14 +13,11 @@ import {
   loadProfile,
   mergeRuntimeEnv,
   REPO_ROOT,
-  resolveCloudGatewayConfigPath,
   resolveDevProfileId,
   IAM_APPLICATION_BOOTSTRAP_ENV,
   resolveIamDevEnv,
-  resolveGatewayBind,
   resolveSurfaceBind,
   resolveSurfaceHttpUrl,
-  shouldAutostartGateway,
   waitForHttpHealthy,
 } from './lib/documents-topology.mjs';
 import { mergeRepoDevBootstrapAccessTokenEnv } from '../../sdkwork-iam/scripts/dev/create-dev-bootstrap-access-token-env.mjs';
@@ -183,38 +179,6 @@ function createApiServerBinaryProcess(crate, binary, label, env) {
   };
 }
 
-function createPlatformGatewayProcess(env) {
-  const deploymentProfile = env.SDKWORK_DOCUMENTS_DEPLOYMENT_PROFILE ?? 'cloud';
-  const bind =
-    resolveSurfaceBind(env, 'platform.api-gateway') ?? resolveGatewayBind(env, deploymentProfile);
-  const gatewayConfig = resolveCloudGatewayConfigPath(
-    env,
-    env.SDKWORK_DOCUMENTS_ENVIRONMENT ?? 'development',
-  );
-  return {
-    label: 'sdkwork-api-cloud-gateway',
-    command: cargoCommand(),
-    args: [
-      'run',
-      '-p',
-      'sdkwork-api-cloud-gateway',
-      '--bin',
-      'sdkwork-api-cloud-gateway',
-      '--',
-      '--config',
-      gatewayConfig,
-    ],
-    cwd: API_GATEWAY_REPO,
-    env: {
-      ...env,
-      ...IAM_APPLICATION_BOOTSTRAP_ENV,
-      SDKWORK_API_CLOUD_GATEWAY_BIND: bind,
-      SDKWORK_API_CLOUD_GATEWAY_CONFIG: gatewayConfig,
-    },
-    shell: false,
-  };
-}
-
 function createBrowserDevProcess(env, processDef) {
   const packageRoot = path.join(REPO_ROOT, processDef.package ?? 'apps/sdkwork-documents-pc');
   const script = processDef.script ?? 'dev';
@@ -238,10 +202,6 @@ function partitionOrchestrationProcesses(profileId, env, target) {
 
   for (const processDef of listOrchestrationProcesses(profileId)) {
     if (processDef.id === 'platform.api-gateway') {
-      if (!shouldAutostartGateway(env)) {
-        continue;
-      }
-      backendProcesses.push(createPlatformGatewayProcess(env));
       continue;
     }
 
@@ -253,13 +213,6 @@ function partitionOrchestrationProcesses(profileId, env, target) {
     const crate = processDef.crate ?? DEFAULT_API_SERVER_CRATE;
     const binary = processDef.binary ?? processDef.id;
     backendProcesses.push(createApiServerBinaryProcess(crate, binary, binary, env));
-  }
-
-  if (
-    !backendProcesses.some((entry) => entry.label === 'sdkwork-api-cloud-gateway')
-    && shouldAutostartGateway(env)
-  ) {
-    backendProcesses.unshift(createPlatformGatewayProcess(env));
   }
 
   if (target === 'server') {
@@ -298,9 +251,6 @@ function terminateProcessTree(child) {
 
 async function waitForSurfaceHealth(profileId, env) {
   const surfaces = [...listHealthSurfaces(profileId)];
-  if (shouldAutostartGateway(env) && !surfaces.includes('platform.api-gateway')) {
-    surfaces.unshift('platform.api-gateway');
-  }
   for (const surfaceId of surfaces) {
     const url = resolveSurfaceHttpUrl(env, surfaceId);
     if (!url) {

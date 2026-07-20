@@ -81,7 +81,7 @@ test("documents dev orchestrator loads topology profile env", async () => {
   const devScript = await read("scripts/documents-dev.mjs");
   assert.match(devScript, /listOrchestrationProcesses/);
   assert.match(devScript, /partitionOrchestrationProcesses/);
-  assert.match(devScript, /resolveCloudGatewayConfigPath/);
+  assert.doesNotMatch(devScript, /createPlatformGatewayProcess/);
   assert.match(devScript, /SDKWORK_DOCUMENTS_DEPLOYMENT_PROFILE/);
   assert.match(devScript, /SDKWORK_DOCUMENTS_SERVICE_LAYOUT/);
   assert.match(devScript, /DEFAULT_API_SERVER_CRATE/);
