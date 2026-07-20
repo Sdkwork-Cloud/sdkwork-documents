@@ -7,7 +7,7 @@ pub struct ApiAssembly {
     pub router: Router,
 }
 
-pub async fn assemble_business_router(
+pub async fn assemble_business_routes(
     runtime: &DocumentsRuntime,
 ) -> ApiAssembly {
     let open = runtime
@@ -24,13 +24,13 @@ pub async fn assemble_business_router(
 }
 
 pub async fn assemble_api_router(runtime: &DocumentsRuntime) -> ApiAssembly {
-    assemble_business_router(runtime).await
+    assemble_business_routes(runtime).await
 }
 
-pub async fn assemble_business_router_from_env() -> Result<ApiAssembly, String>
+pub async fn assemble_api_router_from_env() -> Result<ApiAssembly, String>
 {
     validate_process_config();
     let runtime = DocumentsRuntime::connect_from_env().await?;
     runtime.readiness_check().await?;
-    Ok(assemble_business_router(&runtime).await)
+    Ok(assemble_api_router(&runtime).await)
 }
