@@ -96,15 +96,15 @@
   },
   "components": {
     "appApiRouter": {
-      "crate": "sdkwork-documents-standalone-gateway",
+      "crate": "sdkwork-api-documents-standalone-gateway",
       "binary": "sdkwork-documents-app-api"
     },
     "backendApiRouter": {
-      "crate": "sdkwork-documents-standalone-gateway",
+      "crate": "sdkwork-api-documents-standalone-gateway",
       "binary": "sdkwork-documents-backend-api"
     },
     "openApiRouter": {
-      "crate": "sdkwork-documents-standalone-gateway",
+      "crate": "sdkwork-api-documents-standalone-gateway",
       "binary": "sdkwork-documents-open-api"
     }
   },
@@ -114,8 +114,8 @@
         "processes": [
           {
             "id": "application.public-ingress",
-            "crate": "sdkwork-documents-standalone-gateway",
-            "binary": "sdkwork-documents-standalone-gateway",
+            "crate": "sdkwork-api-documents-standalone-gateway",
+            "binary": "sdkwork-api-documents-standalone-gateway",
             "required": true,
             "role": "api-standalone-gateway"
           },
@@ -142,8 +142,8 @@
         "processes": [
           {
             "id": "application.public-ingress",
-            "crate": "sdkwork-documents-standalone-gateway",
-            "binary": "sdkwork-documents-standalone-gateway",
+            "crate": "sdkwork-api-documents-standalone-gateway",
+            "binary": "sdkwork-api-documents-standalone-gateway",
             "required": true,
             "role": "api-standalone-gateway"
           },
@@ -164,8 +164,8 @@
         "processes": [
           {
             "id": "application.public-ingress",
-            "crate": "sdkwork-documents-standalone-gateway",
-            "binary": "sdkwork-documents-standalone-gateway",
+            "crate": "sdkwork-api-documents-standalone-gateway",
+            "binary": "sdkwork-api-documents-standalone-gateway",
             "required": true,
             "role": "api-standalone-gateway"
           },

@@ -176,7 +176,7 @@ assert(cargoToml.includes("sdkwork-database-config"), "Cargo.toml must declare s
 assert(cargoToml.includes("sdkwork-database-sqlx"), "Cargo.toml must declare sdkwork-database-sqlx");
 assert(cargoToml.includes("sdkwork-database-repository"), "Cargo.toml must declare sdkwork-database-repository");
 assert(cargoToml.includes("sdkwork-utils-rust"), "Cargo.toml must declare sdkwork-utils-rust");
-assert(cargoToml.includes("sdkwork-documents-standalone-gateway"), "Cargo.toml must include sdkwork-documents-standalone-gateway");
+assert(cargoToml.includes("sdkwork-api-documents-standalone-gateway"), "Cargo.toml must include sdkwork-api-documents-standalone-gateway");
 assert(
   cargoToml.includes("sdkwork-documents-observability"),
   "Cargo.toml must include sdkwork-documents-observability",
@@ -218,8 +218,8 @@ for (const target of workflow.targets || []) {
   );
   for (const glob of target.outputGlobs ?? []) {
     assert(
-      !glob.includes("sdkwork-documents-standalone-gateway"),
-      `sdkwork.workflow.json target ${target.id} must package per-surface binaries, not unified sdkwork-documents-standalone-gateway`,
+      !glob.includes("sdkwork-api-documents-standalone-gateway"),
+      `sdkwork.workflow.json target ${target.id} must package per-surface binaries, not unified sdkwork-api-documents-standalone-gateway`,
     );
   }
 }
@@ -251,18 +251,18 @@ for (const routerCrate of routerCrates) {
   );
 }
 
-const apiServerToml = readText("crates/sdkwork-documents-standalone-gateway/Cargo.toml");
+const apiServerToml = readText("crates/sdkwork-api-documents-standalone-gateway/Cargo.toml");
 assert(
-  apiServerToml.includes('name = "sdkwork-documents-standalone-gateway"'),
-  "sdkwork-documents-standalone-gateway must declare unified standalone gateway binary",
+  apiServerToml.includes('name = "sdkwork-api-documents-standalone-gateway"'),
+  "sdkwork-api-documents-standalone-gateway must declare unified standalone gateway binary",
 );
 assert(
-  apiServerToml.includes("sdkwork-documents-gateway-assembly"),
-  "sdkwork-documents-standalone-gateway must depend on sdkwork-documents-gateway-assembly",
+  apiServerToml.includes("sdkwork-api-documents-assembly"),
+  "sdkwork-api-documents-standalone-gateway must depend on sdkwork-api-documents-assembly",
 );
 assert(
-  fs.existsSync(path.join(repoRoot, "crates/sdkwork-documents-gateway-assembly/Cargo.toml")),
-  "sdkwork-documents-gateway-assembly crate must exist",
+  fs.existsSync(path.join(repoRoot, "crates/sdkwork-api-documents-assembly/Cargo.toml")),
+  "sdkwork-api-documents-assembly crate must exist",
 );
 
 const repositorySqlxToml = readText("crates/sdkwork-content-documents-repository-sqlx/Cargo.toml");
@@ -615,7 +615,7 @@ const crateComponentSpecs = [
   "crates/sdkwork-content-documents-repository-sqlx/specs/component.spec.json",
   "crates/sdkwork-content-documents-sdk-reference/specs/component.spec.json",
   "crates/sdkwork-documents-database-host/specs/component.spec.json",
-  "crates/sdkwork-documents-standalone-gateway/specs/component.spec.json",
+  "crates/sdkwork-api-documents-standalone-gateway/specs/component.spec.json",
   "crates/sdkwork-documents-observability/specs/component.spec.json",
 ];
 for (const relativePath of crateComponentSpecs) {
