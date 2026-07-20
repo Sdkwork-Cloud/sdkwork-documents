@@ -86,8 +86,8 @@ Build scripts, dev runners, and `pnpm clean` must follow `CODE_STYLE_SPEC.md` §
 
 Use canonical root package scripts from `PNPM_SCRIPT_SPEC.md`:
 
-- `pnpm dev`: default PostgreSQL, `unified-process`, `standalone` server dev workflow.
-- `pnpm dev:server` and `pnpm dev:server:postgres:unified-process:standalone`: explicit server development orchestration.
+- `pnpm dev`: default PostgreSQL standalone server dev workflow.
+- `pnpm dev:server` and `pnpm dev:server:postgres:standalone`: explicit server development orchestration.
 - `pnpm build`, `pnpm test`, `pnpm check`, `pnpm verify`, `pnpm clean`: standard root lifecycle commands.
 - `pnpm check:architecture-alignment`: validate Documents architecture and platform integration.
 - `pnpm check:pnpm-script-standard`: validate package script standardization.

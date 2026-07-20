@@ -13,7 +13,7 @@ This repository adopts the shared SDKWork runtime topology framework.
 
 ## Default Dev Profile
 
-`standalone.unified-process.development`
+`standalone.development`
 
 ```bash
 pnpm dev:server
@@ -21,18 +21,18 @@ pnpm dev:browser
 pnpm topology:validate
 ```
 
-`pnpm dev:browser` starts the topology-aware backend orchestration, waits for health checks, then launches the PC Vite dev server. Use `pnpm dev:browser:postgres:unified-process:standalone:local` when the backend is already running.
+`pnpm dev:browser` starts the topology-aware backend orchestration, waits for health checks, then launches the PC Vite dev server. Use `pnpm dev:browser:postgres:standalone:local` when the backend is already running.
 
 ## Local URLs
 
-### Default dev profile (`standalone.unified-process.development`)
+### Default dev profile (`standalone.development`)
 
 | Surface | URL |
 | --- | --- |
 | `application.public-ingress` | http://127.0.0.1:18084 |
 | `application.browser-pc` | http://127.0.0.1:3902 |
 
-### Cloud split-services dev profile (`cloud.split-services.development`)
+### Cloud split-services dev profile (`cloud.development`)
 
 | Surface | URL |
 | --- | --- |

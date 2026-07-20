@@ -40,7 +40,7 @@ Run app-surface commands from this directory when the task is limited to this su
 From the repository root:
 
 - `pnpm dev:browser` — topology-aware backend + PC Vite dev (`http://127.0.0.1:3902`)
-- `pnpm dev:browser:postgres:unified-process:standalone:local` — PC Vite only when backend is already running
+- `pnpm dev:browser:postgres:standalone:local` — PC Vite only when backend is already running
 - `pnpm verify` — cross-surface validation including `build:browser`
 
 ## App SDK Consumer Imports

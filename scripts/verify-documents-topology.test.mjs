@@ -37,18 +37,18 @@ test("declares SDKWork v3 deployment topology spec and profile env files for sdk
   assert.equal(spec.appId, "sdkwork-documents");
   assert.equal(spec.archetype, "application-http-gateway");
   assert.deepEqual(spec.vocabulary.deploymentProfile.allowed, ["standalone", "cloud"]);
-  assert.equal(spec.defaults.developmentProfileId, "standalone.unified-process.development");
-  assert.equal(spec.defaults.productionProfileId, "cloud.split-services.production");
+  assert.equal(spec.defaults.developmentProfileId, "standalone.development");
+  assert.equal(spec.defaults.productionProfileId, "cloud.production");
   assert.ok(spec.surfaces["application.public-ingress"]);
   assert.ok(spec.surfaces["application.backend-http"]);
   assert.ok(spec.surfaces["application.open-http"]);
   assert.ok(spec.surfaces["platform.api-gateway"]);
 
   for (const profileId of [
-    "standalone.unified-process.development",
-    "standalone.unified-process.production",
-    "cloud.split-services.development",
-    "cloud.split-services.production",
+    "standalone.development",
+    "standalone.production",
+    "cloud.development",
+    "cloud.production",
   ]) {
     const profilePath = spec.profileFiles[profileId];
     assert.equal(await exists(profilePath), true, `${profilePath} should exist`);
@@ -64,7 +64,7 @@ test("declares SDKWork v3 deployment topology spec and profile env files for sdk
 test("root package.json wires @sdkwork/app-topology and standard dev scripts", async () => {
   const packageJson = await readJson("package.json");
   assert.equal(packageJson.dependencies["@sdkwork/app-topology"], "file:../sdkwork-app-topology");
-  assert.match(packageJson.scripts["dev:server"], /dev:server:postgres:unified-process:standalone/);
+  assert.match(packageJson.scripts["dev:server"], /dev:server:postgres:standalone/);
   assert.match(packageJson.scripts["topology:validate"], /sdkwork-topology\.mjs validate/);
   assert.match(packageJson.scripts["test"], /test:topology/);
 });
@@ -99,7 +99,7 @@ test("documents dev orchestrator loads topology profile env", async () => {
 test("root package.json wires browser dev through topology orchestrator", async () => {
   const packageJson = await readJson("package.json");
   assert.match(
-    packageJson.scripts["dev:browser:postgres:unified-process:standalone"],
+    packageJson.scripts["dev:browser:postgres:standalone"],
     /documents-dev\.mjs --target browser/,
   );
 });
@@ -113,7 +113,7 @@ test("topology standard documents PC browser dev surface", async () => {
 test("standalone development orchestration declares pc-renderer process", async () => {
   const spec = await readJson("specs/topology.spec.json");
   const processes =
-    spec.orchestration?.profiles?.["standalone.unified-process.development"]?.processes ?? [];
+    spec.orchestration?.profiles?.["standalone.development"]?.processes ?? [];
   const pcRenderer = processes.find((entry) => entry.id === "pc-renderer");
   assert.ok(pcRenderer, "standalone development profile must declare pc-renderer");
   assert.equal(pcRenderer.package, "apps/sdkwork-documents-pc");
@@ -124,7 +124,7 @@ test("cloud split-services orchestration maps each HTTP surface to its canonical
   const spec = await readJson("specs/topology.spec.json");
   const components = spec.components ?? {};
   const processes =
-    spec.orchestration?.profiles?.["cloud.split-services.development"]?.processes ?? [];
+    spec.orchestration?.profiles?.["cloud.development"]?.processes ?? [];
 
   const expectedBySurface = {
     "application.public-ingress": components.appApiRouter?.binary,

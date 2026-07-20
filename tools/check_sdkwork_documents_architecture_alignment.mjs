@@ -70,7 +70,7 @@ for (const script of ["dev", "build", "test", "check", "verify", "clean"]) {
 
 for (const script of [
   "dev:server",
-  "dev:server:postgres:unified-process:standalone",
+  "dev:server:postgres:standalone",
   "check:architecture-alignment",
   "check:pnpm-script-standard",
   "check:agent-workflow-standard",
@@ -88,12 +88,12 @@ assert(
   "specs/topology.spec.json must use deploymentProfile standalone/cloud vocabulary",
 );
 assert(
-  topologySpec.defaults?.developmentProfileId === "standalone.unified-process.development",
-  "specs/topology.spec.json must default development to standalone.unified-process.development",
+  topologySpec.defaults?.developmentProfileId === "standalone.development",
+  "specs/topology.spec.json must default development to standalone.development",
 );
 assert(
-  topologySpec.defaults?.productionProfileId === "cloud.split-services.production",
-  "specs/topology.spec.json must default production to cloud.split-services.production",
+  topologySpec.defaults?.productionProfileId === "cloud.production",
+  "specs/topology.spec.json must default production to cloud.production",
 );
 assert(
   topologySpec.schemaVersion === 2,
@@ -101,10 +101,10 @@ assert(
 );
 
 for (const profileId of [
-  "standalone.unified-process.development",
-  "standalone.unified-process.production",
-  "cloud.split-services.development",
-  "cloud.split-services.production",
+  "standalone.development",
+  "standalone.production",
+  "cloud.development",
+  "cloud.production",
 ]) {
   const profilePath = topologySpec.profileFiles?.[profileId];
   assert(profilePath, `specs/topology.spec.json must declare profileFiles.${profileId}`);
@@ -352,8 +352,8 @@ assert(componentSpec.component.domain === "content", "component domain must be c
 assert(componentSpec.component.capability === "documents", "component capability must be documents");
 
 assert(
-  fs.existsSync(path.join(repoRoot, "configs/topology/standalone.unified-process.development.env")),
-  "configs/topology/standalone.unified-process.development.env must exist",
+  fs.existsSync(path.join(repoRoot, "configs/topology/standalone.development.env")),
+  "configs/topology/standalone.development.env must exist",
 );
 assert(
   fs.existsSync(path.join(repoRoot, "crates/sdkwork-routes-documents-app-api/src/runtime.rs")),
@@ -647,7 +647,7 @@ assert(
   "package.json must expose pnpm dev:browser for documents PC development",
 );
 assert(
-  packageJson.scripts?.["dev:browser:postgres:unified-process:standalone"]?.includes(
+  packageJson.scripts?.["dev:browser:postgres:standalone"]?.includes(
     "documents-dev.mjs --target browser",
   ),
   "dev:browser must route through topology-aware documents-dev.mjs browser orchestration",
@@ -698,7 +698,7 @@ assert(
 );
 
 const topologyOrchestrationStandalone =
-  topologySpec.orchestration?.profiles?.["standalone.unified-process.development"]?.processes ?? [];
+  topologySpec.orchestration?.profiles?.["standalone.development"]?.processes ?? [];
 assert(
   topologyOrchestrationStandalone.some((entry) => entry.id === "pc-renderer"),
   "topology standalone development profile must declare pc-renderer orchestration process",
@@ -717,7 +717,7 @@ for (const componentKey of ["appApiRouter", "backendApiRouter", "openApiRouter"]
 }
 
 const cloudSplitDevProcesses =
-  topologySpec.orchestration?.profiles?.["cloud.split-services.development"]?.processes ?? [];
+  topologySpec.orchestration?.profiles?.["cloud.development"]?.processes ?? [];
 const publicIngressProcess = cloudSplitDevProcesses.find(
   (entry) => entry.id === "application.public-ingress",
 );
