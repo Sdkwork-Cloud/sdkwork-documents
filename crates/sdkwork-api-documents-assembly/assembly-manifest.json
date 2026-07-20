@@ -1,0 +1,43 @@
+{
+  "kind": "sdkwork.api.assembly",
+  "schemaVersion": 1,
+  "applicationCode": "documents",
+  "apiMode": "served",
+  "packageName": "sdkwork-api-documents-assembly",
+  "crateDir": "crates/sdkwork-api-documents-assembly",
+  "routeCrates": [
+    {
+      "packageName": "sdkwork-routes-documents-app-api",
+      "memberDir": "crates/sdkwork-routes-documents-app-api",
+      "libName": "sdkwork_routes_documents_app_api",
+      "surface": "app-api",
+      "pathPrefix": null,
+      "mountOrder": 0,
+      "componentRef": "crates/sdkwork-routes-documents-app-api/specs/component.spec.json",
+      "routeManifestRef": "crates/sdkwork-routes-documents-app-api/sdks/_route-manifests/app-api/sdkwork-routes-documents-app-api.route-manifest.json",
+      "sourceRef": "crates/sdkwork-routes-documents-app-api/Cargo.toml"
+    },
+    {
+      "packageName": "sdkwork-routes-documents-backend-api",
+      "memberDir": "crates/sdkwork-routes-documents-backend-api",
+      "libName": "sdkwork_routes_documents_backend_api",
+      "surface": "backend-api",
+      "pathPrefix": null,
+      "mountOrder": 1,
+      "componentRef": "crates/sdkwork-routes-documents-backend-api/specs/component.spec.json",
+      "routeManifestRef": "crates/sdkwork-routes-documents-backend-api/sdks/_route-manifests/backend-api/sdkwork-routes-documents-backend-api.route-manifest.json",
+      "sourceRef": "crates/sdkwork-routes-documents-backend-api/Cargo.toml"
+    },
+    {
+      "packageName": "sdkwork-routes-documents-open-api",
+      "memberDir": "crates/sdkwork-routes-documents-open-api",
+      "libName": "sdkwork_routes_documents_open_api",
+      "surface": "open-api",
+      "pathPrefix": null,
+      "mountOrder": 2,
+      "componentRef": "crates/sdkwork-routes-documents-open-api/specs/component.spec.json",
+      "routeManifestRef": "crates/sdkwork-routes-documents-open-api/sdks/_route-manifests/open-api/sdkwork-routes-documents-open-api.route-manifest.json",
+      "sourceRef": "crates/sdkwork-routes-documents-open-api/Cargo.toml"
+    }
+  ]
+}

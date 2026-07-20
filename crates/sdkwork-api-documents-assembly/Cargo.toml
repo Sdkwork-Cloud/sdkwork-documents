@@ -1,0 +1,17 @@
+[package]
+name = "sdkwork-api-documents-assembly"
+edition.workspace = true
+license.workspace = true
+version.workspace = true
+description = "Generated API assembly for sdkwork-documents application HTTP plane."
+
+[lib]
+name = "sdkwork_api_documents_assembly"
+path = "src/lib.rs"
+
+[dependencies]
+axum.workspace = true
+tokio.workspace = true
+sdkwork-routes-documents-app-api.workspace = true
+sdkwork-routes-documents-backend-api.workspace = true
+sdkwork-routes-documents-open-api.workspace = true
