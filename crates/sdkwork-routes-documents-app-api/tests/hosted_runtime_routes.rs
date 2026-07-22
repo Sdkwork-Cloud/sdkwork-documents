@@ -9,8 +9,8 @@ use tower::util::ServiceExt;
 #[tokio::test]
 async fn hosted_app_router_mounts_protected_documents_route() {
     let runtime = test_runtime().await;
-    let app =
-        runtime.build_app_router_with_web_framework_resolver(IamWebRequestContextResolver::new(None));
+    let app = runtime
+        .build_app_router_with_web_framework_resolver(IamWebRequestContextResolver::new(None));
 
     let response = app
         .oneshot(
@@ -37,9 +37,7 @@ async fn hosted_app_router_mounts_protected_documents_route() {
 async fn hosted_backend_router_mounts_protected_documents_route() {
     let runtime = test_runtime().await;
     let app = runtime
-        .build_backend_router_with_web_framework_resolver(IamWebRequestContextResolver::new(
-            None,
-        ));
+        .build_backend_router_with_web_framework_resolver(IamWebRequestContextResolver::new(None));
 
     let response = app
         .oneshot(
@@ -65,8 +63,8 @@ async fn hosted_backend_router_mounts_protected_documents_route() {
 #[tokio::test]
 async fn hosted_open_router_mounts_protected_capabilities_route() {
     let runtime = test_runtime().await;
-    let app =
-        runtime.build_open_router_with_web_framework_resolver(IamWebRequestContextResolver::new(None));
+    let app = runtime
+        .build_open_router_with_web_framework_resolver(IamWebRequestContextResolver::new(None));
 
     let response = app
         .oneshot(

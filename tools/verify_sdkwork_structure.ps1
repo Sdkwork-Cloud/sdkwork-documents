@@ -164,7 +164,7 @@ $routeManifests = @(
         PackageName = "sdkwork-routes-documents-app-api"
         Surface = "app-api"
         Prefix = "/app/v3/api"
-        ApiAuthority = "sdkwork-documents.app"
+        ApiAuthority = "sdkwork-documents-app-api"
         SdkFamily = "sdkwork-documents-app-sdk"
     },
     @{
@@ -172,7 +172,7 @@ $routeManifests = @(
         PackageName = "sdkwork-routes-documents-backend-api"
         Surface = "backend-api"
         Prefix = "/backend/v3/api"
-        ApiAuthority = "sdkwork-documents.backend"
+        ApiAuthority = "sdkwork-documents-backend-api"
         SdkFamily = "sdkwork-documents-backend-sdk"
     }
 )

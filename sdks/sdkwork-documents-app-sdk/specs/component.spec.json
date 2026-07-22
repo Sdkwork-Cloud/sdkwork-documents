@@ -16,6 +16,7 @@
     "generated": true,
     "private": false,
     "manifests": [
+      "sdk-manifest.json",
       "sdk-manifest.json"
     ]
   },
@@ -35,7 +36,7 @@
   ],
   "contracts": {
     "apiAuthority": {
-      "name": "sdkwork-documents.app",
+      "name": "sdkwork-documents-app-api",
       "prefix": "/app/v3/api",
       "authorityOpenApi": "openapi/documents-app-api.openapi.json",
       "derivedOpenApi": [
@@ -53,6 +54,7 @@
     ],
     "events": [],
     "configKeys": [
+      "sdk-manifest.json",
       "sdk-manifest.json"
     ]
   },

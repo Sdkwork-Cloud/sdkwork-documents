@@ -29,7 +29,7 @@
       { "workspace": "sdkwork-utils", "role": "cross-language-utility-runtime" },
       { "workspace": "sdkwork-sdk-generator", "role": "sdk-generation-tooling" }
     ],
-    "apiAuthorities": ["sdkwork-documents.app"],
+    "apiAuthorities": ["sdkwork-documents-app-api"],
     "events": [],
     "configKeys": [
       "SDKWORK_DOCUMENTS_SDK_GENERATOR_BASE_URL",

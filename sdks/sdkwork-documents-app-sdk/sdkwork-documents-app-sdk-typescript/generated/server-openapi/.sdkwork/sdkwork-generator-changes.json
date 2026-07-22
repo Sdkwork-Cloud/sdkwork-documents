@@ -9,11 +9,67 @@
     "protocol": "http",
     "packageName": "@sdkwork/documents-app-sdk"
   },
-  "changeFingerprint": "123d66857fd343200d5e76ad907ccc7151ee67da09cdf1563e6fa7b4c9b6dba7",
+  "changeFingerprint": "ad22033f49fdc4f355885c08af30a9e48aa02fae5b61682c3d167dd166042e90",
   "changes": {
-    "createdGeneratedFiles": [],
-    "updatedGeneratedFiles": [],
-    "unchangedGeneratedFiles": [
+    "createdGeneratedFiles": [
+      "src/types/document-capabilities-response.ts",
+      "src/types/document-list-response.ts",
+      "src/types/document-response.ts"
+    ],
+    "updatedGeneratedFiles": [
+      "bin/publish-core.mjs",
+      "bin/publish.ps1",
+      "bin/publish.sh",
+      "bin/sdk-gen.bat",
+      "bin/sdk-gen.sh",
+      "CHANGELOG.md",
+      "LICENSE",
+      "package.json",
+      "README.md",
+      "sdkwork-sdk.json",
+      "src/api/base.ts",
+      "src/api/documents.ts",
+      "src/api/index.ts",
+      "src/api/paths.ts",
+      "src/auth/index.ts",
+      "src/http/client.ts",
+      "src/http/index.ts",
+      "src/index.ts",
+      "src/sdk.ts",
+      "src/types/common.ts",
+      "src/types/document-capabilities.ts",
+      "src/types/document-create-request.ts",
+      "src/types/document-update-request.ts",
+      "src/types/document.ts",
+      "src/types/field-error.ts",
+      "src/types/index.ts",
+      "src/types/page-info.ts",
+      "src/types/problem-detail.ts",
+      "src/types/sdk-work-api-response.ts",
+      "src/types/sdk-work-command-data.ts",
+      "src/types/sdk-work-command-response.ts",
+      "src/types/sdk-work-list-response.ts",
+      "src/types/sdk-work-page-data.ts",
+      "src/types/sdk-work-platform-error-code.ts",
+      "src/types/sdk-work-resource-data.ts",
+      "src/types/sdk-work-resource-response.ts",
+      "tsconfig.json"
+    ],
+    "unchangedGeneratedFiles": [],
+    "deletedGeneratedFiles": [
+      "src/types/document-list.ts",
+      "src/types/documents-create-response201.ts",
+      "src/types/documents-list-response.ts",
+      "src/types/documents-retrieve-response.ts",
+      "src/types/documents-update-response.ts",
+      "src/types/problem-details.ts"
+    ],
+    "scaffoldedFiles": [],
+    "preservedScaffoldFiles": [
+      "custom/build-runtime.mjs",
+      "custom/README.md"
+    ],
+    "backedUpFiles": [
       "bin/publish-core.mjs",
       "bin/publish.ps1",
       "bin/publish.sh",
@@ -57,37 +113,162 @@
       "src/types/sdk-work-resource-data.ts",
       "src/types/sdk-work-resource-response.ts",
       "tsconfig.json"
-    ],
-    "deletedGeneratedFiles": [],
-    "scaffoldedFiles": [],
-    "preservedScaffoldFiles": [
-      "custom/build-runtime.mjs",
-      "custom/README.md"
-    ],
-    "backedUpFiles": []
+    ]
   },
   "impact": {
     "schemaVersion": 1,
-    "areas": [],
-    "details": [],
-    "requiresVerification": false,
-    "summary": "No generated, scaffold, or backup changes detected. Verification can be skipped."
+    "areas": [
+      "api-surface",
+      "models",
+      "runtime",
+      "build-metadata",
+      "publish-workflow",
+      "documentation",
+      "unknown"
+    ],
+    "details": [
+      {
+        "area": "api-surface",
+        "paths": [
+          "src/api/base.ts",
+          "src/api/documents.ts",
+          "src/api/index.ts",
+          "src/api/paths.ts",
+          "src/http/client.ts",
+          "src/sdk.ts"
+        ]
+      },
+      {
+        "area": "models",
+        "paths": [
+          "src/types/common.ts",
+          "src/types/document-capabilities-response.ts",
+          "src/types/document-capabilities.ts",
+          "src/types/document-create-request.ts",
+          "src/types/document-list-response.ts",
+          "src/types/document-list.ts",
+          "src/types/document-response.ts",
+          "src/types/document-update-request.ts",
+          "src/types/document.ts",
+          "src/types/documents-create-response201.ts",
+          "src/types/documents-list-response.ts",
+          "src/types/documents-retrieve-response.ts",
+          "src/types/documents-update-response.ts",
+          "src/types/field-error.ts",
+          "src/types/index.ts",
+          "src/types/page-info.ts",
+          "src/types/problem-detail.ts",
+          "src/types/problem-details.ts",
+          "src/types/sdk-work-api-response.ts",
+          "src/types/sdk-work-command-data.ts",
+          "src/types/sdk-work-command-response.ts",
+          "src/types/sdk-work-list-response.ts",
+          "src/types/sdk-work-page-data.ts",
+          "src/types/sdk-work-platform-error-code.ts",
+          "src/types/sdk-work-resource-data.ts",
+          "src/types/sdk-work-resource-response.ts"
+        ]
+      },
+      {
+        "area": "runtime",
+        "paths": [
+          "src/auth/index.ts",
+          "src/http/client.ts",
+          "src/http/index.ts"
+        ]
+      },
+      {
+        "area": "build-metadata",
+        "paths": [
+          "package.json",
+          "sdkwork-sdk.json",
+          "tsconfig.json"
+        ]
+      },
+      {
+        "area": "publish-workflow",
+        "paths": [
+          "bin/publish-core.mjs",
+          "bin/publish.ps1",
+          "bin/publish.sh",
+          "bin/sdk-gen.bat",
+          "bin/sdk-gen.sh"
+        ]
+      },
+      {
+        "area": "documentation",
+        "paths": [
+          "CHANGELOG.md",
+          "README.md"
+        ]
+      },
+      {
+        "area": "unknown",
+        "paths": [
+          "LICENSE",
+          "src/index.ts"
+        ]
+      }
+    ],
+    "requiresVerification": true,
+    "summary": "Detected impact areas: api-surface, models, runtime, build-metadata, publish-workflow, documentation, unknown. Verification is required."
   },
   "verificationPlan": {
-    "shouldRun": false,
-    "runPhase": "skip",
-    "summary": "No generated, scaffold, or backup changes detected. Verification can be skipped.",
-    "steps": []
+    "shouldRun": true,
+    "runPhase": "now",
+    "summary": "Detected impact areas: api-surface, models, runtime, build-metadata, publish-workflow, documentation, unknown. Verification is required. Run the required verification commands now against the generated SDK output.",
+    "steps": [
+      {
+        "id": "check",
+        "title": "Unified package check",
+        "required": true,
+        "rationale": "Validate the generated package with the unified publish helper. Triggered by: api-surface, models, runtime, build-metadata, publish-workflow, documentation, unknown.",
+        "workingDirectory": "E:\\sdkwork-space\\sdkwork-documents\\sdks\\sdkwork-documents-app-sdk\\sdkwork-documents-app-sdk-typescript\\generated\\server-openapi",
+        "command": "node",
+        "args": [
+          "./bin/publish-core.mjs",
+          "--language",
+          "typescript",
+          "--project-dir",
+          ".",
+          "--action",
+          "check"
+        ],
+        "displayCommand": "node ./bin/publish-core.mjs --language typescript --project-dir . --action check"
+      },
+      {
+        "id": "build",
+        "title": "Unified package build",
+        "required": true,
+        "rationale": "Run the full package build because this language uses a lighter check path than the final build. Triggered by: api-surface, models, runtime, build-metadata, publish-workflow, documentation, unknown.",
+        "workingDirectory": "E:\\sdkwork-space\\sdkwork-documents\\sdks\\sdkwork-documents-app-sdk\\sdkwork-documents-app-sdk-typescript\\generated\\server-openapi",
+        "command": "node",
+        "args": [
+          "./bin/publish-core.mjs",
+          "--language",
+          "typescript",
+          "--project-dir",
+          ".",
+          "--action",
+          "build"
+        ],
+        "displayCommand": "node ./bin/publish-core.mjs --language typescript --project-dir . --action build"
+      }
+    ]
   },
   "executionDecision": {
     "schemaVersion": 1,
-    "riskLevel": "low",
-    "nextAction": "skip",
+    "riskLevel": "high",
+    "nextAction": "verify",
     "requiresManualReview": false,
     "applyRequiresExpectedFingerprint": false,
-    "summary": "No actionable changes were detected. No apply or verification step is required.",
+    "summary": "Changes have been applied. Run the required verification plan now.",
     "reasons": [
-      "no-actionable-changes"
+      "backed-up-generated-files",
+      "deleted-generated-files",
+      "manual-review-required",
+      "unknown-impact",
+      "verification-required"
     ]
   },
   "preservedLegacyFiles": false

@@ -1,10 +1,13 @@
 //! API assembly for sdkwork-documents.
 //! Application bootstrap lives in `bootstrap.rs`; route inventory is in `assembly-manifest.json`.
 
-mod bootstrap;
+pub mod bootstrap;
 mod generated;
 
-pub use bootstrap::{assemble_api_router, assemble_api_router_from_env, ApiAssembly};
+pub use bootstrap::{
+    assemble_api_router, assemble_api_router_from_env, assemble_business_routes, ApiAssembly,
+};
+pub use sdkwork_routes_documents_app_api::DocumentsRuntime;
 
 pub fn assembly_route_count() -> usize {
     generated::ROUTE_CRATE_COUNT

@@ -7,6 +7,8 @@ import fs from "node:fs";
 import path from "node:path";
 import { parseArgs } from "node:util";
 
+import { sdkWorkEnvelopeComponentSchemas } from "../../sdkwork-specs/tools/lib/openapi-envelope-schemas.mjs";
+
 const { values } = parseArgs({
   options: {
     check: { type: "boolean", default: false },
@@ -84,7 +86,7 @@ function problemResponseRef() {
     description: "Problem detail",
     content: {
       "application/problem+json": {
-        schema: { $ref: "#/components/schemas/ProblemDetails" },
+        schema: { $ref: "#/components/schemas/ProblemDetail" },
       },
     },
   };
@@ -190,17 +192,7 @@ function buildOpenApi({ title, authority, sdkFamily, apiSurface, authMode, paths
     components: {
       securitySchemes: openApiSecuritySchemes(authMode),
       schemas: {
-        ProblemDetails: {
-          type: "object",
-          required: ["type", "title", "status"],
-          properties: {
-            type: { type: "string", format: "uri" },
-            title: { type: "string" },
-            status: { type: "integer" },
-            detail: { type: "string" },
-            instance: { type: "string", format: "uri" },
-          },
-        },
+        ...sdkWorkEnvelopeComponentSchemas,
         DocumentCapabilities: {
           type: "object",
           required: ["version", "supportedFormats"],
@@ -235,12 +227,63 @@ function buildOpenApi({ title, authority, sdkFamily, apiSurface, authMode, paths
             status: { type: "string" },
           },
         },
-        DocumentList: {
-          type: "object",
-          required: ["items"],
-          properties: {
-            items: { type: "array", items: { $ref: "#/components/schemas/Document" } },
-          },
+        DocumentCapabilitiesResponse: {
+          allOf: [
+            { $ref: "#/components/schemas/SdkWorkApiResponse" },
+            {
+              type: "object",
+              properties: {
+                data: {
+                  type: "object",
+                  additionalProperties: false,
+                  required: ["item"],
+                  properties: {
+                    item: { $ref: "#/components/schemas/DocumentCapabilities" },
+                  },
+                },
+              },
+            },
+          ],
+        },
+        DocumentResponse: {
+          allOf: [
+            { $ref: "#/components/schemas/SdkWorkApiResponse" },
+            {
+              type: "object",
+              properties: {
+                data: {
+                  type: "object",
+                  additionalProperties: false,
+                  required: ["item"],
+                  properties: {
+                    item: { $ref: "#/components/schemas/Document" },
+                  },
+                },
+              },
+            },
+          ],
+        },
+        DocumentListResponse: {
+          allOf: [
+            { $ref: "#/components/schemas/SdkWorkApiResponse" },
+            {
+              type: "object",
+              properties: {
+                data: {
+                  type: "object",
+                  additionalProperties: false,
+                  required: ["items", "pageInfo"],
+                  properties: {
+                    items: {
+                      type: "array",
+                      items: { $ref: "#/components/schemas/Document" },
+                    },
+                    pageInfo: { $ref: "#/components/schemas/PageInfo" },
+                  },
+                },
+              },
+            },
+          ],
         },
       },
     },
@@ -264,7 +307,7 @@ const openPaths = {
           description: "OK",
           content: {
             "application/json": {
-              schema: { $ref: "#/components/schemas/DocumentCapabilities" },
+              schema: { $ref: "#/components/schemas/DocumentCapabilitiesResponse" },
             },
           },
         },
@@ -288,7 +331,7 @@ const openPaths = {
           description: "OK",
           content: {
             "application/json": {
-              schema: { $ref: "#/components/schemas/DocumentList" },
+              schema: { $ref: "#/components/schemas/DocumentListResponse" },
             },
           },
         },
@@ -320,7 +363,7 @@ const openPaths = {
           description: "OK",
           content: {
             "application/json": {
-              schema: { $ref: "#/components/schemas/Document" },
+              schema: { $ref: "#/components/schemas/DocumentResponse" },
             },
           },
         },
@@ -335,7 +378,7 @@ const appPaths = {
     get: {
       ...operationMeta({
         operationId: "documents.list",
-        authority: "sdkwork-documents.app",
+        authority: "sdkwork-documents-app-api",
         sdkFamily: "sdkwork-documents-app-sdk",
         apiSurface: "app-api",
         authMode: "dual-token",
@@ -347,7 +390,7 @@ const appPaths = {
           description: "OK",
           content: {
             "application/json": {
-              schema: { $ref: "#/components/schemas/DocumentList" },
+              schema: { $ref: "#/components/schemas/DocumentListResponse" },
             },
           },
         },
@@ -357,7 +400,7 @@ const appPaths = {
     post: {
       ...operationMeta({
         operationId: "documents.create",
-        authority: "sdkwork-documents.app",
+        authority: "sdkwork-documents-app-api",
         sdkFamily: "sdkwork-documents-app-sdk",
         apiSurface: "app-api",
         authMode: "dual-token",
@@ -378,7 +421,7 @@ const appPaths = {
           description: "Created",
           content: {
             "application/json": {
-              schema: { $ref: "#/components/schemas/Document" },
+              schema: { $ref: "#/components/schemas/DocumentResponse" },
             },
           },
         },
@@ -390,7 +433,7 @@ const appPaths = {
     get: {
       ...operationMeta({
         operationId: "documents.retrieve",
-        authority: "sdkwork-documents.app",
+        authority: "sdkwork-documents-app-api",
         sdkFamily: "sdkwork-documents-app-sdk",
         apiSurface: "app-api",
         authMode: "dual-token",
@@ -410,7 +453,7 @@ const appPaths = {
           description: "OK",
           content: {
             "application/json": {
-              schema: { $ref: "#/components/schemas/Document" },
+              schema: { $ref: "#/components/schemas/DocumentResponse" },
             },
           },
         },
@@ -420,7 +463,7 @@ const appPaths = {
     patch: {
       ...operationMeta({
         operationId: "documents.update",
-        authority: "sdkwork-documents.app",
+        authority: "sdkwork-documents-app-api",
         sdkFamily: "sdkwork-documents-app-sdk",
         apiSurface: "app-api",
         authMode: "dual-token",
@@ -448,7 +491,7 @@ const appPaths = {
           description: "OK",
           content: {
             "application/json": {
-              schema: { $ref: "#/components/schemas/Document" },
+              schema: { $ref: "#/components/schemas/DocumentResponse" },
             },
           },
         },
@@ -463,7 +506,7 @@ const backendPaths = {
     get: {
       ...operationMeta({
         operationId: "documents.list",
-        authority: "sdkwork-documents.backend",
+        authority: "sdkwork-documents-backend-api",
         sdkFamily: "sdkwork-documents-backend-sdk",
         apiSurface: "backend-api",
         authMode: "dual-token",
@@ -475,7 +518,7 @@ const backendPaths = {
           description: "OK",
           content: {
             "application/json": {
-              schema: { $ref: "#/components/schemas/DocumentList" },
+              schema: { $ref: "#/components/schemas/DocumentListResponse" },
             },
           },
         },
@@ -485,7 +528,7 @@ const backendPaths = {
     post: {
       ...operationMeta({
         operationId: "documents.create",
-        authority: "sdkwork-documents.backend",
+        authority: "sdkwork-documents-backend-api",
         sdkFamily: "sdkwork-documents-backend-sdk",
         apiSurface: "backend-api",
         authMode: "dual-token",
@@ -506,7 +549,7 @@ const backendPaths = {
           description: "Created",
           content: {
             "application/json": {
-              schema: { $ref: "#/components/schemas/Document" },
+              schema: { $ref: "#/components/schemas/DocumentResponse" },
             },
           },
         },
@@ -518,7 +561,7 @@ const backendPaths = {
     get: {
       ...operationMeta({
         operationId: "documents.retrieve",
-        authority: "sdkwork-documents.backend",
+        authority: "sdkwork-documents-backend-api",
         sdkFamily: "sdkwork-documents-backend-sdk",
         apiSurface: "backend-api",
         authMode: "dual-token",
@@ -538,7 +581,7 @@ const backendPaths = {
           description: "OK",
           content: {
             "application/json": {
-              schema: { $ref: "#/components/schemas/Document" },
+              schema: { $ref: "#/components/schemas/DocumentResponse" },
             },
           },
         },
@@ -548,7 +591,7 @@ const backendPaths = {
     patch: {
       ...operationMeta({
         operationId: "documents.update",
-        authority: "sdkwork-documents.backend",
+        authority: "sdkwork-documents-backend-api",
         sdkFamily: "sdkwork-documents-backend-sdk",
         apiSurface: "backend-api",
         authMode: "dual-token",
@@ -576,7 +619,7 @@ const backendPaths = {
           description: "OK",
           content: {
             "application/json": {
-              schema: { $ref: "#/components/schemas/Document" },
+              schema: { $ref: "#/components/schemas/DocumentResponse" },
             },
           },
         },
@@ -586,7 +629,7 @@ const backendPaths = {
     delete: {
       ...operationMeta({
         operationId: "documents.delete",
-        authority: "sdkwork-documents.backend",
+        authority: "sdkwork-documents-backend-api",
         sdkFamily: "sdkwork-documents-backend-sdk",
         apiSurface: "backend-api",
         authMode: "dual-token",
@@ -619,7 +662,7 @@ const openApiOpen = buildOpenApi({
 });
 const openApiApp = buildOpenApi({
   title: "SDKWork Documents App API",
-  authority: "sdkwork-documents.app",
+  authority: "sdkwork-documents-app-api",
   sdkFamily: "sdkwork-documents-app-sdk",
   apiSurface: "app-api",
   authMode: "dual-token",
@@ -627,7 +670,7 @@ const openApiApp = buildOpenApi({
 });
 const openApiBackend = buildOpenApi({
   title: "SDKWork Documents Backend API",
-  authority: "sdkwork-documents.backend",
+  authority: "sdkwork-documents-backend-api",
   sdkFamily: "sdkwork-documents-backend-sdk",
   apiSurface: "backend-api",
   authMode: "dual-token",
@@ -762,7 +805,7 @@ const sdkFamilies = [
   },
   {
     dir: "sdks/sdkwork-documents-app-sdk",
-    authority: "sdkwork-documents.app",
+    authority: "sdkwork-documents-app-api",
     prefix: appPrefix,
     schemaUrl: appSchemaUrl,
     specFile: "openapi/documents-app-api.openapi.json",
@@ -774,7 +817,7 @@ const sdkFamilies = [
   },
   {
     dir: "sdks/sdkwork-documents-backend-sdk",
-    authority: "sdkwork-documents.backend",
+    authority: "sdkwork-documents-backend-api",
     prefix: backendPrefix,
     schemaUrl: backendSchemaUrl,
     specFile: "openapi/documents-backend-api.openapi.json",

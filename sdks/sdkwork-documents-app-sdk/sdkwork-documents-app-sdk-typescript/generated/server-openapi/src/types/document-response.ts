@@ -1,8 +1,8 @@
 import type { Document } from './document';
 
-export interface DocumentsCreateResponse201 {
+export interface DocumentResponse {
   code: 0;
-  data: unknown & Record<string, unknown>;
+  data: unknown & { item: Document; };
   /** Server-owned request correlation id. */
   traceId: string;
 }

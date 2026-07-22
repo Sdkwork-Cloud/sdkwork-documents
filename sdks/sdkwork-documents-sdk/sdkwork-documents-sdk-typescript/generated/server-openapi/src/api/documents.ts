@@ -27,8 +27,8 @@ export class DocumentsApi {
   }
 
 
-async list(): Promise<Record<string, unknown>> {
-    return this.client.get<Record<string, unknown>>(customApiPath(`/documents`));
+async list(): Promise<{ items: Document[]; pageInfo: PageInfo; }> {
+    return this.client.get<{ items: Document[]; pageInfo: PageInfo; }>(customApiPath(`/documents`));
   }
 
 async retrieve(documentId: string): Promise<Document> {
@@ -40,13 +40,7 @@ export function createDocumentsApi(client: HttpClient): DocumentsApi {
   return new DocumentsApi(client);
 }
 
-function appendQueryString(path: string, rawQueryString: string): string {
-  const query = rawQueryString.replace(/^\?+/, '');
-  if (!query) {
-    return path;
-  }
-  return path.includes('?') ? `${path}&${query}` : `${path}?${query}`;
-}
+
 
 interface PathParameterSpec {
   name: string;

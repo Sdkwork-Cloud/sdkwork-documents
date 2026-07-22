@@ -1,8 +1,8 @@
 import type { DocumentCapabilities } from './document-capabilities';
 
-export interface CapabilitiesRetrieveResponse {
+export interface DocumentCapabilitiesResponse {
   code: 0;
-  data: unknown & Record<string, unknown>;
+  data: unknown & { item: DocumentCapabilities; };
   /** Server-owned request correlation id. */
   traceId: string;
 }

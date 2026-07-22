@@ -21,8 +21,8 @@
     "capability": "documents",
     "apiAuthorities": [
       "sdkwork-documents-open-api",
-      "sdkwork-documents.app",
-      "sdkwork-documents.backend"
+      "sdkwork-documents-app-api",
+      "sdkwork-documents-backend-api"
     ],
     "accessTokenPermissionScope": [
       "iam.users.read"

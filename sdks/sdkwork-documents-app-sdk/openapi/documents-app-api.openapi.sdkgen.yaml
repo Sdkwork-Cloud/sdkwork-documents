@@ -3,7 +3,7 @@ kind: sdkwork.sdkgen.config
 input: documents-app-api.openapi.json
 output: ../sdkwork-documents-app-sdk-typescript/generated/server-openapi
 sdkOwner: sdkwork-documents
-apiAuthority: sdkwork-documents.app
+apiAuthority: sdkwork-documents-app-api
 sdkFamily: sdkwork-documents-app-sdk
 standardProfile: sdkwork-v3
 languageTargets:

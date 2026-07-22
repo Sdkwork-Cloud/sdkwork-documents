@@ -16,6 +16,7 @@
     "generated": true,
     "private": false,
     "manifests": [
+      "sdk-manifest.json",
       "sdk-manifest.json"
     ]
   },
@@ -53,6 +54,7 @@
     ],
     "events": [],
     "configKeys": [
+      "sdk-manifest.json",
       "sdk-manifest.json"
     ]
   },

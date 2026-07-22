@@ -6,7 +6,7 @@
   "owner": "sdkwork-documents",
   "domain": "content",
   "capability": "documents",
-  "apiAuthority": "sdkwork-documents.app",
+  "apiAuthority": "sdkwork-documents-app-api",
   "sdkFamily": "sdkwork-documents-app-sdk",
   "prefix": "/app/v3/api",
   "source": {
@@ -32,7 +32,7 @@
       },
       "ownership": {
         "owner": "sdkwork-documents",
-        "apiAuthority": "sdkwork-documents.app"
+        "apiAuthority": "sdkwork-documents-app-api"
       },
       "requestContext": "WebRequestContext",
       "apiSurface": "app-api"
@@ -54,7 +54,7 @@
       },
       "ownership": {
         "owner": "sdkwork-documents",
-        "apiAuthority": "sdkwork-documents.app"
+        "apiAuthority": "sdkwork-documents-app-api"
       },
       "requestContext": "WebRequestContext",
       "apiSurface": "app-api"
@@ -76,7 +76,7 @@
       },
       "ownership": {
         "owner": "sdkwork-documents",
-        "apiAuthority": "sdkwork-documents.app"
+        "apiAuthority": "sdkwork-documents-app-api"
       },
       "requestContext": "WebRequestContext",
       "apiSurface": "app-api"
@@ -98,7 +98,7 @@
       },
       "ownership": {
         "owner": "sdkwork-documents",
-        "apiAuthority": "sdkwork-documents.app"
+        "apiAuthority": "sdkwork-documents-app-api"
       },
       "requestContext": "WebRequestContext",
       "apiSurface": "app-api"

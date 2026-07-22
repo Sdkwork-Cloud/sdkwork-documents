@@ -72,13 +72,13 @@
         "sdkFamily": "sdkwork-documents-sdk"
       },
       {
-        "name": "sdkwork-documents.app",
+        "name": "sdkwork-documents-app-api",
         "prefix": "/app/v3/api",
         "authorityOpenApi": "sdks/sdkwork-documents-app-sdk/openapi/documents-app-api.openapi.json",
         "sdkFamily": "sdkwork-documents-app-sdk"
       },
       {
-        "name": "sdkwork-documents.backend",
+        "name": "sdkwork-documents-backend-api",
         "prefix": "/backend/v3/api",
         "authorityOpenApi": "sdks/sdkwork-documents-backend-sdk/openapi/documents-backend-api.openapi.json",
         "sdkFamily": "sdkwork-documents-backend-sdk"

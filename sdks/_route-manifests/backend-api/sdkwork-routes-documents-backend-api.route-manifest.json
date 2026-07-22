@@ -6,7 +6,7 @@
   "owner": "sdkwork-documents",
   "domain": "content",
   "capability": "documents",
-  "apiAuthority": "sdkwork-documents.backend",
+  "apiAuthority": "sdkwork-documents-backend-api",
   "sdkFamily": "sdkwork-documents-backend-sdk",
   "prefix": "/backend/v3/api",
   "source": {
@@ -32,7 +32,7 @@
       },
       "ownership": {
         "owner": "sdkwork-documents",
-        "apiAuthority": "sdkwork-documents.backend"
+        "apiAuthority": "sdkwork-documents-backend-api"
       },
       "requestContext": "WebRequestContext",
       "apiSurface": "backend-api"
@@ -54,7 +54,7 @@
       },
       "ownership": {
         "owner": "sdkwork-documents",
-        "apiAuthority": "sdkwork-documents.backend"
+        "apiAuthority": "sdkwork-documents-backend-api"
       },
       "requestContext": "WebRequestContext",
       "apiSurface": "backend-api"
@@ -76,7 +76,7 @@
       },
       "ownership": {
         "owner": "sdkwork-documents",
-        "apiAuthority": "sdkwork-documents.backend"
+        "apiAuthority": "sdkwork-documents-backend-api"
       },
       "requestContext": "WebRequestContext",
       "apiSurface": "backend-api"
@@ -98,7 +98,7 @@
       },
       "ownership": {
         "owner": "sdkwork-documents",
-        "apiAuthority": "sdkwork-documents.backend"
+        "apiAuthority": "sdkwork-documents-backend-api"
       },
       "requestContext": "WebRequestContext",
       "apiSurface": "backend-api"
@@ -120,7 +120,7 @@
       },
       "ownership": {
         "owner": "sdkwork-documents",
-        "apiAuthority": "sdkwork-documents.backend"
+        "apiAuthority": "sdkwork-documents-backend-api"
       },
       "requestContext": "WebRequestContext",
       "apiSurface": "backend-api"

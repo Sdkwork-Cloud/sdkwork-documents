@@ -1,6 +1,4 @@
-use sdkwork_api_documents_assembly::{
-    assemble_api_router, bootstrap, DocumentsRuntime,
-};
+use sdkwork_api_documents_assembly::{assemble_api_router, bootstrap, DocumentsRuntime};
 use sdkwork_api_documents_standalone_gateway::serve_router;
 
 #[tokio::main]
@@ -18,9 +16,7 @@ async fn main() {
         .await
         .expect("documents database readiness check failed");
 
-    let router = assemble_api_router(&runtime)
-        .await
-        .router;
+    let router = assemble_api_router(&runtime).await.router;
     serve_router(
         &listen_addr,
         "sdkwork-api-documents-standalone-gateway",

@@ -20,7 +20,7 @@ const families = [
   {
     root: "sdkwork-documents-app-sdk",
     owner: "sdkwork-documents",
-    authority: "sdkwork-documents.app",
+    authority: "sdkwork-documents-app-api",
     input: "openapi/documents-app-api.openapi.json",
     manifest: "sdk-manifest.json",
     forbiddenPathPrefixes: ["/backend/v3/api/", "/doc/v3/api/"],
@@ -28,7 +28,7 @@ const families = [
   {
     root: "sdkwork-documents-backend-sdk",
     owner: "sdkwork-documents",
-    authority: "sdkwork-documents.backend",
+    authority: "sdkwork-documents-backend-api",
     input: "openapi/documents-backend-api.openapi.json",
     manifest: "sdk-manifest.json",
     forbiddenPathPrefixes: ["/app/v3/api/", "/doc/v3/api/"],
