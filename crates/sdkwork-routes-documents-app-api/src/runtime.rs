@@ -70,9 +70,13 @@ impl DocumentsRuntime {
 
     pub async fn build_app_business_router_with_web_framework(&self) -> Router {
         let resolver = sdkwork_iam_web_adapter::iam_web_request_context_resolver_from_env().await;
-        let api: Arc<dyn DocumentsAppApi> = self.service.clone();
-        let router = crate::build_business_router_with_shared_app_api(api);
+        let router = self.build_app_business_router();
         crate::wrap_router_with_web_framework(resolver, router)
+    }
+
+    pub fn build_app_business_router(&self) -> Router {
+        let api: Arc<dyn DocumentsAppApi> = self.service.clone();
+        crate::build_business_router_with_shared_app_api(api)
     }
 
     pub fn build_backend_router_with_web_framework_resolver(

@@ -28,7 +28,8 @@ pub use routes::{
 pub use runtime::DocumentsRuntime;
 pub use web_bootstrap::{
     documents_app_api_prefixes, documents_app_api_public_path_prefixes,
-    wrap_router_with_web_framework, wrap_router_with_web_framework_from_env,
+    documents_app_context_injector, wrap_router_with_web_framework,
+    wrap_router_with_web_framework_from_env,
 };
 
 pub fn gateway_route_manifest() -> HttpRouteManifest {

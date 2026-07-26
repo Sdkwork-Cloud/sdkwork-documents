@@ -20,6 +20,10 @@ pub fn documents_app_api_prefixes() -> Vec<String> {
 #[derive(Clone, Default)]
 struct DocumentsAppApiContextInjector;
 
+pub fn documents_app_context_injector() -> Arc<dyn DomainContextInjector> {
+    Arc::new(DocumentsAppApiContextInjector)
+}
+
 impl DomainContextInjector for DocumentsAppApiContextInjector {
     fn inject(&self, request: &mut axum::extract::Request, context: &WebRequestContext) {
         if let Some(app_context) = app_api_context_from_web_request(context) {
@@ -52,7 +56,7 @@ pub fn wrap_router_with_web_framework(
             ..WebRequestContextProfile::default()
         })
         .with_route_manifest(route_manifest)
-        .with_domain_injector(Arc::new(DocumentsAppApiContextInjector));
+        .with_domain_injector(documents_app_context_injector());
     with_web_request_context(router, layer)
 }
 

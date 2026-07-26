@@ -45,9 +45,17 @@
     "publicExports": [
       "."
     ],
+    "providedPorts": [
+      {
+        "name": "documentsAppApiContribution",
+        "export": ".",
+        "target": "sdkwork_api_documents_assembly::assemble_app_api_contribution"
+      }
+    ],
     "runtimeEntrypoints": [
       "sdkwork_api_documents_assembly::assemble_api_router",
       "sdkwork_api_documents_assembly::assemble_api_router_from_env",
+      "sdkwork_api_documents_assembly::assemble_app_api_contribution",
       "sdkwork_api_documents_assembly::assemble_business_routes"
     ],
     "routeManifest": "assembly-manifest.json",
