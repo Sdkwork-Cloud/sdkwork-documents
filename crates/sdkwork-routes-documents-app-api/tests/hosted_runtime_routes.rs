@@ -112,10 +112,7 @@ async fn test_runtime() -> DocumentsRuntime {
 
     std::env::set_var("SDKWORK_ENV", "dev");
     std::env::set_var("SDKWORK_IAM_ALLOW_DEV_AUTH_FALLBACK", "true");
-    std::env::remove_var("SDKWORK_IAM_DATABASE_URL");
     std::env::remove_var("SDKWORK_DATABASE_URL");
-    std::env::remove_var("DATABASE_URL");
-    std::env::remove_var("SDKWORK_CLAW_DATABASE_URL");
 
     DocumentsRuntime::connect(&database_url)
         .await

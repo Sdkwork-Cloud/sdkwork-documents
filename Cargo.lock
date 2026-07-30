@@ -1632,14 +1632,12 @@ name = "sdkwork-api-documents-assembly"
 version = "0.1.0"
 dependencies = [
  "axum",
+ "sdkwork-database-sqlx",
  "sdkwork-routes-documents-app-api",
  "sdkwork-routes-documents-backend-api",
  "sdkwork-routes-documents-open-api",
  "sdkwork-web-bootstrap",
- "sdkwork-web-contract",
  "sdkwork-web-core",
- "serde_json",
- "tokio",
 ]
 
 [[package]]
@@ -1649,6 +1647,8 @@ dependencies = [
  "axum",
  "sdkwork-api-documents-assembly",
  "sdkwork-documents-observability",
+ "sdkwork-iam-web-adapter",
+ "sdkwork-web-bootstrap",
  "tokio",
  "tracing",
  "tracing-subscriber",
@@ -1704,6 +1704,7 @@ dependencies = [
  "thiserror 2.0.18",
  "toml",
  "tracing",
+ "url",
 ]
 
 [[package]]
@@ -1913,6 +1914,7 @@ dependencies = [
  "sdkwork-content-documents-repository-sqlx",
  "sdkwork-content-documents-sdk-reference",
  "sdkwork-content-documents-service",
+ "sdkwork-database-sqlx",
  "sdkwork-documents-contract",
  "sdkwork-documents-database-host",
  "sdkwork-iam-web-adapter",

@@ -3,10 +3,13 @@ use std::sync::Arc;
 use axum::{routing::get, Json, Router};
 use sdkwork_content_documents_repository_sqlx::DocumentsSqlxRepository;
 use sdkwork_content_documents_service::DocumentsService;
+use sdkwork_database_sqlx::DatabasePool;
 use sdkwork_documents_contract::{
     DocumentsAppApi, DocumentsBackendApi, DocumentsOpenApi, DocumentsRepository,
 };
-use sdkwork_documents_database_host::bootstrap_documents_database_from_env;
+use sdkwork_documents_database_host::{
+    bootstrap_documents_database, bootstrap_documents_database_from_env, DocumentsDatabaseHost,
+};
 use sdkwork_iam_web_adapter::IamWebRequestContextResolver;
 use sdkwork_routes_documents_backend_api::{
     build_business_router_with_shared_backend_api, build_router_with_shared_backend_api,
@@ -22,6 +25,7 @@ use crate::bootstrap;
 #[derive(Clone)]
 pub struct DocumentsRuntime {
     service: Arc<DocumentsService>,
+    pool: DatabasePool,
 }
 
 impl DocumentsRuntime {
@@ -31,23 +35,42 @@ impl DocumentsRuntime {
         )
         .await
         .map_err(|error| format!("connect documents database failed: {error}"))?;
-        let repository: Arc<dyn DocumentsRepository> = Arc::new(DocumentsSqlxRepository::new(pool));
+        let repository: Arc<dyn DocumentsRepository> =
+            Arc::new(DocumentsSqlxRepository::new(pool.clone()));
         Ok(Self {
             service: Arc::new(DocumentsService::new(repository)),
+            pool,
         })
     }
 
     pub async fn connect_from_env() -> Result<Self, String> {
         let database_host = bootstrap_documents_database_from_env().await?;
+        Self::from_database_host(database_host)
+    }
+
+    pub async fn connect_from_pool(pool: DatabasePool) -> Result<Self, String> {
+        let database_host = bootstrap_documents_database(pool).await?;
+        Self::from_database_host(database_host)
+    }
+
+    fn from_database_host(database_host: DocumentsDatabaseHost) -> Result<Self, String> {
+        let pool = database_host.pool().clone();
         let repository: Arc<dyn DocumentsRepository> =
-            Arc::new(DocumentsSqlxRepository::new(database_host.pool().clone()));
+            Arc::new(DocumentsSqlxRepository::new(pool.clone()));
         Ok(Self {
             service: Arc::new(DocumentsService::new(repository)),
+            pool,
         })
     }
 
     pub async fn readiness_check(&self) -> Result<(), String> {
-        Ok(())
+        match self.pool.test_connection().await {
+            Ok(true) => Ok(()),
+            Ok(false) => Err("documents database readiness query returned no row".to_owned()),
+            Err(error) => Err(format!(
+                "documents database readiness check failed: {error}"
+            )),
+        }
     }
 
     pub fn service(&self) -> Arc<DocumentsService> {
@@ -77,6 +100,16 @@ impl DocumentsRuntime {
     pub fn build_app_business_router(&self) -> Router {
         let api: Arc<dyn DocumentsAppApi> = self.service.clone();
         crate::build_business_router_with_shared_app_api(api)
+    }
+
+    pub fn build_backend_business_router(&self) -> Router {
+        let api: Arc<dyn DocumentsBackendApi> = self.service.clone();
+        build_business_router_with_shared_backend_api(api)
+    }
+
+    pub fn build_open_business_router(&self) -> Router {
+        let api: Arc<dyn DocumentsOpenApi> = self.service.clone();
+        build_business_router_with_shared_open_api(api)
     }
 
     pub fn build_backend_router_with_web_framework_resolver(

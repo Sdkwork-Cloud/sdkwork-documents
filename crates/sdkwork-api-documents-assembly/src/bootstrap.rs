@@ -1,25 +1,15 @@
-use std::collections::BTreeSet;
 use std::sync::Arc;
 
 use axum::Router;
+use sdkwork_database_sqlx::DatabasePool;
 use sdkwork_routes_documents_app_api::DocumentsRuntime;
+pub use sdkwork_web_bootstrap::ApiAssemblyContribution;
 use sdkwork_web_bootstrap::{ReadinessCheck, ReadinessFuture};
-use sdkwork_web_core::{DomainContextInjector, HttpRoute, HttpRouteManifest};
+use sdkwork_web_core::HttpRouteManifest;
 
 pub use sdkwork_routes_documents_app_api::bootstrap::validate_process_config;
 
-pub struct ApiAssembly {
-    pub router: Router,
-}
-
-pub struct ApiAssemblyContribution {
-    pub router: Router,
-    pub route_manifest: HttpRouteManifest,
-    pub openapi: serde_json::Value,
-    pub permission_catalog: Vec<&'static str>,
-    pub domain_context_injectors: Vec<Arc<dyn DomainContextInjector>>,
-    pub readiness_check: Arc<dyn ReadinessCheck>,
-}
+pub type ApiAssembly = ApiAssemblyContribution;
 
 #[derive(Clone)]
 struct DocumentsReadiness {
@@ -32,61 +22,75 @@ impl ReadinessCheck for DocumentsReadiness {
     }
 }
 
-pub async fn assemble_business_routes(runtime: &DocumentsRuntime) -> ApiAssembly {
-    let open = runtime
-        .build_open_business_router_with_web_framework()
-        .await;
-    let app = runtime.build_app_business_router_with_web_framework().await;
-    let backend = runtime
-        .build_backend_business_router_with_web_framework()
-        .await;
-
-    ApiAssembly {
-        router: Router::new().merge(open).merge(app).merge(backend),
-    }
-}
-
-pub async fn assemble_api_router(runtime: &DocumentsRuntime) -> ApiAssembly {
-    assemble_business_routes(runtime).await
+pub async fn assemble_api_router(runtime: &DocumentsRuntime) -> Result<ApiAssembly, String> {
+    assemble_owner_api_contribution(runtime.clone())
 }
 
 pub async fn assemble_api_router_from_env() -> Result<ApiAssembly, String> {
     validate_process_config();
     let runtime = DocumentsRuntime::connect_from_env().await?;
-    runtime.readiness_check().await?;
-    Ok(assemble_api_router(&runtime).await)
+    assemble_owner_api_contribution(runtime)
 }
 
-/// Builds the raw Documents App API for a gateway-owned Web Framework layer.
+pub async fn assemble_api_router_with_pool(pool: DatabasePool) -> Result<ApiAssembly, String> {
+    validate_process_config();
+    let runtime = DocumentsRuntime::connect_from_pool(pool).await?;
+    assemble_owner_api_contribution(runtime)
+}
+
+fn assemble_owner_api_contribution(runtime: DocumentsRuntime) -> Result<ApiAssembly, String> {
+    let router = Router::new()
+        .merge(runtime.build_app_business_router())
+        .merge(runtime.build_backend_business_router())
+        .merge(runtime.build_open_business_router());
+    let routes = sdkwork_routes_documents_app_api::gateway_route_manifest()
+        .routes()
+        .iter()
+        .chain(
+            sdkwork_routes_documents_backend_api::gateway_route_manifest()
+                .routes()
+                .iter(),
+        )
+        .chain(
+            sdkwork_routes_documents_open_api::gateway_route_manifest()
+                .routes()
+                .iter(),
+        )
+        .cloned()
+        .collect();
+    ApiAssemblyContribution::from_manifest(
+        "sdkwork-documents",
+        "SDKWork Documents API",
+        router,
+        HttpRouteManifest::from_owned_routes(routes),
+        vec![sdkwork_routes_documents_app_api::documents_app_context_injector()],
+        Arc::new(DocumentsReadiness { runtime }),
+    )
+}
+
 pub async fn assemble_app_api_contribution() -> Result<ApiAssemblyContribution, String> {
     validate_process_config();
     let runtime = DocumentsRuntime::connect_from_env().await?;
-    let route_manifest = sdkwork_routes_documents_app_api::app_route_manifest();
-    let router = runtime.build_app_business_router();
-    Ok(ApiAssemblyContribution {
-        router,
-        openapi: sdkwork_web_contract::build_openapi_document(
-            "SDKWork Documents App API",
-            route_manifest.routes(),
-        ),
-        permission_catalog: permission_catalog(route_manifest.routes()),
-        route_manifest,
-        domain_context_injectors: vec![
-            sdkwork_routes_documents_app_api::documents_app_context_injector(),
-        ],
-        readiness_check: Arc::new(DocumentsReadiness { runtime }),
-    })
+    assemble_app_api_contribution_with_runtime(runtime)
 }
 
-fn permission_catalog(routes: &[HttpRoute]) -> Vec<&'static str> {
-    let mut permissions = BTreeSet::new();
-    for route in routes {
-        if let Some(permission) = route.required_permission {
-            permissions.insert(permission);
-        }
-        if let Some(alternate_permissions) = route.alternate_permissions {
-            permissions.extend(alternate_permissions.iter().copied());
-        }
-    }
-    permissions.into_iter().collect()
+pub async fn assemble_app_api_contribution_with_pool(
+    pool: DatabasePool,
+) -> Result<ApiAssemblyContribution, String> {
+    validate_process_config();
+    let runtime = DocumentsRuntime::connect_from_pool(pool).await?;
+    assemble_app_api_contribution_with_runtime(runtime)
+}
+
+fn assemble_app_api_contribution_with_runtime(
+    runtime: DocumentsRuntime,
+) -> Result<ApiAssemblyContribution, String> {
+    ApiAssemblyContribution::from_manifest(
+        "sdkwork-documents",
+        "SDKWork Documents App API",
+        runtime.build_app_business_router(),
+        sdkwork_routes_documents_app_api::app_route_manifest(),
+        vec![sdkwork_routes_documents_app_api::documents_app_context_injector()],
+        Arc::new(DocumentsReadiness { runtime }),
+    )
 }

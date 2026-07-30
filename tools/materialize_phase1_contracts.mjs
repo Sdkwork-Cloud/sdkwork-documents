@@ -938,7 +938,7 @@ writeJson("specs/component.spec.json", {
       "crates/sdkwork-routes-documents-app-api/src/runtime.rs",
     ],
     configKeys: [
-      "SDKWORK_DOCUMENTS_DATABASE_URL",
+      "SDKWORK_DATABASE_*",
       "SDKWORK_DOCUMENTS_TENANT_ID",
       "SDKWORK_DOCUMENTS_USER_ID",
       "SDKWORK_DOCUMENTS_OPERATOR_ID",
@@ -1083,7 +1083,7 @@ CREATE INDEX IF NOT EXISTS idx_documents_audit_log_document ON documents_audit_l
 );
 
 writeText(
-  "database/ddl/baseline/sqlite/0001_documents_baseline.sql",
+  "tests/fixtures/database/sqlite/ddl/baseline/0001_documents_baseline.sql",
   `-- SDKWork Documents baseline DDL (sqlite)
 CREATE TABLE IF NOT EXISTS documents_document (
   id TEXT PRIMARY KEY NOT NULL,
@@ -1186,7 +1186,7 @@ writeText(
   "# PostgreSQL migrations\n\nAdd versioned SQL files using `{version}_{name}.up.sql` and matching `{version}_{name}.down.sql`.\n",
 );
 writeText(
-  "database/migrations/sqlite/README.md",
+  "tests/fixtures/database/sqlite/migrations/README.md",
   "# SQLite migrations\n\nAdd versioned SQL files using `{version}_{name}.up.sql` and matching `{version}_{name}.down.sql`.\n",
 );
 writeText(
@@ -1194,7 +1194,7 @@ writeText(
   "# PostgreSQL baseline DDL\n\nBaseline snapshots for bootstrap review before versioned migrations are split out.\n",
 );
 writeText(
-  "database/ddl/baseline/sqlite/README.md",
+  "tests/fixtures/database/sqlite/ddl/baseline/README.md",
   "# SQLite baseline DDL\n\nOptional full baseline snapshots when `baselineStrategy` is not `migrations-only`.\n",
 );
 writeText(

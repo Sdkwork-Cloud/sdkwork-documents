@@ -56,7 +56,6 @@ function sanitizeSpawnEnv(env) {
 
 function parseArgs(argv) {
   const settings = {
-    database: 'postgres',
     deploymentProfile: 'standalone',
     devEnvFile: undefined,
     dryRun: false,
@@ -81,11 +80,6 @@ function parseArgs(argv) {
       index += 1;
       continue;
     }
-    if (arg === '--database') {
-      settings.database = argv[index + 1] ?? settings.database;
-      index += 1;
-      continue;
-    }
     if (arg === '--target') {
       settings.target = argv[index + 1] ?? settings.target;
       index += 1;
@@ -106,10 +100,6 @@ function parseArgs(argv) {
   if (!ALLOWED_TARGETS.has(settings.target)) {
     throw new Error('target must be one of: server, browser, browser-only');
   }
-  if (!['postgres', 'sqlite'].includes(settings.database)) {
-    throw new Error('database must be one of: postgres, sqlite');
-  }
-
   return settings;
 }
 
@@ -121,7 +111,6 @@ Topology-aware Documents dev entry. Loads configs/topology profile env via @sdkw
 Options:
   --deployment-profile <standalone|cloud>           Default: standalone
   --service-layout <unified-process|split-services> Default: unified-process
-  --database <postgres|sqlite>                      Default: postgres
   --target <server|browser|browser-only>            Default: server
   --dev-env-file <path>                             Optional profile env override
   --dry-run                                         Print plan without executing
@@ -139,24 +128,6 @@ function ensureDocumentsDataDir() {
   if (!fs.existsSync(dataDir)) {
     fs.mkdirSync(dataDir, { recursive: true });
   }
-}
-
-function resolveDefaultSqliteDatabaseUrl() {
-  ensureDocumentsDataDir();
-  const sqliteFile = path.join(REPO_ROOT, '.sdkwork', 'runtime', 'documents', 'documents.sqlite');
-  return `sqlite:///${sqliteFile.split(path.sep).join('/')}?mode=rwc`;
-}
-
-function resolveDocumentsDatabaseEnv(settings) {
-  if (settings.database === 'sqlite') {
-    return {
-      DOCUMENTS_DATABASE_ENGINE: 'sqlite',
-      DOCUMENTS_DATABASE_FILE: './.sdkwork/runtime/documents/documents.sqlite',
-      DOCUMENTS_DATABASE_URL: resolveDefaultSqliteDatabaseUrl(),
-      DOCUMENTS_DATABASE_MAX_CONNECTIONS: '1',
-    };
-  }
-  return {};
 }
 
 function resolvePcDevPort(env) {
@@ -280,7 +251,6 @@ function buildRuntimeEnv(settings, profileId, profileEnv) {
     process.env,
     profileEnv,
     devEnvOverride,
-    resolveDocumentsDatabaseEnv(settings),
   );
 
   return mergeRepoDevBootstrapAccessTokenEnv({
@@ -294,7 +264,6 @@ function buildRuntimeEnv(settings, profileId, profileEnv) {
       {
         SDKWORK_DOCUMENTS_DEPLOYMENT_PROFILE: settings.deploymentProfile,
         SDKWORK_DOCUMENTS_SERVICE_LAYOUT: settings.serviceLayout,
-        SDKWORK_DOCUMENTS_DATABASE_PROFILE: settings.database,
         SDKWORK_DOCUMENTS_PROFILE_ID: profileId,
         SDKWORK_DOCUMENTS_DEV_MODE: '1',
         SDKWORK_DOCUMENTS_RUNTIME_TARGET: runtimeTarget,

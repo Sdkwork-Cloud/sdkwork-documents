@@ -7,11 +7,11 @@ use sdkwork_documents_contract::{
 
 #[tokio::test]
 async fn postgres_document_repository_supports_crud_and_tenant_isolation() {
-    let Some(database_url) = std::env::var("SDKWORK_DOCUMENTS_TEST_DATABASE_URL")
+    let Some(database_url) = std::env::var("SDKWORK_DATABASE_URL")
         .ok()
         .filter(|value| value.starts_with("postgres"))
     else {
-        eprintln!("skip postgres_document_repository_supports_crud_and_tenant_isolation: set SDKWORK_DOCUMENTS_TEST_DATABASE_URL to a postgres url");
+        eprintln!("skip postgres_document_repository_supports_crud_and_tenant_isolation: set SDKWORK_DATABASE_URL to an isolated sdkwork_ai_test database");
         return;
     };
 

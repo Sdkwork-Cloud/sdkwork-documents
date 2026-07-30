@@ -37,5 +37,5 @@ pub fn gateway_route_manifest() -> HttpRouteManifest {
 }
 
 pub fn gateway_mount(api: Arc<dyn DocumentsAppApi>) -> Router {
-    build_router_with_shared_app_api(api)
+    build_business_router_with_shared_app_api(api)
 }

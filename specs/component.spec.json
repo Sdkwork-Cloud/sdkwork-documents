@@ -133,7 +133,7 @@
       "crates/sdkwork-routes-documents-app-api/src/runtime.rs"
     ],
     "configKeys": [
-      "SDKWORK_DOCUMENTS_DATABASE_URL",
+      "SDKWORK_DATABASE_*",
       "SDKWORK_DOCUMENTS_TENANT_ID",
       "SDKWORK_DOCUMENTS_USER_ID",
       "SDKWORK_DOCUMENTS_OPERATOR_ID",
