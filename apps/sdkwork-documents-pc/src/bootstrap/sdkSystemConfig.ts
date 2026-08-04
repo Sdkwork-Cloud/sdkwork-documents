@@ -53,12 +53,12 @@ const DOCUMENTS_OPEN_SDK_METADATA = sdkMetadata({
 
 const LLM_OPEN_API_METADATA = sdkMetadata({
   name: 'SdkworkAiClient',
-  packageName: '@sdkwork/clawrouter-open-sdk',
+  packageName: '@sdkwork/cloudrouter-open-sdk',
   sdkType: 'ai',
   apiPrefix: OPEN_API_PREFIX,
   runtimeEnvName: 'VITE_API_BASE_URL',
-  sourceDir: 'sdks/clawrouter-open-sdk/clawrouter-open-sdk-typescript/src/index.ts',
-  archiveName: 'sdkwork-clawrouter-open-sdk-typescript-0.1.0.zip',
+  sourceDir: 'sdks/cloudrouter-open-sdk/cloudrouter-open-sdk-typescript/src/index.ts',
+  archiveName: 'sdkwork-cloudrouter-open-sdk-typescript-0.1.0.zip',
   description: 'SDKWork LLM Open API SDK',
 });
 
@@ -97,7 +97,7 @@ const AGENT_OPEN_API_METADATA = sdkMetadata({
 
 const PAYMENT_OPEN_API_METADATA = sdkMetadata({
   name: 'SdkworkPaymentClient',
-  packageName: '@sdkwork/clawrouter-app-sdk/domains',
+  packageName: '@sdkwork/cloudrouter-app-sdk/domains',
   sdkType: 'payment',
   apiPrefix: '/payments/v3',
   runtimeEnvName: 'VITE_SDKWORK_COMMERCE_APP_API_BASE_URL',
@@ -108,23 +108,23 @@ const PAYMENT_OPEN_API_METADATA = sdkMetadata({
 
 const IAAS_OPEN_API_METADATA = sdkMetadata({
   name: 'SdkworkCloudClient',
-  packageName: '@sdkwork/clawrouter-open-sdk',
+  packageName: '@sdkwork/cloudrouter-open-sdk',
   sdkType: 'iaas',
   apiPrefix: '/cloud/v3',
   runtimeEnvName: 'VITE_SDKWORK_IAAS_OPEN_API_BASE_URL',
-  sourceDir: 'sdks/clawrouter-open-sdk/clawrouter-open-sdk-typescript/src/index.ts',
-  archiveName: 'sdkwork-clawrouter-open-sdk-typescript-0.1.0.zip',
+  sourceDir: 'sdks/cloudrouter-open-sdk/cloudrouter-open-sdk-typescript/src/index.ts',
+  archiveName: 'sdkwork-cloudrouter-open-sdk-typescript-0.1.0.zip',
   description: 'SDKWork IaaS Open API SDK',
 });
 
 const PAAS_OPEN_API_METADATA = sdkMetadata({
   name: 'SdkworkPaasClient',
-  packageName: '@sdkwork/clawrouter-open-sdk',
+  packageName: '@sdkwork/cloudrouter-open-sdk',
   sdkType: 'paas',
   apiPrefix: '/paas/v3',
   runtimeEnvName: 'VITE_SDKWORK_PAAS_OPEN_API_BASE_URL',
-  sourceDir: 'sdks/clawrouter-open-sdk/clawrouter-open-sdk-typescript/src/index.ts',
-  archiveName: 'sdkwork-clawrouter-open-sdk-typescript-0.1.0.zip',
+  sourceDir: 'sdks/cloudrouter-open-sdk/cloudrouter-open-sdk-typescript/src/index.ts',
+  archiveName: 'sdkwork-cloudrouter-open-sdk-typescript-0.1.0.zip',
   description: 'SDKWork PaaS Open API SDK',
 });
 

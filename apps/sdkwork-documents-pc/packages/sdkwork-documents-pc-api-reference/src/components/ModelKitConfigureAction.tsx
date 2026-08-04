@@ -23,7 +23,7 @@ export function ModelKitConfigureAction({
   profile,
   endpoints,
   apiKeyPlaceholder = '<YOUR_API_KEY>',
-  providerName = 'Claw Router',
+  providerName = 'Cloud Router',
   variant = 'inline',
 }: ModelKitConfigureActionProps) {
   const { t } = useTranslation();

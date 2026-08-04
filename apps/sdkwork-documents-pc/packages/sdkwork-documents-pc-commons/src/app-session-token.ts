@@ -2,7 +2,7 @@ import { readApiRecord } from './api-result.ts';
 import { dispatchPortalSessionChange } from './portal-session-events.ts';
 
 const APP_SESSION_STORAGE_KEY = 'sdkwork.documents.appSession.v1';
-const LEGACY_HOST_SESSION_STORAGE_KEYS = ['sdkwork.clawRouter.appSession.v1'] as const;
+const LEGACY_HOST_SESSION_STORAGE_KEYS = ['sdkwork.cloudRouter.appSession.v1'] as const;
 const EXPIRY_SKEW_SECONDS = 30;
 
 export interface StoredAppSessionToken {

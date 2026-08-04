@@ -281,7 +281,7 @@ export const getSdkDataForSystem = (system: ApiSystem): SdkLanguage[] => {
       description: `Generated Go SDK for ${sysName}.`,
       installCommand: `go get ${pkgs.go}`,
       importCode: `import "${pkgs.go}"`,
-      initCode: `client := claw.New${cls}(os.Getenv("SDKWORK_API_KEY"))`,
+      initCode: `client := cloud.New${cls}(os.Getenv("SDKWORK_API_KEY"))`,
       exampleCode: ex.go,
       githubUrl: `${GITHUB_BASE_URL}/${generatedSdk.sourceDir}`,
     },

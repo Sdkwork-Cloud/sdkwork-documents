@@ -23,7 +23,7 @@ interface ModelKitOverviewSectionProps {
 export function ModelKitOverviewSection({
   endpoints,
   apiKeyPlaceholder = '<YOUR_API_KEY>',
-  providerName = 'Claw Router',
+  providerName = 'Cloud Router',
 }: ModelKitOverviewSectionProps) {
   const { t } = useTranslation();
   const [status, setStatus] = useState<ModelKitInstallStatus>('unknown');

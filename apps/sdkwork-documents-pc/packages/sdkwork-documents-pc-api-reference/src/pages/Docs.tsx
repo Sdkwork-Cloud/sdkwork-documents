@@ -37,7 +37,7 @@ type DocSectionId = (typeof DOC_SECTION_IDS)[number];
 function resolveOpenApiBaseUrl(
   readRuntimeEnv: (name: string) => string | undefined,
 ): string {
-  return readRuntimeEnv('VITE_CLAWROUTER_OPEN_API_BASE_URL')
+  return readRuntimeEnv('VITE_CLOUDROUTER_OPEN_API_BASE_URL')
     ?? readRuntimeEnv('VITE_API_BASE_URL')
     ?? '/v1';
 }
