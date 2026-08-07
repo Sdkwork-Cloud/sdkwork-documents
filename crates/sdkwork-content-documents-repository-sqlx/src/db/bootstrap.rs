@@ -37,23 +37,6 @@ fn map_pool_error(error: PoolError) -> sqlx::Error {
     sqlx::Error::Configuration(error.to_string().into())
 }
 
-pub async fn install_sqlite_schema(pool: &sqlx::SqlitePool) -> Result<(), sqlx::Error> {
-    for migration in crate::migrations::SQLITE_MIGRATIONS {
-        for statement in migration.split(';') {
-            let statement = statement.trim();
-            if statement.is_empty() {
-                continue;
-            }
-            match sqlx::query(statement).execute(pool).await {
-                Ok(_) => {}
-                Err(sqlx::Error::Database(error)) if error.message().contains("already exists") => {
-                }
-                Err(error) => return Err(error),
-            }
-        }
-    }
-    Ok(())
-}
 
 pub async fn install_postgres_schema(pool: &sqlx::PgPool) -> Result<(), sqlx::Error> {
     for migration in crate::migrations::POSTGRES_MIGRATIONS {
@@ -86,15 +69,3 @@ pub async fn connect_postgres_and_install_schema(
     Ok(pool)
 }
 
-pub async fn connect_sqlite_and_install_schema(
-    database_url: &str,
-) -> Result<DatabasePool, sqlx::Error> {
-    let pool = connect_documents_pool_from_url(database_url)
-        .await
-        .map_err(map_pool_error)?;
-    let sqlite = pool
-        .as_sqlite()
-        .ok_or_else(|| sqlx::Error::Configuration("expected sqlite database url".into()))?;
-    install_sqlite_schema(sqlite).await?;
-    Ok(pool)
-}

@@ -47,21 +47,9 @@ impl DocumentsRepository for DocumentsSqlxRepository {
                 .collect());
         }
 
-        let sqlite = self
-            .pool
-            .as_sqlite()
-            .ok_or_else(|| DocumentsServiceError::Internal("database pool unavailable".into()))?;
-        let rows = sqlx::query_as::<_, SqliteDocumentRow>(
-            "SELECT id, title, body, status FROM documents_document WHERE tenant_id = ? ORDER BY updated_at DESC",
-        )
-        .bind(tenant_id)
-        .fetch_all(sqlite)
-        .await
-        .map_err(Self::map_sqlx_error)?;
-        Ok(rows
-            .into_iter()
-            .map(SqliteDocumentRow::into_document)
-            .collect())
+        Err(DocumentsServiceError::Internal(
+            "documents repository requires a PostgreSQL pool (DATABASE_SPEC: authoritative-server persistence is PostgreSQL only)".into(),
+        ))
     }
 
     async fn find_by_id(
@@ -82,19 +70,9 @@ impl DocumentsRepository for DocumentsSqlxRepository {
             return Ok(row.map(PostgresDocumentRow::into_document));
         }
 
-        let sqlite = self
-            .pool
-            .as_sqlite()
-            .ok_or_else(|| DocumentsServiceError::Internal("database pool unavailable".into()))?;
-        let row = sqlx::query_as::<_, SqliteDocumentRow>(
-            "SELECT id, title, body, status FROM documents_document WHERE tenant_id = ? AND id = ?",
-        )
-        .bind(tenant_id)
-        .bind(document_id)
-        .fetch_optional(sqlite)
-        .await
-        .map_err(Self::map_sqlx_error)?;
-        Ok(row.map(SqliteDocumentRow::into_document))
+        Err(DocumentsServiceError::Internal(
+            "documents repository requires a PostgreSQL pool (DATABASE_SPEC: authoritative-server persistence is PostgreSQL only)".into(),
+        ))
     }
 
     async fn insert(&self, tenant_id: i64, document: Document) -> DocumentsServiceResult<Document> {
@@ -114,23 +92,9 @@ impl DocumentsRepository for DocumentsSqlxRepository {
             return Ok(document);
         }
 
-        let sqlite = self
-            .pool
-            .as_sqlite()
-            .ok_or_else(|| DocumentsServiceError::Internal("database pool unavailable".into()))?;
-        Self::parse_document_id(&document.id)?;
-        sqlx::query(
-            "INSERT INTO documents_document (id, tenant_id, title, body, status) VALUES (?, ?, ?, ?, ?)",
-        )
-        .bind(&document.id)
-        .bind(tenant_id)
-        .bind(&document.title)
-        .bind(&document.body)
-        .bind(&document.status)
-        .execute(sqlite)
-        .await
-        .map_err(Self::map_sqlx_error)?;
-        Ok(document)
+        Err(DocumentsServiceError::Internal(
+            "documents repository requires a PostgreSQL pool (DATABASE_SPEC: authoritative-server persistence is PostgreSQL only)".into(),
+        ))
     }
 
     async fn update(
@@ -166,22 +130,9 @@ impl DocumentsRepository for DocumentsSqlxRepository {
             return Ok(updated);
         }
 
-        let sqlite = self
-            .pool
-            .as_sqlite()
-            .ok_or_else(|| DocumentsServiceError::Internal("database pool unavailable".into()))?;
-        sqlx::query(
-            "UPDATE documents_document SET title = ?, body = ?, status = ?, updated_at = datetime('now') WHERE tenant_id = ? AND id = ?",
-        )
-        .bind(&updated.title)
-        .bind(&updated.body)
-        .bind(&updated.status)
-        .bind(tenant_id)
-        .bind(&updated.id)
-        .execute(sqlite)
-        .await
-        .map_err(Self::map_sqlx_error)?;
-        Ok(updated)
+        Err(DocumentsServiceError::Internal(
+            "documents repository requires a PostgreSQL pool (DATABASE_SPEC: authoritative-server persistence is PostgreSQL only)".into(),
+        ))
     }
 
     async fn delete(&self, tenant_id: i64, document_id: &str) -> DocumentsServiceResult<()> {
@@ -200,20 +151,9 @@ impl DocumentsRepository for DocumentsSqlxRepository {
             return Ok(());
         }
 
-        let sqlite = self
-            .pool
-            .as_sqlite()
-            .ok_or_else(|| DocumentsServiceError::Internal("database pool unavailable".into()))?;
-        let result = sqlx::query("DELETE FROM documents_document WHERE tenant_id = ? AND id = ?")
-            .bind(tenant_id)
-            .bind(document_id)
-            .execute(sqlite)
-            .await
-            .map_err(Self::map_sqlx_error)?;
-        if result.rows_affected() == 0 {
-            return Err(DocumentsServiceError::NotFound(document_id.to_owned()));
-        }
-        Ok(())
+        Err(DocumentsServiceError::Internal(
+            "documents repository requires a PostgreSQL pool (DATABASE_SPEC: authoritative-server persistence is PostgreSQL only)".into(),
+        ))
     }
 }
 
@@ -236,21 +176,4 @@ impl PostgresDocumentRow {
     }
 }
 
-#[derive(sqlx::FromRow)]
-struct SqliteDocumentRow {
-    id: String,
-    title: String,
-    body: String,
-    status: String,
-}
 
-impl SqliteDocumentRow {
-    fn into_document(self) -> Document {
-        Document {
-            id: self.id,
-            title: self.title,
-            body: self.body,
-            status: self.status,
-        }
-    }
-}

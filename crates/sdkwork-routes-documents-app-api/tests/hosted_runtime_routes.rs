@@ -8,7 +8,10 @@ use tower::util::ServiceExt;
 
 #[tokio::test]
 async fn hosted_app_router_mounts_protected_documents_route() {
-    let runtime = test_runtime().await;
+    let Some(runtime) = test_runtime().await else {
+    eprintln!("skipping hosted runtime routes test: set SDKWORK_DATABASE_URL or DATABASE_URL to a postgres URL");
+    return;
+};
     let app = runtime
         .build_app_router_with_web_framework_resolver(IamWebRequestContextResolver::new(None));
 
@@ -35,7 +38,10 @@ async fn hosted_app_router_mounts_protected_documents_route() {
 
 #[tokio::test]
 async fn hosted_backend_router_mounts_protected_documents_route() {
-    let runtime = test_runtime().await;
+    let Some(runtime) = test_runtime().await else {
+    eprintln!("skipping hosted runtime routes test: set SDKWORK_DATABASE_URL or DATABASE_URL to a postgres URL");
+    return;
+};
     let app = runtime
         .build_backend_router_with_web_framework_resolver(IamWebRequestContextResolver::new(None));
 
@@ -62,7 +68,10 @@ async fn hosted_backend_router_mounts_protected_documents_route() {
 
 #[tokio::test]
 async fn hosted_open_router_mounts_protected_capabilities_route() {
-    let runtime = test_runtime().await;
+    let Some(runtime) = test_runtime().await else {
+    eprintln!("skipping hosted runtime routes test: set SDKWORK_DATABASE_URL or DATABASE_URL to a postgres URL");
+    return;
+};
     let app = runtime
         .build_open_router_with_web_framework_resolver(IamWebRequestContextResolver::new(None));
 
@@ -87,7 +96,18 @@ async fn hosted_open_router_mounts_protected_capabilities_route() {
     );
 }
 
-async fn test_runtime() -> DocumentsRuntime {
+fn optional_postgres_database_url() -> Option<String> {
+    std::env::var("SDKWORK_DATABASE_URL")
+        .or_else(|_| std::env::var("DATABASE_URL"))
+        .ok()
+        .filter(|url| url.starts_with("postgres://") || url.starts_with("postgresql://"))
+}
+
+async fn test_runtime() -> Option<DocumentsRuntime> {
+    let Some(database_url) = optional_postgres_database_url() else {
+        eprintln!("skipping hosted runtime routes test: set SDKWORK_DATABASE_URL or DATABASE_URL to a postgres URL");
+        return None;
+    };
     static TEST_COUNTER: AtomicU64 = AtomicU64::new(0);
     let nanos = SystemTime::now()
         .duration_since(UNIX_EPOCH)
@@ -108,7 +128,6 @@ async fn test_runtime() -> DocumentsRuntime {
         .display()
         .to_string()
         .replace('\\', "/");
-    let database_url = format!("sqlite://{relative_database_path}?mode=rwc");
 
     std::env::set_var("SDKWORK_ENV", "dev");
     std::env::set_var("SDKWORK_IAM_ALLOW_DEV_AUTH_FALLBACK", "true");
@@ -117,6 +136,7 @@ async fn test_runtime() -> DocumentsRuntime {
     DocumentsRuntime::connect(&database_url)
         .await
         .expect("initialize hosted runtime")
+        .into()
 }
 
 async fn response_body_text(response: axum::response::Response) -> String {

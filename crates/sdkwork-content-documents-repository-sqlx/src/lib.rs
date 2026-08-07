@@ -4,8 +4,7 @@ mod repository;
 pub mod migrations;
 
 pub use db::bootstrap::{
-    connect_documents_pool_from_url, connect_postgres_and_install_schema,
-    connect_sqlite_and_install_schema, install_postgres_schema, install_sqlite_schema,
+    connect_documents_pool_from_url, connect_postgres_and_install_schema, install_postgres_schema,
 };
 pub use repository::DocumentsSqlxRepository;
 

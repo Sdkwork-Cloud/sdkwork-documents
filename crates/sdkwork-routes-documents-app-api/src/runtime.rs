@@ -30,7 +30,7 @@ pub struct DocumentsRuntime {
 
 impl DocumentsRuntime {
     pub async fn connect(database_url: &str) -> Result<Self, String> {
-        let pool = sdkwork_content_documents_repository_sqlx::connect_sqlite_and_install_schema(
+        let pool = sdkwork_content_documents_repository_sqlx::connect_postgres_and_install_schema(
             database_url,
         )
         .await

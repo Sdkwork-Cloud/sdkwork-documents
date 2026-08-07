@@ -1,6 +1,5 @@
 use sdkwork_content_documents_repository_sqlx::migrations::{
-    POSTGRES_CORE_MIGRATION, POSTGRES_REVISION_AUDIT_MIGRATION, SQLITE_CORE_MIGRATION,
-    SQLITE_REVISION_AUDIT_MIGRATION,
+    POSTGRES_CORE_MIGRATION, POSTGRES_REVISION_AUDIT_MIGRATION,
 };
 
 const REQUIRED_TABLES: [&str; 3] = [
@@ -19,12 +18,7 @@ const REQUIRED_INDEXES: [&str; 5] = [
 
 #[test]
 fn migration_manifest_declares_documents_core_tables_and_indexes() {
-    for migration in [
-        POSTGRES_CORE_MIGRATION,
-        SQLITE_CORE_MIGRATION,
-        POSTGRES_REVISION_AUDIT_MIGRATION,
-        SQLITE_REVISION_AUDIT_MIGRATION,
-    ] {
+    for migration in [POSTGRES_CORE_MIGRATION, POSTGRES_REVISION_AUDIT_MIGRATION] {
         for table in REQUIRED_TABLES {
             assert!(
                 table.starts_with("documents_"),
@@ -37,7 +31,7 @@ fn migration_manifest_declares_documents_core_tables_and_indexes() {
         );
     }
 
-    for migration in [POSTGRES_CORE_MIGRATION, SQLITE_CORE_MIGRATION] {
+    for migration in [POSTGRES_CORE_MIGRATION] {
         assert!(
             migration.contains("documents_document"),
             "core migration must declare documents_document"
@@ -48,10 +42,7 @@ fn migration_manifest_declares_documents_core_tables_and_indexes() {
         );
     }
 
-    for migration in [
-        POSTGRES_REVISION_AUDIT_MIGRATION,
-        SQLITE_REVISION_AUDIT_MIGRATION,
-    ] {
+    for migration in [POSTGRES_REVISION_AUDIT_MIGRATION] {
         for table in ["documents_revision", "documents_audit_log"] {
             assert!(
                 migration.contains(table),
@@ -80,11 +71,6 @@ fn migration_manifest_keeps_contract_tables_in_both_engines() {
                 || POSTGRES_REVISION_AUDIT_MIGRATION.contains(table),
             "postgres migrations must declare contract table {table}"
         );
-        assert!(
-            SQLITE_CORE_MIGRATION.contains(table)
-                || SQLITE_REVISION_AUDIT_MIGRATION.contains(table),
-            "sqlite migrations must declare contract table {table}"
-        );
     }
 
     for index in REQUIRED_INDEXES {
@@ -92,11 +78,6 @@ fn migration_manifest_keeps_contract_tables_in_both_engines() {
             POSTGRES_CORE_MIGRATION.contains(index)
                 || POSTGRES_REVISION_AUDIT_MIGRATION.contains(index),
             "postgres migrations must declare index {index}"
-        );
-        assert!(
-            SQLITE_CORE_MIGRATION.contains(index)
-                || SQLITE_REVISION_AUDIT_MIGRATION.contains(index),
-            "sqlite migrations must declare index {index}"
         );
     }
 }
