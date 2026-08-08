@@ -12,8 +12,7 @@
     "ko-KR"
   ],
   "activeLocales": [
-    "zh-CN",
-    "en-US"
+    "zh-CN"
   ],
   "profiles": {
     "minimal": {
@@ -24,28 +23,11 @@
     },
     "standard": {
       "common": [
-        "common/001_bootstrap.sql",
-        "001_bootstrap.sql"
+        "common/001_bootstrap.sql"
       ],
       "locales": {
         "zh-CN": []
       }
-    }
-  },
-  "i18nVersion": "1.0.0",
-  "fallbackLocale": "zh-CN",
-  "localeSets": {
-    "zh-CN": {
-      "version": "1.0.0",
-      "required": true,
-      "checksum": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
-      "files": []
-    },
-    "en-US": {
-      "version": "1.0.0",
-      "required": false,
-      "checksum": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
-      "files": []
     }
   }
 }

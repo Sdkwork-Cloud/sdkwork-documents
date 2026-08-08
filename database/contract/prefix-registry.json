@@ -5,6 +5,5 @@
       "prefix": "documents_",
       "owner": "documents-platform"
     }
-  ],
-  "kind": "sdkwork.database.prefix-registry"
+  ]
 }

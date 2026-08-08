@@ -2,26 +2,19 @@
   "schemaVersion": 1,
   "tables": [
     {
+      "name": "documents_document",
       "prefix": "documents_",
-      "owner": "documents-platform",
-      "table_name": "documents_document",
-      "compliance_level": "L2",
-      "lifecycle_status": "active"
+      "owner": "documents-platform"
     },
     {
+      "name": "documents_revision",
       "prefix": "documents_",
-      "owner": "documents-platform",
-      "table_name": "documents_revision",
-      "compliance_level": "L2",
-      "lifecycle_status": "active"
+      "owner": "documents-platform"
     },
     {
+      "name": "documents_audit_log",
       "prefix": "documents_",
-      "owner": "documents-platform",
-      "table_name": "documents_audit_log",
-      "compliance_level": "L2",
-      "lifecycle_status": "active"
+      "owner": "documents-platform"
     }
-  ],
-  "kind": "sdkwork.database.table-registry"
+  ]
 }

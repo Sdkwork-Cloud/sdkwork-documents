@@ -263,6 +263,46 @@ function buildOpenApi({ title, authority, sdkFamily, apiSurface, authMode, paths
             },
           ],
         },
+        SdkReferenceGenerationRequest: {
+          type: "object",
+          additionalProperties: false,
+          required: ["spec", "language"],
+          properties: {
+            spec: {
+              type: "object",
+              additionalProperties: true,
+              description: "OpenAPI/documentation spec to generate SDK reference from",
+            },
+            language: { type: "string" },
+            config: {
+              type: "object",
+              additionalProperties: true,
+              properties: {
+                name: { type: "string" },
+                version: { type: "string" },
+                language: { type: "string" },
+                sdkType: { type: "string" },
+                outputPath: { type: "string" },
+                apiSpecPath: { type: "string" },
+                baseUrl: { type: "string" },
+              },
+            },
+          },
+        },
+        SdkReferenceResponse: {
+          allOf: [
+            { $ref: "#/components/schemas/SdkWorkApiResponse" },
+            {
+              type: "object",
+              properties: {
+                data: {
+                  type: "object",
+                  additionalProperties: true,
+                },
+              },
+            },
+          ],
+        },
         DocumentListResponse: {
           allOf: [
             { $ref: "#/components/schemas/SdkWorkApiResponse" },
@@ -492,6 +532,72 @@ const appPaths = {
           content: {
             "application/json": {
               schema: { $ref: "#/components/schemas/DocumentResponse" },
+            },
+          },
+        },
+        ...problemResponses(),
+      },
+    },
+  },
+  [`${appPrefix}/sdk_reference/archives`]: {
+    post: {
+      ...operationMeta({
+        operationId: "sdkReference.archivesCreate",
+        authority: "sdkwork-documents-app-api",
+        sdkFamily: "sdkwork-documents-app-sdk",
+        apiSurface: "app-api",
+        authMode: "dual-token",
+        permission: "archives.create",
+        auditEvent: "sdkReference.archivesCreated",
+        idempotent: true,
+      }),
+      requestBody: {
+        required: true,
+        content: {
+          "application/json": {
+            schema: { $ref: "#/components/schemas/SdkReferenceGenerationRequest" },
+          },
+        },
+      },
+      responses: {
+        "201": {
+          description: "Created",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/SdkReferenceResponse" },
+            },
+          },
+        },
+        ...problemResponses(),
+      },
+    },
+  },
+  [`${appPrefix}/sdk_reference/documentation`]: {
+    post: {
+      ...operationMeta({
+        operationId: "sdkReference.documentationCreate",
+        authority: "sdkwork-documents-app-api",
+        sdkFamily: "sdkwork-documents-app-sdk",
+        apiSurface: "app-api",
+        authMode: "dual-token",
+        permission: "documentation.create",
+        auditEvent: "sdkReference.documentationCreated",
+        idempotent: true,
+      }),
+      requestBody: {
+        required: true,
+        content: {
+          "application/json": {
+            schema: { $ref: "#/components/schemas/SdkReferenceGenerationRequest" },
+          },
+        },
+      },
+      responses: {
+        "201": {
+          description: "Created",
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/SdkReferenceResponse" },
             },
           },
         },

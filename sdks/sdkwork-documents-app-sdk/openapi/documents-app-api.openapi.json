@@ -131,8 +131,7 @@
               }
             }
           }
-        },
-        "x-sdkwork-source-route-crate": "sdkwork-routes-documents-app-api"
+        }
       },
       "post": {
         "operationId": "documents.create",
@@ -265,8 +264,7 @@
               }
             }
           }
-        },
-        "x-sdkwork-source-route-crate": "sdkwork-routes-documents-app-api"
+        }
       }
     },
     "/app/v3/api/documents/{documentId}": {
@@ -390,8 +388,7 @@
               "type": "string"
             }
           }
-        ],
-        "x-sdkwork-source-route-crate": "sdkwork-routes-documents-app-api"
+        ]
       },
       "patch": {
         "operationId": "documents.update",
@@ -523,8 +520,277 @@
               }
             }
           }
+        }
+      }
+    },
+    "/app/v3/api/sdk_reference/archives": {
+      "post": {
+        "operationId": "sdkReference.archivesCreate",
+        "tags": [
+          "documents"
+        ],
+        "x-sdkwork-owner": "sdkwork-documents",
+        "x-sdkwork-api-authority": "sdkwork-documents-app-api",
+        "x-sdkwork-sdk-family": "sdkwork-documents-app-sdk",
+        "x-sdkwork-api-surface": "app-api",
+        "x-sdkwork-request-context": "WebRequestContext",
+        "x-sdkwork-auth-mode": "dual-token",
+        "x-sdkwork-permission": "archives.create",
+        "x-sdkwork-audit-event": "sdkReference.archivesCreated",
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SdkReferenceResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Problem detail",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Problem detail",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Problem detail",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Problem detail",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Problem detail",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Problem detail",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Problem detail",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Problem detail",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          }
         },
-        "x-sdkwork-source-route-crate": "sdkwork-routes-documents-app-api"
+        "x-sdkwork-idempotent": true,
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SdkReferenceGenerationRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/app/v3/api/sdk_reference/documentation": {
+      "post": {
+        "operationId": "sdkReference.documentationCreate",
+        "tags": [
+          "documents"
+        ],
+        "x-sdkwork-owner": "sdkwork-documents",
+        "x-sdkwork-api-authority": "sdkwork-documents-app-api",
+        "x-sdkwork-sdk-family": "sdkwork-documents-app-sdk",
+        "x-sdkwork-api-surface": "app-api",
+        "x-sdkwork-request-context": "WebRequestContext",
+        "x-sdkwork-auth-mode": "dual-token",
+        "x-sdkwork-permission": "documentation.create",
+        "x-sdkwork-audit-event": "sdkReference.documentationCreated",
+        "security": [
+          {
+            "AuthToken": [],
+            "AccessToken": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SdkReferenceResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Problem detail",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Problem detail",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Problem detail",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Problem detail",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Problem detail",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Problem detail",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Problem detail",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Problem detail",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          }
+        },
+        "x-sdkwork-idempotent": true,
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SdkReferenceGenerationRequest"
+              }
+            }
+          }
+        }
       }
     }
   },
@@ -941,6 +1207,67 @@
           }
         ]
       },
+      "SdkReferenceGenerationRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "spec",
+          "language"
+        ],
+        "properties": {
+          "spec": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "OpenAPI/documentation spec to generate SDK reference from"
+          },
+          "language": {
+            "type": "string"
+          },
+          "config": {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "version": {
+                "type": "string"
+              },
+              "language": {
+                "type": "string"
+              },
+              "sdkType": {
+                "type": "string"
+              },
+              "outputPath": {
+                "type": "string"
+              },
+              "apiSpecPath": {
+                "type": "string"
+              },
+              "baseUrl": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "SdkReferenceResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "data": {
+                "type": "object",
+                "additionalProperties": true
+              }
+            }
+          }
+        ]
+      },
       "DocumentListResponse": {
         "allOf": [
           {
@@ -973,7 +1300,5 @@
         ]
       }
     }
-  },
-  "x-sdkwork-owner-only-input": true,
-  "x-sdkwork-standard-version": "2026-06-20"
+  }
 }

@@ -130,8 +130,7 @@
               }
             }
           }
-        },
-        "x-sdkwork-source-route-crate": "sdkwork-routes-documents-open-api"
+        }
       }
     },
     "/doc/v3/api/documents": {
@@ -244,8 +243,7 @@
               }
             }
           }
-        },
-        "x-sdkwork-source-route-crate": "sdkwork-routes-documents-open-api"
+        }
       }
     },
     "/doc/v3/api/documents/{documentId}": {
@@ -368,8 +366,7 @@
               "type": "string"
             }
           }
-        ],
-        "x-sdkwork-source-route-crate": "sdkwork-routes-documents-open-api"
+        ]
       }
     }
   },
@@ -781,6 +778,67 @@
           }
         ]
       },
+      "SdkReferenceGenerationRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "spec",
+          "language"
+        ],
+        "properties": {
+          "spec": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "OpenAPI/documentation spec to generate SDK reference from"
+          },
+          "language": {
+            "type": "string"
+          },
+          "config": {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "version": {
+                "type": "string"
+              },
+              "language": {
+                "type": "string"
+              },
+              "sdkType": {
+                "type": "string"
+              },
+              "outputPath": {
+                "type": "string"
+              },
+              "apiSpecPath": {
+                "type": "string"
+              },
+              "baseUrl": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "SdkReferenceResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SdkWorkApiResponse"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "data": {
+                "type": "object",
+                "additionalProperties": true
+              }
+            }
+          }
+        ]
+      },
       "DocumentListResponse": {
         "allOf": [
           {
@@ -813,7 +871,5 @@
         ]
       }
     }
-  },
-  "x-sdkwork-owner-only-input": true,
-  "x-sdkwork-standard-version": "2026-06-20"
+  }
 }

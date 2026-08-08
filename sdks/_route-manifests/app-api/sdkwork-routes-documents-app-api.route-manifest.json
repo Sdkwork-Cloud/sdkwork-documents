@@ -102,6 +102,50 @@
       },
       "requestContext": "WebRequestContext",
       "apiSurface": "app-api"
+    },
+    {
+      "method": "POST",
+      "path": "/app/v3/api/sdk_reference/archives",
+      "operationId": "sdkReference.archivesCreate",
+      "tags": [
+        "documents"
+      ],
+      "auth": {
+        "mode": "dual-token",
+        "required": true
+      },
+      "handler": {
+        "module": "crate::routes",
+        "name": null
+      },
+      "ownership": {
+        "owner": "sdkwork-documents",
+        "apiAuthority": "sdkwork-documents-app-api"
+      },
+      "requestContext": "WebRequestContext",
+      "apiSurface": "app-api"
+    },
+    {
+      "method": "POST",
+      "path": "/app/v3/api/sdk_reference/documentation",
+      "operationId": "sdkReference.documentationCreate",
+      "tags": [
+        "documents"
+      ],
+      "auth": {
+        "mode": "dual-token",
+        "required": true
+      },
+      "handler": {
+        "module": "crate::routes",
+        "name": null
+      },
+      "ownership": {
+        "owner": "sdkwork-documents",
+        "apiAuthority": "sdkwork-documents-app-api"
+      },
+      "requestContext": "WebRequestContext",
+      "apiSurface": "app-api"
     }
   ]
 }

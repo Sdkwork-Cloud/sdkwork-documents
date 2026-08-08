@@ -1,58 +1,27 @@
 {
-  "workspace": "sdkwork-documents-sdk",
-  "title": "SDKWork Documents Open API SDK",
-  "apiVersion": "0.1.0",
-  "openapiVersion": "3.1.2",
-  "authoritySpec": "openapi/documents-open-api.openapi.json",
-  "generationInputSpec": "openapi/documents-open-api.openapi.json",
-  "derivedSpecs": {
-    "default": "openapi/documents-open-api.openapi.json"
-  },
+  "schemaVersion": 1,
+  "kind": "sdkwork.sdk.manifest",
+  "sdkOwner": "sdkwork-documents",
+  "sdkFamily": "sdkwork-documents-sdk",
   "apiAuthority": "sdkwork-documents-open-api",
+  "generationInputSpec": "openapi/documents-open-api.openapi.json",
   "discoverySurface": {
-    "sdkTarget": "open",
     "apiPrefix": "/doc/v3/api",
-    "schemaUrl": "/doc/v3/openapi.json",
-    "generatedProtocols": [
-      "http-openapi"
-    ],
-    "manualTransports": []
+    "schemaUrl": "/doc/v3/openapi.json"
   },
   "languages": [
-    {
-      "language": "typescript",
-      "workspace": "sdkwork-documents-sdk-typescript",
-      "generationState": "materialized",
-      "releaseState": "not_published",
-      "generatedPath": "sdkwork-documents-sdk-typescript/generated/server-openapi",
-      "manifestPath": "sdkwork-documents-sdk-typescript/generated/server-openapi/package.json",
-      "name": "@sdkwork/documents-sdk",
-      "version": "0.1.0",
-      "description": "Generator-owned TypeScript transport SDK for sdkwork-documents-open-api.",
-      "consumerSurface": {
-        "primaryClient": "SdkworkDocumentsOpenClient",
-        "apiPrefix": "/doc/v3/api"
-      }
-    }
+    "typescript",
+    "rust",
+    "java"
   ],
-  "sdkOwner": "sdkwork-documents",
-  "sdkDependencies": [],
   "metadata": {
-    "standardVersion": "2026-06-20",
-    "ownerOnlyOperationCount": 3,
-    "managedBy": "sdks/standardize-documents-sdk-family.mjs"
+    "version": "0.1.0",
+    "managedBy": "tools/materialize_phase1_contracts.mjs"
   },
-  "schemaVersion": 1,
-  "sdkName": "sdkwork-documents-sdk",
-  "packageName": "@sdkwork/documents-sdk",
-  "sdkFamily": "sdkwork-documents-sdk",
-  "sdkType": "open",
-  "sdkSurface": "open",
-  "language": "typescript",
+  "domain": "content",
+  "capability": "documents",
   "apiPrefix": "/doc/v3/api",
-  "generatedOutput": "sdkwork-documents-sdk-typescript/generated/server-openapi",
-  "standardProfile": "sdkwork-v3",
-  "ownerOnlyOperationCount": 3,
-  "standardVersion": "2026-06-20",
-  "managedBy": "sdks/standardize-documents-sdk-family.mjs"
+  "sdkClients": [
+    "SdkworkDocumentsOpenClient"
+  ]
 }

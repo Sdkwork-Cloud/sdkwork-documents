@@ -1,58 +1,27 @@
 {
-  "workspace": "sdkwork-documents-backend-sdk",
-  "title": "SDKWork Documents Backend API SDK",
-  "apiVersion": "0.1.0",
-  "openapiVersion": "3.1.2",
-  "authoritySpec": "openapi/documents-backend-api.openapi.json",
-  "generationInputSpec": "openapi/documents-backend-api.openapi.json",
-  "derivedSpecs": {
-    "default": "openapi/documents-backend-api.openapi.json"
-  },
+  "schemaVersion": 1,
+  "kind": "sdkwork.sdk.manifest",
+  "sdkOwner": "sdkwork-documents",
+  "sdkFamily": "sdkwork-documents-backend-sdk",
   "apiAuthority": "sdkwork-documents-backend-api",
+  "generationInputSpec": "openapi/documents-backend-api.openapi.json",
   "discoverySurface": {
-    "sdkTarget": "backend",
     "apiPrefix": "/backend/v3/api",
-    "schemaUrl": "/backend/v3/openapi.json",
-    "generatedProtocols": [
-      "http-openapi"
-    ],
-    "manualTransports": []
+    "schemaUrl": "/backend/v3/openapi.json"
   },
   "languages": [
-    {
-      "language": "typescript",
-      "workspace": "sdkwork-documents-backend-sdk-typescript",
-      "generationState": "materialized",
-      "releaseState": "not_published",
-      "generatedPath": "sdkwork-documents-backend-sdk-typescript/generated/server-openapi",
-      "manifestPath": "sdkwork-documents-backend-sdk-typescript/generated/server-openapi/package.json",
-      "name": "@sdkwork/documents-backend-sdk",
-      "version": "0.1.0",
-      "description": "Generator-owned TypeScript transport SDK for sdkwork-documents-backend-api.",
-      "consumerSurface": {
-        "primaryClient": "SdkworkDocumentsBackendClient",
-        "apiPrefix": "/backend/v3/api"
-      }
-    }
+    "typescript",
+    "rust",
+    "java"
   ],
-  "sdkOwner": "sdkwork-documents",
-  "sdkDependencies": [],
   "metadata": {
-    "standardVersion": "2026-06-20",
-    "ownerOnlyOperationCount": 5,
-    "managedBy": "sdks/standardize-documents-sdk-family.mjs"
+    "version": "0.1.0",
+    "managedBy": "tools/materialize_phase1_contracts.mjs"
   },
-  "schemaVersion": 1,
-  "sdkName": "sdkwork-documents-backend-sdk",
-  "packageName": "@sdkwork/documents-backend-sdk",
-  "sdkFamily": "sdkwork-documents-backend-sdk",
-  "sdkType": "backend",
-  "sdkSurface": "backend",
-  "language": "typescript",
+  "domain": "content",
+  "capability": "documents",
   "apiPrefix": "/backend/v3/api",
-  "generatedOutput": "sdkwork-documents-backend-sdk-typescript/generated/server-openapi",
-  "standardProfile": "sdkwork-v3",
-  "ownerOnlyOperationCount": 5,
-  "standardVersion": "2026-06-20",
-  "managedBy": "sdks/standardize-documents-sdk-family.mjs"
+  "sdkClients": [
+    "SdkworkDocumentsBackendClient"
+  ]
 }
