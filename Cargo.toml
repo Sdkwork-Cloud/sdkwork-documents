@@ -21,6 +21,8 @@ version = "0.1.0"
 license = "AGPL-3.0-or-later"
 
 [workspace.dependencies]
+sdkwork_api_documents_assembly = { path = "crates/sdkwork-api-documents-assembly", package = "sdkwork-api-documents-assembly" }
+
 async-trait = "0.1"
 axum = "0.8"
 http = "1.4"

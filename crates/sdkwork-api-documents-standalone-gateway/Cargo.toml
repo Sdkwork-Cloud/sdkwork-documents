@@ -12,7 +12,7 @@ name = "sdkwork-api-documents-standalone-gateway"
 path = "src/bin/app_main.rs"
 
 [dependencies]
-sdkwork_api_documents_assembly = { package = "sdkwork-api-documents-assembly", path = "../sdkwork-api-documents-assembly" }
+sdkwork_api_documents_assembly.workspace = true
 axum.workspace = true
 tokio = { workspace = true, features = ["macros", "rt-multi-thread", "net", "signal"] }
 tracing.workspace = true
