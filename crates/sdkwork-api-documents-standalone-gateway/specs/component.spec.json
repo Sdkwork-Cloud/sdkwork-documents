@@ -47,6 +47,13 @@
       "sdkwork-documents-backend-api",
       "sdkwork-documents-open-api"
     ],
+    "requiredPorts": [
+      {
+        "name": "applicationApiAssembly",
+        "export": "sdkwork_api_documents_assembly::assemble_api_router_from_env",
+        "provider": "sdkwork-api-documents-assembly"
+      }
+    ],
     "sdkClients": [],
     "sdkDependencies": [
       {
