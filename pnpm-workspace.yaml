@@ -27,8 +27,8 @@ packages:
   - "../sdkwork-app-topology"
   - "../sdkwork-iam/sdks/sdkwork-iam-app-sdk/sdkwork-iam-app-sdk-typescript/src/index.ts"
   - "../sdkwork-iam/sdks/sdkwork-iam-backend-sdk/sdkwork-iam-backend-sdk-typescript/src/index.ts"
-
   - "../sdkwork-iam/apps/sdkwork-iam-pc/packages/sdkwork-user-center-core-pc-react"
+
 catalog:
   "@monaco-editor/react": ^4.7.0
   "@playwright/test": ^1.52.0

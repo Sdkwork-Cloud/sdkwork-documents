@@ -23,5 +23,15 @@
   "apiPrefix": "/doc/v3/api",
   "sdkClients": [
     "SdkworkDocumentsOpenClient"
-  ]
+  ],
+  "sdkName": "sdkwork-documents-sdk",
+  "packageName": "@sdkwork/documents-sdk",
+  "transportPackageName": "sdkwork-documents-sdk-generated-typescript",
+  "typescript": {
+    "composedRoot": "sdkwork-documents-sdk-typescript",
+    "composedEntry": "sdkwork-documents-sdk-typescript/src/index.ts",
+    "transportRoot": "sdkwork-documents-sdk-typescript/generated/server-openapi",
+    "transportEntry": "sdkwork-documents-sdk-typescript/generated/server-openapi/src/index.ts"
+  },
+  "sdkDependencies": []
 }
