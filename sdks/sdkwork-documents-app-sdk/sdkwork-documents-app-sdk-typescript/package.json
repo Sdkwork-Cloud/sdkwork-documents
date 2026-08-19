@@ -1,6 +1,6 @@
 {
   "name": "@sdkwork/documents-app-sdk",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "SDKWork sdkwork-documents-app-sdk composed consumer facade.",
   "type": "module",
   "private": false,
