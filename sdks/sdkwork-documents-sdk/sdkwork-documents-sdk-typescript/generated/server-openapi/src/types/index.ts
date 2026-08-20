@@ -16,4 +16,6 @@ export type { DocumentCreateRequest } from './document-create-request';
 export type { DocumentUpdateRequest } from './document-update-request';
 export type { DocumentCapabilitiesResponse } from './document-capabilities-response';
 export type { DocumentResponse } from './document-response';
+export type { SdkReferenceGenerationRequest } from './sdk-reference-generation-request';
+export type { SdkReferenceResponse } from './sdk-reference-response';
 export type { DocumentListResponse } from './document-list-response';

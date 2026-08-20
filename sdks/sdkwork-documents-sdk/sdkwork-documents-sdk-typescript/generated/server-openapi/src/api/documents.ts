@@ -1,5 +1,5 @@
 import { customApiPath } from './paths';
-import type { HttpClient } from '../http/client';
+import type { ApiRequestOptions, HttpClient } from '../http/client';
 
 import type { Document, DocumentCapabilities, PageInfo } from '../types';
 
@@ -12,8 +12,8 @@ export class DocumentsCapabilitiesApi {
   }
 
 
-async retrieve(): Promise<DocumentCapabilities> {
-    return this.client.get<DocumentCapabilities>(customApiPath(`/documents/capabilities`));
+async retrieve(requestOptions?: ApiRequestOptions): Promise<DocumentCapabilities> {
+    return this.client.request<DocumentCapabilities>(customApiPath(`/documents/capabilities`), { ...(requestOptions?.signal !== undefined ? { signal: requestOptions.signal } : {}), ...(requestOptions?.timeout !== undefined ? { timeout: requestOptions.timeout } : {}), method: 'GET' as any, sdkworkUnwrapKind: 'item' });
   }
 }
 
@@ -27,12 +27,12 @@ export class DocumentsApi {
   }
 
 
-async list(): Promise<{ items: Document[]; pageInfo: PageInfo; }> {
-    return this.client.get<{ items: Document[]; pageInfo: PageInfo; }>(customApiPath(`/documents`));
+async list(requestOptions?: ApiRequestOptions): Promise<{ items: Document[]; pageInfo: PageInfo; }> {
+    return this.client.request<{ items: Document[]; pageInfo: PageInfo; }>(customApiPath(`/documents`), { ...(requestOptions?.signal !== undefined ? { signal: requestOptions.signal } : {}), ...(requestOptions?.timeout !== undefined ? { timeout: requestOptions.timeout } : {}), method: 'GET' as any, sdkworkUnwrapKind: 'page' });
   }
 
-async retrieve(documentId: string): Promise<Document> {
-    return this.client.get<Document>(customApiPath(`/documents/${serializePathParameter(documentId, { name: 'documentId', style: 'simple', explode: false })}`));
+async retrieve(documentId: string, requestOptions?: ApiRequestOptions): Promise<Document> {
+    return this.client.request<Document>(customApiPath(`/documents/${serializePathParameter(documentId, { name: 'documentId', style: 'simple', explode: false })}`), { ...(requestOptions?.signal !== undefined ? { signal: requestOptions.signal } : {}), ...(requestOptions?.timeout !== undefined ? { timeout: requestOptions.timeout } : {}), method: 'GET' as any, sdkworkUnwrapKind: 'item' });
   }
 }
 

@@ -130,7 +130,8 @@
               }
             }
           }
-        }
+        },
+        "x-sdkwork-source-route-crate": "sdkwork-routes-documents-open-api"
       }
     },
     "/doc/v3/api/documents": {
@@ -243,7 +244,8 @@
               }
             }
           }
-        }
+        },
+        "x-sdkwork-source-route-crate": "sdkwork-routes-documents-open-api"
       }
     },
     "/doc/v3/api/documents/{documentId}": {
@@ -366,7 +368,8 @@
               "type": "string"
             }
           }
-        ]
+        ],
+        "x-sdkwork-source-route-crate": "sdkwork-routes-documents-open-api"
       }
     }
   },
@@ -871,5 +874,7 @@
         ]
       }
     }
-  }
+  },
+  "x-sdkwork-owner-only-input": true,
+  "x-sdkwork-standard-version": "2026-06-20"
 }

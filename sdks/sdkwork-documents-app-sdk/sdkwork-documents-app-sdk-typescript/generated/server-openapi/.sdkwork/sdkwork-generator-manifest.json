@@ -12,7 +12,7 @@
   "generatedFiles": [
     {
       "path": "bin/publish-core.mjs",
-      "sha256": "98ad0918a78bfbe22bf8f12fec709b0bed545b9e01edd40f5e4abf31a23378a5"
+      "sha256": "a47e95119bf3eafcbcb2102f7024c147f967924e4e3f343d1a29effb4b6765df"
     },
     {
       "path": "bin/publish.ps1",
@@ -40,11 +40,11 @@
     },
     {
       "path": "package.json",
-      "sha256": "bcc9ede98f19b095fcb0488fcc502b7d73c4921f65d949f6af8884f84c897632"
+      "sha256": "3a474eca070bb7e357b9b743d47e1bab3626cc69524889fdc439457df332b5dd"
     },
     {
       "path": "README.md",
-      "sha256": "0c945a0d4c779a0de603bf235a980418180944ade042abab4c74a27e1a757456"
+      "sha256": "2c9c6c3cbc922ea32fd3f5167a8c7756257e68b17f7221060076892c57cc3d1c"
     },
     {
       "path": "sdkwork-sdk.json",
@@ -52,11 +52,11 @@
     },
     {
       "path": "src/api/base.ts",
-      "sha256": "02ad25e6bf331ff241ba387c2947ddf1900dd849038e08c2757416a3aa788a04"
+      "sha256": "94d136c54a008dfe7602e373a0b2c79176bbf2fc6e7c899fc23b1f12f750380f"
     },
     {
       "path": "src/api/documents.ts",
-      "sha256": "f4899c15dd581911a8e8bded7d9688bc16047a90dd41954b28f3a085aed1e6f1"
+      "sha256": "94521a34ec90ac526bc68911ef0dd32cd08192316254b96660f8fe692c2ea542"
     },
     {
       "path": "src/api/index.ts",
@@ -72,7 +72,7 @@
     },
     {
       "path": "src/http/client.ts",
-      "sha256": "902ecbf9b15072c147ac9716f22209cd50b770e517b55d1ce1583671ab4d2c3e"
+      "sha256": "868b7785497a93658b628de2d9b520d9d2456406bcf2ef717319beaa6913146d"
     },
     {
       "path": "src/http/index.ts",
@@ -124,7 +124,7 @@
     },
     {
       "path": "src/types/index.ts",
-      "sha256": "5811b98ff478aed0645d954f69c97687c2bdfb00d0a1b471ff569a7ed0dba687"
+      "sha256": "2d7ffa72809998c15fcfd2e2cd8459f932bed51c8c8fc6927b7dea60ccd716d5"
     },
     {
       "path": "src/types/page-info.ts",
@@ -133,6 +133,14 @@
     {
       "path": "src/types/problem-detail.ts",
       "sha256": "c41fdf6433e1167d2fb1f3ac38fd13eb77178f4c0633c9e27824f1e1687ee4f6"
+    },
+    {
+      "path": "src/types/sdk-reference-generation-request.ts",
+      "sha256": "3b4a0dc4a09d7a615fe9f097134e9a86841e335f7013d71ab9125ff940d95ad7"
+    },
+    {
+      "path": "src/types/sdk-reference-response.ts",
+      "sha256": "b36d6c583da8dd9139d3c27d5d46e4f8c2ec2525b756bec5f3d43f143113862b"
     },
     {
       "path": "src/types/sdk-work-api-response.ts",

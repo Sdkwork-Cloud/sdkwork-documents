@@ -3,53 +3,69 @@
   "kind": "sdkwork.component.spec",
   "component": {
     "name": "sdkwork-documents-backend-sdk",
+    "displayName": "SDKWork Documents Backend API SDK",
+    "version": "0.1.0",
     "type": "sdk-family",
+    "root": "sdkwork-documents/sdks/sdkwork-documents-backend-sdk",
     "domain": "content",
     "capability": "documents",
-    "owner": "sdkwork-documents"
+    "status": "standardized",
+    "languages": [
+      "typescript"
+    ],
+    "generated": true,
+    "private": false,
+    "manifests": [
+      "sdk-manifest.json",
+      "sdk-manifest.json"
+    ]
   },
+  "canonicalSpecs": [
+    {
+      "file": "API_SPEC.md",
+      "path": "../sdkwork-specs/API_SPEC.md"
+    },
+    {
+      "file": "SDK_SPEC.md",
+      "path": "../sdkwork-specs/SDK_SPEC.md"
+    },
+    {
+      "file": "SDK_WORKSPACE_GENERATION_SPEC.md",
+      "path": "../sdkwork-specs/SDK_WORKSPACE_GENERATION_SPEC.md"
+    }
+  ],
   "contracts": {
+    "apiAuthority": {
+      "name": "sdkwork-documents-backend-api",
+      "prefix": "/backend/v3/api",
+      "authorityOpenApi": "openapi/documents-backend-api.openapi.json",
+      "derivedOpenApi": [
+        "openapi/documents-backend-api.openapi.json"
+      ],
+      "owner": "sdkwork-documents"
+    },
+    "publicExports": [],
+    "runtimeEntrypoints": [
+      "sdk-manifest.json"
+    ],
+    "sdkDependencies": [],
     "sdkClients": [
       "SdkworkDocumentsBackendClient"
     ],
-    "sdkDependencies": [
-      {
-        "workspace": "sdkwork-web-framework",
-        "role": "http-web-framework-runtime",
-        "required": true,
-        "dependencyMode": "platform-framework",
-        "generatedTransportImportPolicy": "forbidden"
-      },
-      {
-        "workspace": "sdkwork-database",
-        "role": "database-runtime",
-        "required": true,
-        "dependencyMode": "platform-framework",
-        "generatedTransportImportPolicy": "forbidden"
-      },
-      {
-        "workspace": "sdkwork-utils",
-        "role": "cross-language-utility-runtime",
-        "required": true,
-        "dependencyMode": "platform-framework",
-        "generatedTransportImportPolicy": "forbidden"
-      },
-      {
-        "workspace": "sdkwork-appbase",
-        "role": "appbase-platform-runtime",
-        "required": true,
-        "dependencyMode": "platform-framework",
-        "generatedTransportImportPolicy": "forbidden"
-      },
-      {
-        "workspace": "sdkwork-sdk-generator",
-        "role": "sdk-generation-tooling",
-        "required": true,
-        "dependencyMode": "platform-tooling",
-        "generatedTransportImportPolicy": "forbidden"
-      }
-    ],
-    "dependencyApiExports": [],
-    "dependencyApiSurfaces": []
+    "events": [],
+    "configKeys": [
+      "sdk-manifest.json",
+      "sdk-manifest.json"
+    ]
+  },
+  "verification": {
+    "commands": [
+      "node sdks/standardize-documents-sdk-family.mjs --check",
+      "node sdks/test/verify-sdk-ownership-boundaries.test.mjs"
+    ]
+  },
+  "metadata": {
+    "managedBy": "sdks/standardize-documents-sdk-family.mjs",
+    "standardVersion": "2026-06-20"
   }
 }

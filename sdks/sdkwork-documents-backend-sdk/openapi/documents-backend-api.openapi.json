@@ -131,7 +131,8 @@
               }
             }
           }
-        }
+        },
+        "x-sdkwork-source-route-crate": "sdkwork-routes-documents-backend-api"
       },
       "post": {
         "operationId": "documents.create",
@@ -264,7 +265,8 @@
               }
             }
           }
-        }
+        },
+        "x-sdkwork-source-route-crate": "sdkwork-routes-documents-backend-api"
       }
     },
     "/backend/v3/api/documents/{documentId}": {
@@ -388,7 +390,8 @@
               "type": "string"
             }
           }
-        ]
+        ],
+        "x-sdkwork-source-route-crate": "sdkwork-routes-documents-backend-api"
       },
       "patch": {
         "operationId": "documents.update",
@@ -520,7 +523,8 @@
               }
             }
           }
-        }
+        },
+        "x-sdkwork-source-route-crate": "sdkwork-routes-documents-backend-api"
       },
       "delete": {
         "operationId": "documents.delete",
@@ -635,7 +639,8 @@
               "type": "string"
             }
           }
-        ]
+        ],
+        "x-sdkwork-source-route-crate": "sdkwork-routes-documents-backend-api"
       }
     }
   },
@@ -1145,5 +1150,7 @@
         ]
       }
     }
-  }
+  },
+  "x-sdkwork-owner-only-input": true,
+  "x-sdkwork-standard-version": "2026-06-20"
 }

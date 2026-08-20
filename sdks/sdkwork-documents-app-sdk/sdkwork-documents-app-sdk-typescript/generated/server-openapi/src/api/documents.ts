@@ -1,14 +1,18 @@
 import { appApiPath } from './paths';
-import type { HttpClient } from '../http/client';
+import type { ApiRequestOptions, HttpClient } from '../http/client';
 
-import type { Document, DocumentCreateRequest, DocumentUpdateRequest, PageInfo } from '../types';
+import type { Document, DocumentCreateRequest, DocumentUpdateRequest, PageInfo, SdkReferenceGenerationRequest } from '../types';
 
 
-export interface DocumentsCreateParams {
+export interface DocumentsSdkReferenceArchivesCreateParams {
   idempotencyKey: string;
 }
 
-export class DocumentsApi {
+export interface DocumentsSdkReferenceDocumentationCreateParams {
+  idempotencyKey: string;
+}
+
+export class DocumentsSdkReferenceApi {
   private client: HttpClient;
 
   constructor(client: HttpClient) {
@@ -16,26 +20,61 @@ export class DocumentsApi {
   }
 
 
-async list(): Promise<{ items: Document[]; pageInfo: PageInfo; }> {
-    return this.client.get<{ items: Document[]; pageInfo: PageInfo; }>(appApiPath(`/documents`));
-  }
-
-async create(body: DocumentCreateRequest, params: DocumentsCreateParams): Promise<Document> {
+async archivesCreate(body: SdkReferenceGenerationRequest, params: DocumentsSdkReferenceArchivesCreateParams, requestOptions?: ApiRequestOptions): Promise<Record<string, unknown>> {
     const requestHeaders = buildRequestHeaders(
       {
         'Idempotency-Key': { value: params.idempotencyKey, style: 'simple', explode: false },
       },
       {}
     );
-    return this.client.post<Document>(appApiPath(`/documents`), body, undefined, requestHeaders, 'application/json');
+    return this.client.request<Record<string, unknown>>(appApiPath(`/sdk_reference/archives`), { ...(requestOptions?.signal !== undefined ? { signal: requestOptions.signal } : {}), ...(requestOptions?.timeout !== undefined ? { timeout: requestOptions.timeout } : {}), method: 'POST' as any, body, contentType: 'application/json', ...(requestHeaders !== undefined ? { headers: requestHeaders } : {}), sdkworkUnwrapKind: 'data' });
   }
 
-async retrieve(documentId: string): Promise<Document> {
-    return this.client.get<Document>(appApiPath(`/documents/${serializePathParameter(documentId, { name: 'documentId', style: 'simple', explode: false })}`));
+async documentationCreate(body: SdkReferenceGenerationRequest, params: DocumentsSdkReferenceDocumentationCreateParams, requestOptions?: ApiRequestOptions): Promise<Record<string, unknown>> {
+    const requestHeaders = buildRequestHeaders(
+      {
+        'Idempotency-Key': { value: params.idempotencyKey, style: 'simple', explode: false },
+      },
+      {}
+    );
+    return this.client.request<Record<string, unknown>>(appApiPath(`/sdk_reference/documentation`), { ...(requestOptions?.signal !== undefined ? { signal: requestOptions.signal } : {}), ...(requestOptions?.timeout !== undefined ? { timeout: requestOptions.timeout } : {}), method: 'POST' as any, body, contentType: 'application/json', ...(requestHeaders !== undefined ? { headers: requestHeaders } : {}), sdkworkUnwrapKind: 'data' });
+  }
+}
+
+export interface DocumentsCreateParams {
+  idempotencyKey: string;
+}
+
+export class DocumentsApi {
+  private client: HttpClient;
+  public readonly sdkReference: DocumentsSdkReferenceApi;
+
+  constructor(client: HttpClient) {
+    this.client = client;
+    this.sdkReference = new DocumentsSdkReferenceApi(client);
   }
 
-async update(documentId: string, body: DocumentUpdateRequest): Promise<Document> {
-    return this.client.patch<Document>(appApiPath(`/documents/${serializePathParameter(documentId, { name: 'documentId', style: 'simple', explode: false })}`), body, undefined, undefined, 'application/json');
+
+async list(requestOptions?: ApiRequestOptions): Promise<{ items: Document[]; pageInfo: PageInfo; }> {
+    return this.client.request<{ items: Document[]; pageInfo: PageInfo; }>(appApiPath(`/documents`), { ...(requestOptions?.signal !== undefined ? { signal: requestOptions.signal } : {}), ...(requestOptions?.timeout !== undefined ? { timeout: requestOptions.timeout } : {}), method: 'GET' as any, sdkworkUnwrapKind: 'page' });
+  }
+
+async create(body: DocumentCreateRequest, params: DocumentsCreateParams, requestOptions?: ApiRequestOptions): Promise<Document> {
+    const requestHeaders = buildRequestHeaders(
+      {
+        'Idempotency-Key': { value: params.idempotencyKey, style: 'simple', explode: false },
+      },
+      {}
+    );
+    return this.client.request<Document>(appApiPath(`/documents`), { ...(requestOptions?.signal !== undefined ? { signal: requestOptions.signal } : {}), ...(requestOptions?.timeout !== undefined ? { timeout: requestOptions.timeout } : {}), method: 'POST' as any, body, contentType: 'application/json', ...(requestHeaders !== undefined ? { headers: requestHeaders } : {}), sdkworkUnwrapKind: 'item' });
+  }
+
+async retrieve(documentId: string, requestOptions?: ApiRequestOptions): Promise<Document> {
+    return this.client.request<Document>(appApiPath(`/documents/${serializePathParameter(documentId, { name: 'documentId', style: 'simple', explode: false })}`), { ...(requestOptions?.signal !== undefined ? { signal: requestOptions.signal } : {}), ...(requestOptions?.timeout !== undefined ? { timeout: requestOptions.timeout } : {}), method: 'GET' as any, sdkworkUnwrapKind: 'item' });
+  }
+
+async update(documentId: string, body: DocumentUpdateRequest, requestOptions?: ApiRequestOptions): Promise<Document> {
+    return this.client.request<Document>(appApiPath(`/documents/${serializePathParameter(documentId, { name: 'documentId', style: 'simple', explode: false })}`), { ...(requestOptions?.signal !== undefined ? { signal: requestOptions.signal } : {}), ...(requestOptions?.timeout !== undefined ? { timeout: requestOptions.timeout } : {}), method: 'PATCH' as any, body, contentType: 'application/json', sdkworkUnwrapKind: 'item' });
   }
 }
 

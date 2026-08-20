@@ -1,5 +1,5 @@
 import { backendApiPath } from './paths';
-import type { HttpClient } from '../http/client';
+import type { ApiRequestOptions, HttpClient } from '../http/client';
 
 import type { Document, DocumentCreateRequest, DocumentUpdateRequest, PageInfo } from '../types';
 
@@ -16,30 +16,30 @@ export class DocumentsApi {
   }
 
 
-async list(): Promise<{ items: Document[]; pageInfo: PageInfo; }> {
-    return this.client.get<{ items: Document[]; pageInfo: PageInfo; }>(backendApiPath(`/documents`));
+async list(requestOptions?: ApiRequestOptions): Promise<{ items: Document[]; pageInfo: PageInfo; }> {
+    return this.client.request<{ items: Document[]; pageInfo: PageInfo; }>(backendApiPath(`/documents`), { ...(requestOptions?.signal !== undefined ? { signal: requestOptions.signal } : {}), ...(requestOptions?.timeout !== undefined ? { timeout: requestOptions.timeout } : {}), method: 'GET' as any, sdkworkUnwrapKind: 'page' });
   }
 
-async create(body: DocumentCreateRequest, params: DocumentsCreateParams): Promise<Document> {
+async create(body: DocumentCreateRequest, params: DocumentsCreateParams, requestOptions?: ApiRequestOptions): Promise<Document> {
     const requestHeaders = buildRequestHeaders(
       {
         'Idempotency-Key': { value: params.idempotencyKey, style: 'simple', explode: false },
       },
       {}
     );
-    return this.client.post<Document>(backendApiPath(`/documents`), body, undefined, requestHeaders, 'application/json');
+    return this.client.request<Document>(backendApiPath(`/documents`), { ...(requestOptions?.signal !== undefined ? { signal: requestOptions.signal } : {}), ...(requestOptions?.timeout !== undefined ? { timeout: requestOptions.timeout } : {}), method: 'POST' as any, body, contentType: 'application/json', ...(requestHeaders !== undefined ? { headers: requestHeaders } : {}), sdkworkUnwrapKind: 'item' });
   }
 
-async retrieve(documentId: string): Promise<Document> {
-    return this.client.get<Document>(backendApiPath(`/documents/${serializePathParameter(documentId, { name: 'documentId', style: 'simple', explode: false })}`));
+async retrieve(documentId: string, requestOptions?: ApiRequestOptions): Promise<Document> {
+    return this.client.request<Document>(backendApiPath(`/documents/${serializePathParameter(documentId, { name: 'documentId', style: 'simple', explode: false })}`), { ...(requestOptions?.signal !== undefined ? { signal: requestOptions.signal } : {}), ...(requestOptions?.timeout !== undefined ? { timeout: requestOptions.timeout } : {}), method: 'GET' as any, sdkworkUnwrapKind: 'item' });
   }
 
-async update(documentId: string, body: DocumentUpdateRequest): Promise<Document> {
-    return this.client.patch<Document>(backendApiPath(`/documents/${serializePathParameter(documentId, { name: 'documentId', style: 'simple', explode: false })}`), body, undefined, undefined, 'application/json');
+async update(documentId: string, body: DocumentUpdateRequest, requestOptions?: ApiRequestOptions): Promise<Document> {
+    return this.client.request<Document>(backendApiPath(`/documents/${serializePathParameter(documentId, { name: 'documentId', style: 'simple', explode: false })}`), { ...(requestOptions?.signal !== undefined ? { signal: requestOptions.signal } : {}), ...(requestOptions?.timeout !== undefined ? { timeout: requestOptions.timeout } : {}), method: 'PATCH' as any, body, contentType: 'application/json', sdkworkUnwrapKind: 'item' });
   }
 
-async delete(documentId: string): Promise<void> {
-    return this.client.delete<void>(backendApiPath(`/documents/${serializePathParameter(documentId, { name: 'documentId', style: 'simple', explode: false })}`));
+async delete(documentId: string, requestOptions?: ApiRequestOptions): Promise<void> {
+    return this.client.request<void>(backendApiPath(`/documents/${serializePathParameter(documentId, { name: 'documentId', style: 'simple', explode: false })}`), { ...(requestOptions?.signal !== undefined ? { signal: requestOptions.signal } : {}), ...(requestOptions?.timeout !== undefined ? { timeout: requestOptions.timeout } : {}), method: 'DELETE' as any });
   }
 }
 
