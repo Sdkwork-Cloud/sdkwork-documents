@@ -60,7 +60,6 @@ function parseArgs(argv) {
     devEnvFile: undefined,
     dryRun: false,
     help: false,
-    serviceLayout: 'unified-process',
     target: 'server',
   };
 
@@ -76,9 +75,9 @@ function parseArgs(argv) {
       continue;
     }
     if (arg === '--service-layout') {
-      settings.serviceLayout = argv[index + 1] ?? settings.serviceLayout;
-      index += 1;
-      continue;
+      throw new Error(
+        '--service-layout is retired; topology v5 uses <deploymentProfile>.<environment>',
+      );
     }
     if (arg === '--target') {
       settings.target = argv[index + 1] ?? settings.target;
@@ -106,11 +105,10 @@ function parseArgs(argv) {
 function printHelp() {
   console.log(`Usage: node scripts/documents-dev.mjs [options]
 
-Topology-aware Documents dev entry. Loads configs/topology profile env via @sdkwork/app-topology.
+Topology-aware Documents dev entry. Loads etc/topology profile env via @sdkwork/app-topology.
 
 Options:
   --deployment-profile <standalone|cloud>           Default: standalone
-  --service-layout <unified-process|split-services> Default: unified-process
   --target <server|browser|browser-only>            Default: server
   --dev-env-file <path>                             Optional profile env override
   --dry-run                                         Print plan without executing
@@ -263,7 +261,6 @@ function buildRuntimeEnv(settings, profileId, profileEnv) {
       IAM_APPLICATION_BOOTSTRAP_ENV,
       {
         SDKWORK_DOCUMENTS_DEPLOYMENT_PROFILE: settings.deploymentProfile,
-        SDKWORK_DOCUMENTS_SERVICE_LAYOUT: settings.serviceLayout,
         SDKWORK_DOCUMENTS_PROFILE_ID: profileId,
         SDKWORK_DOCUMENTS_DEV_MODE: '1',
         SDKWORK_DOCUMENTS_RUNTIME_TARGET: runtimeTarget,
@@ -332,7 +329,7 @@ async function main() {
   }
 
   const profileId =
-    resolveDevProfileId(settings.deploymentProfile, settings.serviceLayout) ||
+    resolveDevProfileId(settings.deploymentProfile) ||
     DEFAULT_DEV_PROFILE_ID;
   const profileEnv = loadProfile(profileId);
   const runtimeEnv = buildRuntimeEnv(settings, profileId, profileEnv);
@@ -355,7 +352,7 @@ async function main() {
 
   if (settings.dryRun) {
     console.log(
-      `[sdkwork-documents] profile=${profileId} deploymentProfile=${settings.deploymentProfile} serviceLayout=${settings.serviceLayout} database=${settings.database} target=${settings.target}`,
+      `[sdkwork-documents] profile=${profileId} deploymentProfile=${settings.deploymentProfile} database=${settings.database} target=${settings.target}`,
     );
     for (const entry of backendProcesses) {
       console.log(`[${entry.label}] ${entry.command} ${entry.args.join(' ')}`);

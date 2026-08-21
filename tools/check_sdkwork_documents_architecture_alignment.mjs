@@ -352,8 +352,8 @@ assert(componentSpec.component.domain === "content", "component domain must be c
 assert(componentSpec.component.capability === "documents", "component capability must be documents");
 
 assert(
-  fs.existsSync(path.join(repoRoot, "configs/topology/standalone.development.env")),
-  "configs/topology/standalone.development.env must exist",
+  fs.existsSync(path.join(repoRoot, "etc/topology/standalone.development.env")),
+  "etc/topology/standalone.development.env must exist",
 );
 assert(
   fs.existsSync(path.join(repoRoot, "crates/sdkwork-routes-documents-app-api/src/runtime.rs")),

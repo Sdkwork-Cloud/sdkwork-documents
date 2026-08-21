@@ -23,7 +23,7 @@ Tables use documents_ prefix: documents_document, documents_revision, documents_
 - sdkwork-discovery deferred until RPC services exist
 
 ## Runtime Topology
-Documents adopts SDKWork application-http-gateway topology v2 via `specs/topology.spec.json` and `configs/topology/*.env`. See `docs/topology-standard.md`.
+Documents adopts SDKWork application-http-gateway topology v2 via `specs/topology.spec.json` and `etc/topology/*.env`. See `docs/topology-standard.md`.
 
 ## SDK Generation
 

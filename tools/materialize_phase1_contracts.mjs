@@ -35,7 +35,7 @@ const PHASE1_REQUIRED_ARTIFACTS = [
   "specs/component.spec.json",
   "apis/authority-manifest.json",
   "database/database.manifest.json",
-  "configs/topology/standalone.unified-process.development.env",
+  "etc/topology/standalone.development.env",
   "scripts/documents-dev.mjs",
   "sdks/_route-manifests/open-api/sdkwork-routes-documents-open-api.route-manifest.json",
   "sdks/_route-manifests/app-api/sdkwork-routes-documents-app-api.route-manifest.json",
@@ -1072,7 +1072,7 @@ if (!fs.existsSync(path.join(root, "specs/topology.spec.json"))) {
     kind: "sdkwork.app.topology",
     appId: owner,
     archetype: "application-http-gateway",
-    profileRoot: "configs/topology",
+    profileRoot: "etc/topology",
     profilePattern: "{deploymentProfile}.{serviceLayout}.{environment}.env",
   });
 }

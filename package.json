@@ -57,7 +57,7 @@
     "dev:server:postgres:standalone": "pnpm exec sdkwork-app dev --runtime-target server --deployment-profile standalone",
     "dev:server:cloud": "pnpm exec sdkwork-app dev --runtime-target server --deployment-profile cloud",
     "dev:browser:postgres:standalone": "pnpm exec sdkwork-app dev --runtime-target browser --deployment-profile standalone",
-    "dev:browser:postgres:standalone:local": "node scripts/documents-dev.mjs --target browser-only --deployment-profile standalone --dev-env-file configs/topology/standalone.development.env"
+    "dev:browser:postgres:standalone:local": "node scripts/documents-dev.mjs --target browser-only --deployment-profile standalone --dev-env-file etc/topology/standalone.development.env"
   },
   "exports": {
     ".": {

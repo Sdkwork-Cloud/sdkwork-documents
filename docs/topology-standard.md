@@ -9,7 +9,7 @@ This repository adopts the shared SDKWork runtime topology framework.
 
 ## Archetype
 
-`application-http-gateway`: Documents exposes application HTTP surfaces through `sdkwork-routes-documents-*` route crates. Cloud split-services profiles route through `platform.api-gateway`.
+`application-http-gateway`: Documents exposes application HTTP surfaces through `sdkwork-routes-documents-*` route crates. Cloud profiles route through `platform.api-gateway`.
 
 ## Default Dev Profile
 
@@ -32,7 +32,7 @@ pnpm topology:validate
 | `application.public-ingress` | http://127.0.0.1:18084 |
 | `application.browser-pc` | http://127.0.0.1:3902 |
 
-### Cloud split-services dev profile (`cloud.development`)
+### Cloud development profile (`cloud.development`)
 
 | Surface | URL |
 | --- | --- |
@@ -49,7 +49,7 @@ Client env keys:
 - `VITE_SDKWORK_DOCUMENTS_APPLICATION_OPEN_HTTP_URL`: open SDK surface.
 - `VITE_SDKWORK_DOCUMENTS_PLATFORM_API_GATEWAY_HTTP_URL`: platform gateway surface.
 
-Profile values live in `configs/topology/*.env` only.
+Profile values live in `etc/topology/*.env` only.
 
 Cloud gateway config bundles:
 

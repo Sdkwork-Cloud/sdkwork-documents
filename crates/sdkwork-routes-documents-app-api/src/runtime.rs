@@ -174,19 +174,9 @@ async fn health_check() -> Json<serde_json::Value> {
     }))
 }
 
-pub fn unified_process_layout() -> bool {
-    std::env::var("SDKWORK_DOCUMENTS_SERVICE_LAYOUT")
-        .map(|value| value.eq_ignore_ascii_case("unified-process"))
-        .unwrap_or(true)
-}
-
 pub async fn build_served_app_router(runtime: &DocumentsRuntime) -> Router {
     bootstrap::validate_process_config();
-    if unified_process_layout() {
-        runtime.build_unified_router_with_web_framework().await
-    } else {
-        runtime.build_app_router_with_web_framework().await
-    }
+    runtime.build_unified_router_with_web_framework().await
 }
 
 pub async fn build_served_backend_router(runtime: &DocumentsRuntime) -> Router {
