@@ -86,16 +86,180 @@
   },
   "cloudPublicHosts": {
     "application.public-ingress": {
-      "httpHost": "documents.sdkwork.com"
+      "httpHost": "documents.sdkwork.com",
+      "environments": {
+        "development": {
+          "httpHosts": [
+            "documents-dev.sdkwork.com",
+            "documents-dev.birdcoder.com",
+            "documents-dev.dtupay.com",
+            "documents-dev.sdkwork.cn",
+            "documents-dev.birdcoder.cn",
+            "documents-dev.dtupay.cn"
+          ]
+        },
+        "test": {
+          "httpHosts": [
+            "documents-test.sdkwork.com",
+            "documents-test.birdcoder.com",
+            "documents-test.dtupay.com",
+            "documents-test.sdkwork.cn",
+            "documents-test.birdcoder.cn",
+            "documents-test.dtupay.cn"
+          ]
+        },
+        "staging": {
+          "httpHosts": [
+            "documents-staging.sdkwork.com",
+            "documents-staging.birdcoder.com",
+            "documents-staging.dtupay.com",
+            "documents-staging.sdkwork.cn",
+            "documents-staging.birdcoder.cn",
+            "documents-staging.dtupay.cn"
+          ]
+        }
+      },
+      "httpHosts": [
+        "documents.sdkwork.com",
+        "documents.birdcoder.com",
+        "documents.dtupay.com",
+        "documents.sdkwork.cn",
+        "documents.birdcoder.cn",
+        "documents.dtupay.cn"
+      ]
     },
     "application.backend-http": {
-      "httpHost": "documents-admin.sdkwork.com"
+      "httpHost": "documents-admin.sdkwork.com",
+      "environments": {
+        "development": {
+          "httpHosts": [
+            "documents-admin-dev.sdkwork.com",
+            "documents-admin-dev.birdcoder.com",
+            "documents-admin-dev.dtupay.com",
+            "documents-admin-dev.sdkwork.cn",
+            "documents-admin-dev.birdcoder.cn",
+            "documents-admin-dev.dtupay.cn"
+          ]
+        },
+        "test": {
+          "httpHosts": [
+            "documents-admin-test.sdkwork.com",
+            "documents-admin-test.birdcoder.com",
+            "documents-admin-test.dtupay.com",
+            "documents-admin-test.sdkwork.cn",
+            "documents-admin-test.birdcoder.cn",
+            "documents-admin-test.dtupay.cn"
+          ]
+        },
+        "staging": {
+          "httpHosts": [
+            "documents-admin-staging.sdkwork.com",
+            "documents-admin-staging.birdcoder.com",
+            "documents-admin-staging.dtupay.com",
+            "documents-admin-staging.sdkwork.cn",
+            "documents-admin-staging.birdcoder.cn",
+            "documents-admin-staging.dtupay.cn"
+          ]
+        }
+      },
+      "httpHosts": [
+        "documents-admin.sdkwork.com",
+        "documents-admin.birdcoder.com",
+        "documents-admin.dtupay.com",
+        "documents-admin.sdkwork.cn",
+        "documents-admin.birdcoder.cn",
+        "documents-admin.dtupay.cn"
+      ]
     },
     "application.open-http": {
-      "httpHost": "doc.sdkwork.com"
+      "httpHost": "documents-open.sdkwork.com",
+      "environments": {
+        "development": {
+          "httpHosts": [
+            "documents-open-dev.sdkwork.com",
+            "documents-open-dev.birdcoder.com",
+            "documents-open-dev.dtupay.com",
+            "documents-open-dev.sdkwork.cn",
+            "documents-open-dev.birdcoder.cn",
+            "documents-open-dev.dtupay.cn",
+            "doc-dev.sdkwork.com"
+          ]
+        },
+        "test": {
+          "httpHosts": [
+            "documents-open-test.sdkwork.com",
+            "documents-open-test.birdcoder.com",
+            "documents-open-test.dtupay.com",
+            "documents-open-test.sdkwork.cn",
+            "documents-open-test.birdcoder.cn",
+            "documents-open-test.dtupay.cn",
+            "doc-test.sdkwork.com"
+          ]
+        },
+        "staging": {
+          "httpHosts": [
+            "documents-open-staging.sdkwork.com",
+            "documents-open-staging.birdcoder.com",
+            "documents-open-staging.dtupay.com",
+            "documents-open-staging.sdkwork.cn",
+            "documents-open-staging.birdcoder.cn",
+            "documents-open-staging.dtupay.cn",
+            "doc-staging.sdkwork.com"
+          ]
+        }
+      },
+      "httpHosts": [
+        "documents-open.sdkwork.com",
+        "documents-open.birdcoder.com",
+        "documents-open.dtupay.com",
+        "documents-open.sdkwork.cn",
+        "documents-open.birdcoder.cn",
+        "documents-open.dtupay.cn",
+        "doc.sdkwork.com"
+      ]
     },
     "platform.api-gateway": {
-      "httpHost": "api.sdkwork.com"
+      "httpHost": "api.sdkwork.com",
+      "environments": {
+        "development": {
+          "httpHosts": [
+            "api-dev.sdkwork.com",
+            "api-dev.birdcoder.com",
+            "api-dev.dtupay.com",
+            "api-dev.sdkwork.cn",
+            "api-dev.birdcoder.cn",
+            "api-dev.dtupay.cn"
+          ]
+        },
+        "test": {
+          "httpHosts": [
+            "api-test.sdkwork.com",
+            "api-test.birdcoder.com",
+            "api-test.dtupay.com",
+            "api-test.sdkwork.cn",
+            "api-test.birdcoder.cn",
+            "api-test.dtupay.cn"
+          ]
+        },
+        "staging": {
+          "httpHosts": [
+            "api-staging.sdkwork.com",
+            "api-staging.birdcoder.com",
+            "api-staging.dtupay.com",
+            "api-staging.sdkwork.cn",
+            "api-staging.birdcoder.cn",
+            "api-staging.dtupay.cn"
+          ]
+        }
+      },
+      "httpHosts": [
+        "api.sdkwork.com",
+        "api.birdcoder.com",
+        "api.dtupay.com",
+        "api.sdkwork.cn",
+        "api.birdcoder.cn",
+        "api.dtupay.cn"
+      ]
     }
   },
   "components": {
