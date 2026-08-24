@@ -59,6 +59,62 @@ profiles:
         aliases:
           - documents-dev.dtupay.cn
           - documents-open-dev.dtupay.cn
+      - domain: documents-admin-dev.skubc.com
+        tls: skubc.com
+        mode: web+api
+        web: adaptive
+        aliases:
+          - documents-dev.skubc.com
+          - documents-open-dev.skubc.com
+      - domain: documents-admin-dev.skubc.cn
+        tls: skubc.cn
+        mode: web+api
+        web: adaptive
+        aliases:
+          - documents-dev.skubc.cn
+          - documents-open-dev.skubc.cn
+      - domain: documents-admin-dev.zowalk.com
+        tls: zowalk.com
+        mode: web+api
+        web: adaptive
+        aliases:
+          - documents-dev.zowalk.com
+          - documents-open-dev.zowalk.com
+      - domain: documents-admin-dev.zowalk.cn
+        tls: zowalk.cn
+        mode: web+api
+        web: adaptive
+        aliases:
+          - documents-dev.zowalk.cn
+          - documents-open-dev.zowalk.cn
+      - domain: documents-admin-dev.offer86.com
+        tls: offer86.com
+        mode: web+api
+        web: adaptive
+        aliases:
+          - documents-dev.offer86.com
+          - documents-open-dev.offer86.com
+      - domain: documents-admin-dev.offer86.cn
+        tls: offer86.cn
+        mode: web+api
+        web: adaptive
+        aliases:
+          - documents-dev.offer86.cn
+          - documents-open-dev.offer86.cn
+      - domain: documents-admin-dev.86offer.com
+        tls: 86offer.com
+        mode: web+api
+        web: adaptive
+        aliases:
+          - documents-dev.86offer.com
+          - documents-open-dev.86offer.com
+      - domain: documents-admin-dev.86offer.cn
+        tls: 86offer.cn
+        mode: web+api
+        web: adaptive
+        aliases:
+          - documents-dev.86offer.cn
+          - documents-open-dev.86offer.cn
     packages: []
     overrides:
       topology:
@@ -123,6 +179,62 @@ profiles:
         aliases:
           - documents-open.dtupay.cn
           - documents.dtupay.cn
+      - domain: documents-admin.skubc.com
+        tls: skubc.com
+        mode: web+api
+        web: adaptive
+        aliases:
+          - documents-open.skubc.com
+          - documents.skubc.com
+      - domain: documents-admin.skubc.cn
+        tls: skubc.cn
+        mode: web+api
+        web: adaptive
+        aliases:
+          - documents-open.skubc.cn
+          - documents.skubc.cn
+      - domain: documents-admin.zowalk.com
+        tls: zowalk.com
+        mode: web+api
+        web: adaptive
+        aliases:
+          - documents-open.zowalk.com
+          - documents.zowalk.com
+      - domain: documents-admin.zowalk.cn
+        tls: zowalk.cn
+        mode: web+api
+        web: adaptive
+        aliases:
+          - documents-open.zowalk.cn
+          - documents.zowalk.cn
+      - domain: documents-admin.offer86.com
+        tls: offer86.com
+        mode: web+api
+        web: adaptive
+        aliases:
+          - documents-open.offer86.com
+          - documents.offer86.com
+      - domain: documents-admin.offer86.cn
+        tls: offer86.cn
+        mode: web+api
+        web: adaptive
+        aliases:
+          - documents-open.offer86.cn
+          - documents.offer86.cn
+      - domain: documents-admin.86offer.com
+        tls: 86offer.com
+        mode: web+api
+        web: adaptive
+        aliases:
+          - documents-open.86offer.com
+          - documents.86offer.com
+      - domain: documents-admin.86offer.cn
+        tls: 86offer.cn
+        mode: web+api
+        web: adaptive
+        aliases:
+          - documents-open.86offer.cn
+          - documents.86offer.cn
     packages: []
     overrides:
       topology:
@@ -187,6 +299,62 @@ profiles:
         aliases:
           - documents-dev.dtupay.cn
           - documents-open-dev.dtupay.cn
+      - domain: documents-admin-dev.skubc.com
+        tls: skubc.com
+        mode: web+api
+        web: adaptive
+        aliases:
+          - documents-dev.skubc.com
+          - documents-open-dev.skubc.com
+      - domain: documents-admin-dev.skubc.cn
+        tls: skubc.cn
+        mode: web+api
+        web: adaptive
+        aliases:
+          - documents-dev.skubc.cn
+          - documents-open-dev.skubc.cn
+      - domain: documents-admin-dev.zowalk.com
+        tls: zowalk.com
+        mode: web+api
+        web: adaptive
+        aliases:
+          - documents-dev.zowalk.com
+          - documents-open-dev.zowalk.com
+      - domain: documents-admin-dev.zowalk.cn
+        tls: zowalk.cn
+        mode: web+api
+        web: adaptive
+        aliases:
+          - documents-dev.zowalk.cn
+          - documents-open-dev.zowalk.cn
+      - domain: documents-admin-dev.offer86.com
+        tls: offer86.com
+        mode: web+api
+        web: adaptive
+        aliases:
+          - documents-dev.offer86.com
+          - documents-open-dev.offer86.com
+      - domain: documents-admin-dev.offer86.cn
+        tls: offer86.cn
+        mode: web+api
+        web: adaptive
+        aliases:
+          - documents-dev.offer86.cn
+          - documents-open-dev.offer86.cn
+      - domain: documents-admin-dev.86offer.com
+        tls: 86offer.com
+        mode: web+api
+        web: adaptive
+        aliases:
+          - documents-dev.86offer.com
+          - documents-open-dev.86offer.com
+      - domain: documents-admin-dev.86offer.cn
+        tls: 86offer.cn
+        mode: web+api
+        web: adaptive
+        aliases:
+          - documents-dev.86offer.cn
+          - documents-open-dev.86offer.cn
     packages: []
     overrides:
       topology:
@@ -251,6 +419,62 @@ profiles:
         aliases:
           - documents-open.dtupay.cn
           - documents.dtupay.cn
+      - domain: documents-admin.skubc.com
+        tls: skubc.com
+        mode: web+api
+        web: adaptive
+        aliases:
+          - documents-open.skubc.com
+          - documents.skubc.com
+      - domain: documents-admin.skubc.cn
+        tls: skubc.cn
+        mode: web+api
+        web: adaptive
+        aliases:
+          - documents-open.skubc.cn
+          - documents.skubc.cn
+      - domain: documents-admin.zowalk.com
+        tls: zowalk.com
+        mode: web+api
+        web: adaptive
+        aliases:
+          - documents-open.zowalk.com
+          - documents.zowalk.com
+      - domain: documents-admin.zowalk.cn
+        tls: zowalk.cn
+        mode: web+api
+        web: adaptive
+        aliases:
+          - documents-open.zowalk.cn
+          - documents.zowalk.cn
+      - domain: documents-admin.offer86.com
+        tls: offer86.com
+        mode: web+api
+        web: adaptive
+        aliases:
+          - documents-open.offer86.com
+          - documents.offer86.com
+      - domain: documents-admin.offer86.cn
+        tls: offer86.cn
+        mode: web+api
+        web: adaptive
+        aliases:
+          - documents-open.offer86.cn
+          - documents.offer86.cn
+      - domain: documents-admin.86offer.com
+        tls: 86offer.com
+        mode: web+api
+        web: adaptive
+        aliases:
+          - documents-open.86offer.com
+          - documents.86offer.com
+      - domain: documents-admin.86offer.cn
+        tls: 86offer.cn
+        mode: web+api
+        web: adaptive
+        aliases:
+          - documents-open.86offer.cn
+          - documents.86offer.cn
     packages: []
     overrides:
       topology:

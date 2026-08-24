@@ -11,7 +11,11 @@
     "preview": "vite preview",
     "lint": "pnpm run typecheck",
     "typecheck": "tsc --noEmit",
-    "test:architecture": "node --test tests/documents-pc-architecture.contract.test.mjs"
+    "test:architecture": "node --test tests/documents-pc-architecture.contract.test.mjs",
+    "build:dev": "node ../../../sdkwork-specs/tools/build-browser-client.mjs --app-root . --environment dev",
+    "build:test": "node ../../../sdkwork-specs/tools/build-browser-client.mjs --app-root . --environment test",
+    "build:staging": "node ../../../sdkwork-specs/tools/build-browser-client.mjs --app-root . --environment staging",
+    "build:prod": "node ../../../sdkwork-specs/tools/build-browser-client.mjs --app-root . --environment prod"
   },
   "dependencies": {
     "@sdkwork/iam-app-sdk": "workspace:*",

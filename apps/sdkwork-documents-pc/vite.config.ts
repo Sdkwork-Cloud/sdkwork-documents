@@ -1,3 +1,5 @@
+import { resolveBrowserDistOutDir } from '../../../../sdkwork-specs/tools/browser-dist-layout.mjs';
+
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import fs from 'node:fs';
@@ -149,7 +151,7 @@ export default defineConfig(({ mode }) => {
     },
     build: {
       target: 'esnext',
-      outDir: 'dist',
+      outDir: resolveBrowserDistOutDir(resolveViteEnvironment(mode, env)),
       sourcemap: true,
     },
   };

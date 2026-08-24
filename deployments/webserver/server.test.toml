@@ -2,59 +2,8 @@ environment = "test"
 
 [http]
 
-[http.certificates]
-
-[http.certificates."sdkwork.com"]
-certFile = "/opt/certs/letsencrypt/live/sdkwork.com/fullchain.pem"
-certKeyFile = "/opt/certs/letsencrypt/live/sdkwork.com/privkey.pem"
-chainFile = "/opt/certs/letsencrypt/live/sdkwork.com/chain.pem"
-ocspStapling = true
-
-[http.certificates."birdcoder.com"]
-certFile = "/opt/certs/letsencrypt/live/birdcoder.com/fullchain.pem"
-certKeyFile = "/opt/certs/letsencrypt/live/birdcoder.com/privkey.pem"
-chainFile = "/opt/certs/letsencrypt/live/birdcoder.com/chain.pem"
-ocspStapling = true
-
-[http.certificates."dtupay.com"]
-certFile = "/opt/certs/letsencrypt/live/dtupay.com/fullchain.pem"
-certKeyFile = "/opt/certs/letsencrypt/live/dtupay.com/privkey.pem"
-chainFile = "/opt/certs/letsencrypt/live/dtupay.com/chain.pem"
-ocspStapling = true
-
-[http.certificates."sdkwork.cn"]
-certFile = "/opt/certs/letsencrypt/live/sdkwork.cn/fullchain.pem"
-certKeyFile = "/opt/certs/letsencrypt/live/sdkwork.cn/privkey.pem"
-chainFile = "/opt/certs/letsencrypt/live/sdkwork.cn/chain.pem"
-ocspStapling = true
-
-[http.certificates."birdcoder.cn"]
-certFile = "/opt/certs/letsencrypt/live/birdcoder.cn/fullchain.pem"
-certKeyFile = "/opt/certs/letsencrypt/live/birdcoder.cn/privkey.pem"
-chainFile = "/opt/certs/letsencrypt/live/birdcoder.cn/chain.pem"
-ocspStapling = true
-
-[http.certificates."dtupay.cn"]
-certFile = "/opt/certs/letsencrypt/live/dtupay.cn/fullchain.pem"
-certKeyFile = "/opt/certs/letsencrypt/live/dtupay.cn/privkey.pem"
-chainFile = "/opt/certs/letsencrypt/live/dtupay.cn/chain.pem"
-ocspStapling = true
-
 [[http.server]]
 listen = ["80"]
-serverName = ["documents-test.sdkwork.com", "documents-test.birdcoder.com", "documents-test.dtupay.com", "documents-test.sdkwork.cn", "documents-test.birdcoder.cn", "documents-test.dtupay.cn", "documents-admin-test.sdkwork.com", "documents-admin-test.birdcoder.com", "documents-admin-test.dtupay.com", "documents-admin-test.sdkwork.cn", "documents-admin-test.birdcoder.cn", "documents-admin-test.dtupay.cn", "documents-open-test.sdkwork.com", "documents-open-test.birdcoder.com", "documents-open-test.dtupay.com", "documents-open-test.sdkwork.cn", "documents-open-test.birdcoder.cn", "documents-open-test.dtupay.cn", "doc-test.sdkwork.com"]
-
-[[http.server.location]]
-match = "/api/"
-proxyPass = "http://gateway"
-proxyHttpVersion = "1.1"
-proxySetHeader = ["Host $host", "X-Forwarded-For $proxy_add_x_forwarded_for", "X-Forwarded-Proto $scheme"]
-
-[[http.server.location]]
-match = "/"
-proxyPass = "http://gateway"
-proxyHttpVersion = "1.1"
-proxySetHeader = ["Host $host", "X-Forwarded-For $proxy_add_x_forwarded_for", "X-Forwarded-Proto $scheme"]
-proxyBuffering = false
-proxyReadTimeout = "300s"
+serverName = ["documents-test.sdkwork.com", "documents-test.birdcoder.com", "documents-test.dtupay.com", "documents-test.sdkwork.cn", "documents-test.birdcoder.cn", "documents-test.dtupay.cn", "documents-test.skubc.com", "documents-test.skubc.cn", "documents-test.zowalk.com", "documents-test.zowalk.cn", "documents-test.offer86.com", "documents-test.offer86.cn", "documents-test.86offer.com", "documents-test.86offer.cn", "documents-admin-test.sdkwork.com", "documents-admin-test.birdcoder.com", "documents-admin-test.dtupay.com", "documents-admin-test.sdkwork.cn", "documents-admin-test.birdcoder.cn", "documents-admin-test.dtupay.cn", "documents-admin-test.skubc.com", "documents-admin-test.skubc.cn", "documents-admin-test.zowalk.com", "documents-admin-test.zowalk.cn", "documents-admin-test.offer86.com", "documents-admin-test.offer86.cn", "documents-admin-test.86offer.com", "documents-admin-test.86offer.cn", "documents-open-test.sdkwork.com", "documents-open-test.birdcoder.com", "documents-open-test.dtupay.com", "documents-open-test.sdkwork.cn", "documents-open-test.birdcoder.cn", "documents-open-test.dtupay.cn", "documents-open-test.skubc.com", "documents-open-test.skubc.cn", "documents-open-test.zowalk.com", "documents-open-test.zowalk.cn", "documents-open-test.offer86.com", "documents-open-test.offer86.cn", "documents-open-test.86offer.com", "documents-open-test.86offer.cn", "doc-test.sdkwork.com"]
+include = ["snippets/gateway-locations.nonproduction.conf"]
 
