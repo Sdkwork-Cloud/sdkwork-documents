@@ -54,5 +54,12 @@
   "standardProfile": "sdkwork-v3",
   "ownerOnlyOperationCount": 5,
   "standardVersion": "2026-06-20",
-  "managedBy": "sdks/standardize-documents-sdk-family.mjs"
+  "managedBy": "sdks/standardize-documents-sdk-family.mjs",
+  "transportPackageName": "sdkwork-documents-backend-sdk-generated-typescript",
+  "typescript": {
+    "composedRoot": "sdkwork-documents-backend-sdk-typescript",
+    "composedEntry": "sdkwork-documents-backend-sdk-typescript/src/index.ts",
+    "transportRoot": "sdkwork-documents-backend-sdk-typescript/generated/server-openapi",
+    "transportEntry": "sdkwork-documents-backend-sdk-typescript/generated/server-openapi/src/index.ts"
+  }
 }
