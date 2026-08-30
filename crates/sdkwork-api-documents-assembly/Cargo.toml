@@ -10,10 +10,11 @@ name = "sdkwork_api_documents_assembly"
 path = "src/lib.rs"
 
 [dependencies]
-sdkwork-database-sqlx.workspace = true
 axum.workspace = true
+tokio.workspace = true
 sdkwork-web-bootstrap.workspace = true
 sdkwork-web-core.workspace = true
+sdkwork-database-sqlx.workspace = true
 sdkwork-routes-documents-app-api.workspace = true
 sdkwork-routes-documents-backend-api.workspace = true
 sdkwork-routes-documents-open-api.workspace = true

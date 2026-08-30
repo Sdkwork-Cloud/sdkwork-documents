@@ -22,7 +22,7 @@
   "paths": {
     "/backend/v3/api/documents": {
       "get": {
-        "operationId": "documents.list",
+        "operationId": "list",
         "tags": [
           "documents"
         ],
@@ -132,10 +132,11 @@
             }
           }
         },
-        "x-sdkwork-source-route-crate": "sdkwork-routes-documents-backend-api"
+        "x-sdkwork-source-route-crate": "sdkwork-routes-documents-backend-api",
+        "parameters": []
       },
       "post": {
-        "operationId": "documents.create",
+        "operationId": "create",
         "tags": [
           "documents"
         ],
@@ -252,7 +253,9 @@
             "in": "header",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
             }
           }
         ],
@@ -271,7 +274,7 @@
     },
     "/backend/v3/api/documents/{documentId}": {
       "get": {
-        "operationId": "documents.retrieve",
+        "operationId": "retrieve",
         "tags": [
           "documents"
         ],
@@ -394,7 +397,7 @@
         "x-sdkwork-source-route-crate": "sdkwork-routes-documents-backend-api"
       },
       "patch": {
-        "operationId": "documents.update",
+        "operationId": "update",
         "tags": [
           "documents"
         ],
@@ -527,7 +530,7 @@
         "x-sdkwork-source-route-crate": "sdkwork-routes-documents-backend-api"
       },
       "delete": {
-        "operationId": "documents.delete",
+        "operationId": "delete",
         "tags": [
           "documents"
         ],

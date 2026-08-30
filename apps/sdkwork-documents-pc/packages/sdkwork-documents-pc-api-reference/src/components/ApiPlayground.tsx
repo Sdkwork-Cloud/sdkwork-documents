@@ -19,6 +19,7 @@ import {
   parseApiPlaygroundBulkRows,
 } from '../apiPlaygroundRows';
 import { buildPlaygroundRequest, buildPlaygroundUrl } from '../playgroundRequest';
+import { sendPlaygroundRequest } from '../playgroundSender';
 import type { PlaygroundResponse } from '../playgroundRequest';
 import { downloadApiPlaygroundResponse, serializeApiPlaygroundResponseData } from '../playgroundResponseDownload';
 import type { ApiReferenceEndpoint } from '../openapiTypes';
@@ -214,55 +215,8 @@ export function ApiPlayground({ endpoint, requestBaseUrl, onClose }: ApiPlaygrou
     setLoading(true);
     setErrors({});
     setActiveResponseTab('body');
-    const startTime = Date.now();
     try {
-      const res = await fetch(request.url, request.requestInit);
-      const endTime = Date.now();
-
-      let data: unknown;
-      const contentType = res.headers.get('content-type');
-      const text = await res.text();
-      const size = new Blob([text]).size;
-
-      if (contentType && contentType.includes('application/json')) {
-        try {
-          data = JSON.parse(text);
-        } catch (e) {
-          data = text;
-        }
-      } else {
-        data = text;
-      }
-
-      const responseHeaders: [string, string][] = [];
-      res.headers.forEach((value, key) => {
-        responseHeaders.push([key, value]);
-      });
-
-      const nextResponse = {
-        status: res.status,
-        statusText: res.statusText,
-        time: endTime - startTime,
-        size: size,
-        headers: responseHeaders,
-        data: data
-      };
-      setResponse(nextResponse);
-      return nextResponse;
-
-    } catch (error: unknown) {
-      const endTime = Date.now();
-      const nextResponse = {
-        status: 0,
-        statusText: 'Network Error',
-        time: endTime - startTime,
-        size: 0,
-        headers: [],
-        data: {
-          error: unknownToErrorMessage(error),
-          hint: 'This might be a CORS issue, or the server is unreachable. Check your network console for details.'
-        }
-      };
+      const nextResponse = await sendPlaygroundRequest(request.url, request.requestInit);
       setResponse(nextResponse);
       return nextResponse;
     } finally {
@@ -851,14 +805,4 @@ function formatBytes(bytes: number, decimals = 2) {
   const sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
   return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
-}
-
-function unknownToErrorMessage(error: unknown): string {
-  if (error instanceof Error) {
-    return error.message;
-  }
-  if (typeof error === 'string') {
-    return error;
-  }
-  return 'Request failed';
 }

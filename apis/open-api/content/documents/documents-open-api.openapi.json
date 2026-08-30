@@ -130,12 +130,13 @@
               }
             }
           }
-        }
+        },
+        "parameters": []
       }
     },
     "/doc/v3/api/documents": {
       "get": {
-        "operationId": "documents.list",
+        "operationId": "list",
         "tags": [
           "documents"
         ],
@@ -243,12 +244,13 @@
               }
             }
           }
-        }
+        },
+        "parameters": []
       }
     },
     "/doc/v3/api/documents/{documentId}": {
       "get": {
-        "operationId": "documents.retrieve",
+        "operationId": "retrieve",
         "tags": [
           "documents"
         ],

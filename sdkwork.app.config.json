@@ -45,21 +45,78 @@
   "media": {
     "icons": {
       "primary": {
-        "id": "documents-primary-icon",
+        "id": "sdkwork-documents-primary-icon",
         "type": "ICON",
         "purpose": "PRIMARY",
-        "url": "https://sdkwork.com/assets/apps/sdkwork-documents/icon.png",
-        "platform": "WEB",
+        "url": "https://cdn.sdkwork.com/apps/sdkwork-documents/assets/icon-1024.png",
+        "platform": "APP",
         "locale": "en-US",
         "width": 1024,
         "height": 1024,
         "format": "PNG",
-        "enabled": true
+        "fileSizeBytes": 524288,
+        "alphaChannel": false,
+        "sortOrder": 0,
+        "enabled": true,
+        "metadata": {
+          "generatedPlaceholder": true
+        }
       },
-      "platform": []
+      "platform": [],
+      "metadata": {
+        "generatedPlaceholder": true
+      }
     },
-    "screenshots": [],
-    "previews": []
+    "screenshots": [
+      {
+        "id": "sdkwork-documents-web-screenshot",
+        "type": "SCREENSHOT",
+        "purpose": "CATALOG_SCREENSHOT",
+        "url": "https://cdn.sdkwork.com/apps/sdkwork-documents/media/web-screenshot.png",
+        "platform": "WEB",
+        "locale": "en-US",
+        "deviceClass": "BROWSER",
+        "displayType": "WEB_DESKTOP",
+        "width": 1920,
+        "height": 1080,
+        "format": "PNG",
+        "fileSizeBytes": 1048576,
+        "alphaChannel": false,
+        "caption": "SDKWork Documents product screenshot.",
+        "sortOrder": 0,
+        "enabled": true,
+        "metadata": {
+          "generatedPlaceholder": true,
+          "altText": "SDKWork Documents app screenshot."
+        }
+      }
+    ],
+    "previews": [
+      {
+        "id": "sdkwork-documents-catalog-preview",
+        "type": "PREVIEW_IMAGE",
+        "purpose": "CATALOG_PREVIEW",
+        "url": "https://cdn.sdkwork.com/apps/sdkwork-documents/media/preview-cover.png",
+        "platform": "WEB",
+        "locale": "en-US",
+        "width": 1600,
+        "height": 900,
+        "format": "PNG",
+        "fileSizeBytes": 786432,
+        "alphaChannel": false,
+        "caption": "SDKWork Documents preview.",
+        "sortOrder": 0,
+        "enabled": true,
+        "metadata": {
+          "generatedPlaceholder": true,
+          "altText": "SDKWork Documents preview cover."
+        }
+      }
+    ],
+    "metadata": {
+      "assetVersion": "0.1.0",
+      "defaultLocale": "en-US"
+    }
   },
   "publish": {
     "status": "INTERNAL",
@@ -74,11 +131,19 @@
       "workspaceRoot": ".",
       "framework": "rust-service",
       "managedBy": "tools/materialize_phase1_contracts.mjs"
-    }
+    },
+    "defaultPackageId": "container-x64-cloud-container-oci",
+    "installSkill": {
+      "name": "sdkwork-skills-app"
+    },
+    "storeUrl": "https://sdkwork.com/apps/sdkwork-documents"
   },
   "artifacts": {
     "installConfig": {
       "defaultPackageId": "container-x64-cloud-container-oci",
+      "installCommand": "sdkwork install sdkwork-documents",
+      "launchCommand": "sdkwork open sdkwork-documents",
+      "uninstallCommand": "sdkwork uninstall sdkwork-documents",
       "packages": [
         {
           "id": "container-x64-cloud-container-oci",
@@ -87,13 +152,46 @@
           "packageFormat": "DOCKER_IMAGE",
           "platform": "API",
           "architecture": "x64",
-          "url": "oci://registry.sdkwork.com/sdkwork/documents@sha256:TODO",
+          "url": "https://registry.example.com/sdkwork/sdkwork-documents:v1@sha256:0000000000000000000000000000000000000000000000000000000000000001",
           "checksumAlgorithm": "SHA-256",
           "checksum": "TODO",
           "sizeBytes": 0,
           "enabled": false,
           "deploymentProfile": "cloud",
-          "runtimeTarget": "container"
+          "runtimeTarget": "container",
+          "profileBinding": "fixed"
+        },
+        {
+          "id": "linux-x64-cloud-server-tar-gz",
+          "name": "Sdkwork Documents cloud server archive",
+          "sourceType": "BINARY_URL",
+          "packageFormat": "TAR_GZ",
+          "platform": "API",
+          "url": "https://cdn.sdkwork.com/apps/sdkwork-documents/STABLE/0.1.0/linux-x64-cloud-server-tar-gz-0.1.0.tar.gz",
+          "architecture": "x64",
+          "checksumAlgorithm": "SHA-256",
+          "checksum": "cf9aa4260dddbeede222c9cc0322afab982b6d9c1fda54f353f0c7f1480924f6",
+          "deploymentProfile": "cloud",
+          "runtimeTarget": "server",
+          "profileBinding": "fixed",
+          "enabled": true,
+          "metadata": {}
+        },
+        {
+          "id": "linux-x64-standalone-server-tar-gz",
+          "name": "Sdkwork Documents standalone server archive",
+          "sourceType": "BINARY_URL",
+          "packageFormat": "TAR_GZ",
+          "platform": "API",
+          "url": "https://cdn.sdkwork.com/apps/sdkwork-documents/STABLE/0.1.0/linux-x64-standalone-server-tar-gz-0.1.0.tar.gz",
+          "architecture": "x64",
+          "checksumAlgorithm": "SHA-256",
+          "checksum": "7bc9aff066c6f5a4003eaad0f790bba42c1f2e088767fb6ca02291d3b2c32502",
+          "deploymentProfile": "standalone",
+          "runtimeTarget": "server",
+          "profileBinding": "fixed",
+          "enabled": true,
+          "metadata": {}
         }
       ]
     }
@@ -101,19 +199,34 @@
   "release": {
     "currentVersion": "0.1.0",
     "latest": {
+      "STABLE": "0.1.0",
       "DEV": "0.1.0"
     },
     "notes": [
       {
         "version": "0.1.0",
-        "channel": "DEV",
-        "current": true,
-        "packageIds": [
-          "container-x64-cloud-container-oci"
+        "releaseChannel": "STABLE",
+        "title": "SDKWork Documents 0.1.0",
+        "summary": "SDKWork Documents initialized standard release.",
+        "content": "Initial SDKWork App Standard v3 manifest for SDKWork Documents.",
+        "highlights": [
+          "SDKWork App Standard v3 configuration initialized",
+          "platform_app projection metadata standardized",
+          "Download package matrix normalized"
         ],
-        "notes": "Initial Documents HTTP service skeleton."
+        "packageIds": [
+          "container-x64-cloud-container-oci",
+          "linux-x64-cloud-server-tar-gz",
+          "linux-x64-standalone-server-tar-gz"
+        ],
+        "publishedAt": "2026-05-07T00:00:00Z",
+        "current": true,
+        "forceUpdate": false,
+        "minSupportedVersion": "0.1.0",
+        "metadata": {}
       }
-    ]
+    ],
+    "defaultChannel": "STABLE"
   },
   "security": {
     "checksumRequired": true,
@@ -126,6 +239,8 @@
   },
   "metadata": {
     "status": "contract-skeleton",
-    "todo": "Replace placeholder media and artifact values before app registration."
+    "todo": "Replace placeholder media and artifact values before app registration.",
+    "deploymentConfig": "etc/sdkwork.deployment.config.json",
+    "standardOwner": "sdkwork-platform"
   }
 }
