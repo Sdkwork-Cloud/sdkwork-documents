@@ -76,17 +76,6 @@
       "managedBy": "tools/materialize_phase1_contracts.mjs"
     }
   },
-  "environments": {
-    "dev": {
-      "accessUrl": "http://127.0.0.1:18084"
-    },
-    "test": {
-      "accessUrl": "https://test.sdkwork.com/documents"
-    },
-    "prod": {
-      "accessUrl": "https://api.sdkwork.com/documents"
-    }
-  },
   "artifacts": {
     "installConfig": {
       "defaultPackageId": "container-x64-cloud-container-oci",

@@ -1,3 +1,0 @@
-# configs
-
-Owner: sdkwork-documents
