@@ -1,6 +1,6 @@
 use sdkwork_api_documents_assembly::assemble_api_router_from_env;
+use sdkwork_web_bootstrap::ApiModuleRegistry;
 use sdkwork_api_documents_standalone_gateway::serve_router;
-use sdkwork_web_bootstrap::ComposedApiAssembly;
 
 #[tokio::main]
 async fn main() {
@@ -14,7 +14,10 @@ async fn main() {
     let resolver = sdkwork_iam_web_adapter::iam_web_request_context_resolver_from_env().await;
     let framework =
         sdkwork_iam_web_adapter::build_web_framework_builder(resolver, manifest, Vec::new());
-    let router = ComposedApiAssembly::try_compose("SDKWork Documents API", vec![assembly])
+    let mut module_registry = ApiModuleRegistry::new();
+    module_registry.add_modules(vec![assembly]);
+    let router = module_registry
+        .try_compose("SDKWork Documents API")
         .expect("compose documents API contribution")
         .into_hosted(framework)
         .router;
