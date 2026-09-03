@@ -18,7 +18,57 @@ const RUNTIME_ENV_SCRIPT_PATH = '/runtime-env.js';
 const HTML_MODULE_SCRIPT_PATTERN =
   /<script\b(?=[^>]*\btype=["']module["'])(?=[^>]*\bsrc=["'][^"']+["'])[^>]*><\/script>/i;
 
-function documentsRuntimeEnvPlugin(): Plugin {
+/**
+ * Fields of the deploy-time browser runtime document
+ * (apps/<app>/public/runtime-env.json — ENVIRONMENT_SPEC.md §5.1.0.1) merged
+ * into the emitted script for a *built* bundle. The dotenv surface is a dev
+ * convenience; the runtime document is materialized by the canonical build
+ * runner immediately before Vite runs and is the deploy-time authority.
+ */
+const BROWSER_RUNTIME_ENV_DOCUMENT_FILE = 'runtime-env.json';
+const BROWSER_RUNTIME_ENV_DOCUMENT_URL_FIELDS = {
+  VITE_SDKWORK_DOCUMENTS_APP_API_BASE_URL: 'appApiBaseUrl',
+  VITE_SDKWORK_DOCUMENTS_BACKEND_API_BASE_URL: 'backendApiBaseUrl',
+  VITE_SDKWORK_DOCUMENTS_OPEN_API_BASE_URL: 'openApiBaseUrl',
+} as const;
+
+/** Fold a ';'-joined multi-origin list to its registered primary origin. */
+function primaryBrowserRuntimeOrigin(value: unknown): string | undefined {
+  const trimmed = typeof value === 'string' ? value.trim() : '';
+  if (!trimmed) {
+    return undefined;
+  }
+  return trimmed.split(';')[0]?.trim() || undefined;
+}
+
+function readBrowserRuntimeEnvDocumentOverrides(configDir: string): Record<string, string> {
+  const documentPath = path.join(configDir, 'public', BROWSER_RUNTIME_ENV_DOCUMENT_FILE);
+  if (!fs.existsSync(documentPath)) {
+    return {};
+  }
+
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(fs.readFileSync(documentPath, 'utf8'));
+  } catch {
+    return {};
+  }
+  if (!parsed || typeof parsed !== 'object') {
+    return {};
+  }
+
+  const document = parsed as Record<string, unknown>;
+  const overrides: Record<string, string> = {};
+  for (const [targetKey, documentField] of Object.entries(BROWSER_RUNTIME_ENV_DOCUMENT_URL_FIELDS)) {
+    const value = primaryBrowserRuntimeOrigin(document[documentField]);
+    if (value) {
+      overrides[targetKey] = value;
+    }
+  }
+  return overrides;
+}
+
+function documentsRuntimeEnvPlugin(configDir: string = process.cwd()): Plugin {
   return {
     name: 'documents-runtime-env',
     configureServer(server) {
@@ -32,6 +82,17 @@ function documentsRuntimeEnvPlugin(): Plugin {
         response.setHeader('Content-Type', 'application/javascript; charset=utf-8');
         response.setHeader('Cache-Control', 'no-store');
         response.end(buildDocumentsRuntimeEnvScript());
+      });
+    },
+    // Static hosting has no dev middleware: emit the script referenced by the
+    // injected tag. Without it the request falls through to the SPA fallback
+    // (index.html served as text/html), the module script fails to parse, and
+    // every runtime env read returns undefined.
+    generateBundle() {
+      this.emitFile({
+        type: 'asset',
+        fileName: RUNTIME_ENV_SCRIPT_PATH.replace(/^\//u, ''),
+        source: buildDocumentsRuntimeEnvScript(readBrowserRuntimeEnvDocumentOverrides(configDir)),
       });
     },
     transformIndexHtml: {
@@ -50,7 +111,7 @@ function documentsRuntimeEnvPlugin(): Plugin {
   };
 }
 
-function buildDocumentsRuntimeEnvScript(): string {
+function buildDocumentsRuntimeEnvScript(overrides: Record<string, string> = {}): string {
   const runtimeEnv: Record<string, string> = {};
   for (const [key, value] of Object.entries(process.env)) {
     if (!key.startsWith('VITE_')) {
@@ -61,6 +122,7 @@ function buildDocumentsRuntimeEnvScript(): string {
       runtimeEnv[key] = trimmed;
     }
   }
+  Object.assign(runtimeEnv, overrides);
 
   const serializedEnv = JSON.stringify(runtimeEnv)
     .replace(/</g, '\\u003C')
