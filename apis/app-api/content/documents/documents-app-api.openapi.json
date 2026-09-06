@@ -32,7 +32,6 @@
         "x-sdkwork-api-surface": "app-api",
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-auth-mode": "dual-token",
-        "x-sdkwork-permission": "documents.read",
         "x-sdkwork-audit-event": "documents.listed",
         "security": [
           {
@@ -145,7 +144,6 @@
         "x-sdkwork-api-surface": "app-api",
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-auth-mode": "dual-token",
-        "x-sdkwork-permission": "documents.write",
         "x-sdkwork-audit-event": "documents.created",
         "security": [
           {
@@ -282,7 +280,6 @@
         "x-sdkwork-api-surface": "app-api",
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-auth-mode": "dual-token",
-        "x-sdkwork-permission": "documents.read",
         "x-sdkwork-audit-event": "documents.retrieved",
         "security": [
           {
@@ -404,7 +401,6 @@
         "x-sdkwork-api-surface": "app-api",
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-auth-mode": "dual-token",
-        "x-sdkwork-permission": "documents.write",
         "x-sdkwork-audit-event": "documents.updated",
         "security": [
           {
@@ -538,7 +534,6 @@
         "x-sdkwork-api-surface": "app-api",
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-auth-mode": "dual-token",
-        "x-sdkwork-permission": "archives.create",
         "x-sdkwork-audit-event": "sdkReference.archivesCreated",
         "security": [
           {
@@ -675,7 +670,6 @@
         "x-sdkwork-api-surface": "app-api",
         "x-sdkwork-request-context": "WebRequestContext",
         "x-sdkwork-auth-mode": "dual-token",
-        "x-sdkwork-permission": "documentation.create",
         "x-sdkwork-audit-event": "sdkReference.documentationCreated",
         "security": [
           {
